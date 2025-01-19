@@ -1,5 +1,11 @@
 /** Global Parameters Object */
-const params = { };
+const PARAMS = { 
+    canvasWidth: 1024,
+    canvasHeight: 768,
+    CELL_SIZE: 64,
+    GRID_PERSPECTIVE_ANGLE: 45,
+    DEBUG: true
+};
 
 /**
  * @param {Number} n
