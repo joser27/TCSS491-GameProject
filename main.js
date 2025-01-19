@@ -11,5 +11,6 @@ ASSET_MANAGER.downloadAll(() => {
 	gameEngine.init(ctx);
 
     gameEngine.addEntity(new SceneManager(gameEngine));
+	gameEngine.addEntity(new Enemy(gameEngine,14*PARAMS.CELL_SIZE, 8*PARAMS.CELL_SIZE));
 	gameEngine.start();
 });

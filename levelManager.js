@@ -23,7 +23,7 @@ class LevelManager {
         const xOffset = (PARAMS.canvasHeight/2) * Math.tan(angleInRadians);
         
         if (this.debugPlayer) {
-            // Get player's current cell
+            // Get player's current cell using absolute x position
             let playerCellX = Math.floor(this.player.x / PARAMS.CELL_SIZE);
             const playerCellY = Math.floor(this.player.y / PARAMS.CELL_SIZE);
             
@@ -35,8 +35,10 @@ class LevelManager {
                 const adjustedX = this.player.x + (xOffset * progress);
                 playerCellX = Math.floor(adjustedX / PARAMS.CELL_SIZE);
             }
+
+            // Draw the cell highlight
             ctx.fillStyle = rgba(0, 255, 0, 0.3); // semi-transparent green
-            let cellX = playerCellX * PARAMS.CELL_SIZE - this.camera.x;
+            let cellX = playerCellX * PARAMS.CELL_SIZE - this.gameEngine.camera.x;
             const cellY = playerCellY * PARAMS.CELL_SIZE;
             
             // Draw the cell with proper perspective
