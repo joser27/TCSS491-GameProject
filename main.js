@@ -2,7 +2,7 @@ const gameEngine = new GameEngine();
 
 const ASSET_MANAGER = new AssetManager();
 ASSET_MANAGER.queueDownload("./assets/sprites/white_fight_spritesheet.png");
-ASSET_MANAGER.queueDownload("./assets/sprites/groundBig.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/evenBiggerGround.png");
 
 ASSET_MANAGER.downloadAll(() => {
 	const canvas = document.getElementById("gameWorld");

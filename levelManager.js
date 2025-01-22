@@ -6,7 +6,7 @@ class LevelManager {
         this.player = player;
         this.GRID_COLS = Math.floor(PARAMS.canvasWidth / PARAMS.CELL_SIZE);
         this.GRID_ROWS = Math.floor(PARAMS.canvasHeight / PARAMS.CELL_SIZE);
-        this.ground = ASSET_MANAGER.getAsset("./assets/sprites/groundBig.png");
+        this.ground = ASSET_MANAGER.getAsset("./assets/sprites/evenBiggerGround.png");
         this.groundWidth = this.ground.width;
         this.groundHeight = this.ground.height;
 
@@ -27,8 +27,8 @@ class LevelManager {
         
         for (let i = 0; i < numGrounds; i++) {
             const groundX = Math.floor(firstX + (i * this.groundWidth) - this.gameEngine.camera.x);
-            ctx.drawImage(this.ground, groundX - 2, PARAMS.canvasHeight/2, 
-                         this.groundWidth + 4, this.groundHeight);
+            ctx.drawImage(this.ground, groundX - 2, PARAMS.canvasHeight/3, 
+                            this.groundWidth + 4, this.groundHeight);
         }
     }
 
