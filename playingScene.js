@@ -9,9 +9,6 @@ class PlayingScene {
         
         this.levelManager = new LevelManager(this.gameEngine,this.player,this.camera);
         this.gameEngine.addEntity(this.levelManager);
-
-        this.GRID_COLS = Math.floor(PARAMS.canvasWidth / PARAMS.CELL_SIZE);
-        this.GRID_ROWS = Math.floor(PARAMS.canvasHeight / PARAMS.CELL_SIZE);
     }
 
     update() {

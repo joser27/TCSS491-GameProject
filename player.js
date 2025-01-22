@@ -17,7 +17,7 @@ class Player {
         }
         
         this.runAnimation = new Animator(
-            ASSET_MANAGER.getAsset("./white_fight_spritesheet.png"),
+            ASSET_MANAGER.getAsset("./assets/sprites/white_fight_spritesheet.png"),
             this.runSheet.startX,  // xStart
             0,                     // yStart
             this.runSheet.width,   // width of each frame

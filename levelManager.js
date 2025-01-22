@@ -6,6 +6,10 @@ class LevelManager {
         this.player = player;
         this.GRID_COLS = Math.floor(PARAMS.canvasWidth / PARAMS.CELL_SIZE);
         this.GRID_ROWS = Math.floor(PARAMS.canvasHeight / PARAMS.CELL_SIZE);
+        this.ground = ASSET_MANAGER.getAsset("./assets/sprites/groundBig.png");
+        this.groundWidth = this.ground.width;
+        this.groundHeight = this.ground.height;
+
     }
 
     update() {
@@ -13,7 +17,19 @@ class LevelManager {
     }
 
     draw(ctx) {
+        this.drawGround(ctx);
         this.drawGrid(ctx);
+    }
+
+    drawGround(ctx) {
+        const numGrounds = Math.ceil(PARAMS.canvasWidth / this.groundWidth) + 2;
+        const firstX = Math.floor(this.gameEngine.camera.x / this.groundWidth) * this.groundWidth;
+        
+        for (let i = 0; i < numGrounds; i++) {
+            const groundX = Math.floor(firstX + (i * this.groundWidth) - this.gameEngine.camera.x);
+            ctx.drawImage(this.ground, groundX - 2, PARAMS.canvasHeight/2, 
+                         this.groundWidth + 4, this.groundHeight);
+        }
     }
 
     drawGrid(ctx) {

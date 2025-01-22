@@ -3,7 +3,7 @@ class SceneManager {
         this.gameEngine = gameEngine;
         this.gameEngine.camera = this;
         this.x = 0;
-        this.scene = new PlayingScene(this.gameEngine, this);
+        this.scene = new MenuScene(this.gameEngine);
         this.gameEngine.addEntity(this.scene);
     };
 
@@ -24,10 +24,13 @@ class SceneManager {
     };
 
     update() {
-
+        console.log(this.gameEngine.entities);
+        if (this.gameEngine.keys["Enter"]) {
+            this.clearEntities();
+            this.scene = new PlayingScene(this.gameEngine, this);
+            this.gameEngine.addEntity(this.scene);
+        }
     };
-
-
 
     draw(ctx) {
 
