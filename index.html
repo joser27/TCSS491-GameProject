@@ -1,18 +1,29 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width">
+
     <title>Game Project Title Goes Here</title>
-  
+    <style>
+        body {
+          margin: 0; /* Remove default margins */
+          padding: 0; /* Remove default padding */
+          overflow: hidden; /* Prevent scrollbars */
+        }
+        canvas {
+          display: block; /* Remove extra inline space */
+        }
+    </style>
     <script type="text/javascript" src="./assetmanager.js"></script>
     <script type="text/javascript" src="./timer.js"></script>
     <script type="text/javascript" src="./gameengine.js"></script>
-    <script type="text/javascript" src="./animator.js"></script>
     <script type="text/javascript" src="./util.js"></script>
+    <script type="text/javascript" src="./animator.js"></script>
+    <script type="text/javascript" src="./background.js"></script>
     <script type="text/javascript" src="./main.js"></script>
 </head>
 <body>
-    <canvas id="gameWorld" width="1024" height="768" style="background: white; border: 1px solid black" tabindex="0" autofocus></canvas>
+    <canvas id="gameWorld" width="2048" height="968" style="background: white; border: 1px solid black" tabindex="0" autofocus></canvas>
 </body>
 </html>
