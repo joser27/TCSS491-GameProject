@@ -26,80 +26,38 @@ class Player {
             0.1,                   // frameDuration
             1                      // scale
         );
+        this.boundingbox = new BoundingBox(this.x,this.y,32,32)
     }
 
     update() {
-        if (this.transitioningScreen) {
-            if (this.gameEngine.camera.x < this.transitionTarget) {
-                this.gameEngine.camera.x += this.transitionSpeed;
-                const transitionProgress = (this.gameEngine.camera.x - (this.screenPosition - 1) * PARAMS.canvasWidth) / PARAMS.canvasWidth;
-                
-                // Smoothly move player from right side to left side
-                this.screenX = this.originalX + (100 - this.originalX) * transitionProgress;
-                this.x = this.screenX + this.gameEngine.camera.x;
-
-                if (this.gameEngine.camera.x >= this.transitionTarget) {
-                    this.gameEngine.camera.x = this.transitionTarget;
-                    this.transitioningScreen = false;
-                    this.screenX = 100;
-                    this.x = this.screenX + this.gameEngine.camera.x;
-                }
-            }
-            return;
-        }
-
-        // Normal movement controls
         if (this.gameEngine.keys.d) {
-            if (this.screenX < PARAMS.canvasWidth - 100) {
-                this.screenX += 5;
-                this.x = this.screenX + this.gameEngine.camera.x;
-            } else if (this.canProgress && !this.transitioningScreen) {
-                this.transitioningScreen = true;
-                this.screenPosition++;
-                this.transitionTarget = this.screenPosition * PARAMS.canvasWidth;
-                this.originalX = this.screenX;
-            }
-        }
-        if (this.gameEngine.keys.a) {
-            if (this.screenX > 100) {
-                this.screenX -= 5;
-                this.x = this.screenX + this.gameEngine.camera.x;
-            }
-        }
-        if (this.gameEngine.keys.w) {
-            if (this.y > 100) {
-                this.y -= 5;
-            }
+            this.x += 3;
         }
         if (this.gameEngine.keys.s) {
-            if (this.y < PARAMS.canvasHeight - 100) {
-                this.y += 5;
-            }
+            this.y += 3;
         }
-
-        // Keep player within vertical bounds
-        if (this.y < 100) this.y = 100;
-        if (this.y > PARAMS.canvasHeight - 100) this.y = PARAMS.canvasHeight - 100;
+        if (this.gameEngine.keys.w) {
+            this.y -= 3;
+        }
+        if (this.gameEngine.keys.a) {
+            this.x -= 3;
+        }
+        this.boundingbox.x = this.x;
+        this.boundingbox.y = this.y;
+        
     }
 
     draw(ctx) {
-        ctx.fillStyle = "red";
-        ctx.fillRect(this.screenX, this.y, 16, 16);
+
         this.runAnimation.drawFrame(
             this.gameEngine.clockTick,
             ctx,
-            this.screenX-250,
-            this.y-370
+            this.x-250, // position x sprite on boundingbox
+            this.y-350  // position y sprite on boundingbox
         );
+        ctx.fillStyle = "rgba(0, 179, 255, 0.68)";
+        ctx.fillRect(this.boundingbox.x, this.boundingbox.y, this.boundingbox.width, this.boundingbox.height);
 
-        ctx.fillStyle = "blue";
-        ctx.font = "20px Arial";
-        ctx.fillText(
-            "Screen: " + Math.floor(this.screenX/PARAMS.CELL_SIZE) + 
-            ", World: " + Math.floor(this.x/PARAMS.CELL_SIZE) + 
-            ", Y: " + Math.floor(this.y/PARAMS.CELL_SIZE), 
-            100, 100
-        );
     }
 }
 

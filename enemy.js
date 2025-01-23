@@ -1,12 +1,18 @@
 class Enemy {
-    constructor(gameEngine,x,y) {
+    constructor(gameEngine, scene, x, y) {
         this.gameEngine = gameEngine;
+        this.scene = scene;
         this.x = x;
         this.y = y;
     }
 
     update() {
-        // Update logic here
+        if (this.x > this.scene.player.x) {
+            this.x -= 2
+        }
+        if (this.x < this.scene.player.x) {
+            this.x += 2
+        }
     }
 
     draw(ctx) {
