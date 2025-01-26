@@ -1,3 +1,4 @@
+import { PlayingScene } from "./playingScene.js"; 
 class SceneManager {
     constructor(gameEngine) {
         this.gameEngine = gameEngine;

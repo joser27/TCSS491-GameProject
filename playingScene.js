@@ -1,3 +1,5 @@
+import { Player } from './player.js';
+import { Enemy } from "./enemy.js";
 class PlayingScene {
     constructor(gameEngine, camera) {
         this.gameEngine = gameEngine;
@@ -14,7 +16,7 @@ class PlayingScene {
 
 
 
-        this.enemy = new Enemy(this.gameEngine,this, 27*PARAMS.CELL_SIZE, 7*PARAMS.CELL_SIZE)
+        this.enemy = new Enemy(this.gameEngine);
         this.gameEngine.addEntity(this.enemy);
 
         this.levelManager = new LevelManager(this.gameEngine,this.player,this.camera);
