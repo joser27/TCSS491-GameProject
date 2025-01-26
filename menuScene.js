@@ -1,9 +1,14 @@
 class MenuScene {
-    constructor(gameEngine) {
+    constructor(gameEngine, sceneManager) {
+        this.sceneManager = sceneManager;
         this.gameEngine = gameEngine;
     }
     update() {
-
+        if (this.gameEngine.keys["Enter"]) {
+            this.sceneManager.clearEntities();
+            this.sceneManager.scene = new PlayingScene(this.gameEngine, this.sceneManager);
+            this.gameEngine.addEntity(this.sceneManager.scene);
+        }
     }
 
     draw(ctx) {

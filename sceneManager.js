@@ -1,11 +1,31 @@
-import { PlayingScene } from "./playingScene.js"; 
 class SceneManager {
     constructor(gameEngine) {
         this.gameEngine = gameEngine;
         this.gameEngine.camera = this;
         this.x = 0;
-        this.scene = new MenuScene(this.gameEngine);
+        this.scene = new MenuScene(this.gameEngine, this);
         this.gameEngine.addEntity(this.scene);
+        this.initializeButtons();
+    };
+
+    initializeButtons() {
+        const debugCheckbox = document.getElementById("debugButton");
+        const fullscreenButton = document.getElementById("fullscreenButton");
+        const canvas = document.getElementById("gameWorld");
+
+        debugCheckbox.addEventListener("change", () => {
+            PARAMS.DEBUG = debugCheckbox.checked;
+        });
+
+        fullscreenButton.addEventListener("click", () => {
+            if (!document.fullscreenElement) {
+                canvas.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        });
     };
 
     clearEntities() {
@@ -25,12 +45,8 @@ class SceneManager {
     };
 
     update() {
-        console.log(this.gameEngine.entities);
-        if (this.gameEngine.keys["Enter"]) {
-            this.clearEntities();
-            this.scene = new PlayingScene(this.gameEngine, this);
-            this.gameEngine.addEntity(this.scene);
-        }
+
+        
     };
 
     draw(ctx) {

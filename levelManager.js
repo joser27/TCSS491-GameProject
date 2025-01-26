@@ -2,14 +2,13 @@ class LevelManager {
     constructor(gameEngine, player, camera) {
         this.gameEngine = gameEngine;
         this.camera = camera;
-        this.debugPlayer = true;
         this.player = player;
         this.GRID_COLS = Math.floor(PARAMS.canvasWidth / PARAMS.CELL_SIZE);
         this.GRID_ROWS = Math.floor(PARAMS.canvasHeight / PARAMS.CELL_SIZE);
-        this.ground = ASSET_MANAGER.getAsset("./assets/sprites/evenBiggerGround.png");
-        this.groundWidth = this.ground.width;
-        this.groundHeight = this.ground.height;
 
+        // Background entity
+        this.background = new Background(this.gameEngine);
+        this.gameEngine.addEntity(this.background);
     }
 
     update() {
@@ -17,28 +16,18 @@ class LevelManager {
     }
 
     draw(ctx) {
-        this.drawGround(ctx);
-        this.drawGrid(ctx);
-    }
-
-    drawGround(ctx) {
-        const numGrounds = Math.ceil(PARAMS.canvasWidth / this.groundWidth) + 2;
-        const firstX = Math.floor(this.gameEngine.camera.x / this.groundWidth) * this.groundWidth;
-        
-        for (let i = 0; i < numGrounds; i++) {
-            const groundX = Math.floor(firstX + (i * this.groundWidth) - this.gameEngine.camera.x);
-            ctx.drawImage(this.ground, groundX - 2, PARAMS.canvasHeight/3, 
-                            this.groundWidth + 4, this.groundHeight);
+        if (PARAMS.DEBUG) {
+            this.drawGrid(ctx);
         }
     }
+
 
     drawGrid(ctx) {
         const rgba = (r, g, b, a) => `rgba(${r}, ${g}, ${b}, ${a})`;
         // Calculate perspective values
         const angleInRadians = (PARAMS.GRID_PERSPECTIVE_ANGLE * Math.PI) / 180;
         const xOffset = (PARAMS.canvasHeight/2) * Math.tan(angleInRadians);
-        
-        if (this.debugPlayer) {
+   
             // Get player's current cell using absolute x position
             let playerCellX = Math.floor(this.player.x / PARAMS.CELL_SIZE);
             const playerCellY = Math.floor(this.player.y / PARAMS.CELL_SIZE);
@@ -78,7 +67,7 @@ class LevelManager {
             } else {
                 // For cells in top half, draw regular rectangle
                 ctx.fillRect(cellX, cellY, PARAMS.CELL_SIZE, PARAMS.CELL_SIZE);
-            }
+ 
         }
 
         ctx.strokeStyle = rgba(100, 100, 100, 1);

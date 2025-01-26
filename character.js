@@ -1,21 +1,22 @@
 class Character {
-    constructor(gameEngine, spriteSheet) {
+    constructor(gameEngine, spriteSheet, scene) {
         this.gameEngine = gameEngine;
         this.spriteSheet = spriteSheet;
+        this.scene = scene;
 
         this.x = 0;
         this.y = 0;
         this.speed = 3;
         this.health = 100;
 
-        this.boundingbox = new BoundingBox(this.x, this.y, 16, 16);
+        this.boundingbox = new BoundingBox(this.x, this.y, 80, 80);
         this.isDead = false;
         this.deathCompleted = false;
         this.isMoving = false;
         this.currentAttack = null;
         this.attackCooldown = false;
 
-        // Run Animation
+        // Single run animation (right-facing)
         this.runAnimation = new Animator(
             ASSET_MANAGER.getAsset(spriteSheet),
             512 * 58, // 59th sprite
@@ -24,7 +25,8 @@ class Character {
             512,
             8,
             0.1,
-            0.5
+            .8,
+            true
         );
 
         // Idle Animation
@@ -36,7 +38,8 @@ class Character {
             512,
             1,
             1,
-            0.5
+            0.8,
+            true
         );
 
         // Death Animation
@@ -46,9 +49,10 @@ class Character {
             0,
             512,
             512,
-            11,
+            10,
             0.2,
-            0.5
+            0.8,
+            false
         );
 
         // Attack Animations
@@ -61,7 +65,8 @@ class Character {
                 512,
                 4,
                 0.1,
-                0.5
+                0.8,
+                false
             ),
             kick: new Animator(
                 ASSET_MANAGER.getAsset(spriteSheet),
@@ -71,7 +76,8 @@ class Character {
                 512,
                 5,
                 0.1,
-                0.5
+                0.8,
+                false
             ),
             punch: new Animator(
                 ASSET_MANAGER.getAsset(spriteSheet),
@@ -81,9 +87,13 @@ class Character {
                 512,
                 6,
                 0.1,
-                0.5
+                0.8,
+                false
             )
         };
+
+        // Direction state
+        this.facingLeft = false;
     }
 
     update() {
@@ -109,18 +119,45 @@ class Character {
     }
 
     draw(ctx) {
-        if (this.isDead) {
-            this.deathAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - 125, this.y - 175);
-            if (this.deathCompleted) {
-                this.drawGameOver(ctx);
-            }
-        } else if (this.currentAttack) {
-            this.attackAnimations[this.currentAttack].drawFrame(this.gameEngine.clockTick, ctx, this.x - 125, this.y - 175);
-        } else if (this.isMoving) {
-            this.runAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - 125, this.y - 175);
-        } else {
-            this.idleAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - 125, this.y - 175);
+        // Save the current context state
+        ctx.save();
+
+        // Define offsets consistently
+        const offsetX = 165;  // Adjust this value to move sprites left/right
+        const offsetY = 210;
+
+        // If facing left, flip the context
+        if (this.facingLeft) {
+            ctx.scale(-1, 1);
+            // Update translation to account for the offset
+            ctx.translate(-this.x * 2 - (512 * 0.8) + (offsetX * 2), 0);
         }
+
+        // Draw the character animations using consistent offsets
+        if (this.isDead) {
+            this.deathAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
+        } else if (this.currentAttack) {
+            this.attackAnimations[this.currentAttack].drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
+        } else if (this.isMoving) {
+            this.runAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
+        } else {
+            this.idleAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
+        }
+
+
+        // Restore the context state
+        ctx.restore();
+
+        // Draw bounding box ON TOP of the sprite
+        if (PARAMS.DEBUG) {
+            ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
+            ctx.fillRect(this.boundingbox.x, this.boundingbox.y, this.boundingbox.width, this.boundingbox.height);
+        }
+    }
+
+    drawBoundingBox(ctx) {
+        ctx.strokeStyle = "red";
+        ctx.strokeRect(this.boundingbox.x, this.boundingbox.y, this.boundingbox.width, this.boundingbox.height);
     }
 
     takeDamage(amount) {

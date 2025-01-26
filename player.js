@@ -1,14 +1,20 @@
 //import { Character} from "./character.js";
 class Player extends Character {
-    constructor(gameEngine) {
-        super(gameEngine, "./assets/sprites/white_fight_spritesheet.png"); // Pass player sprite sheet
+    constructor(gameEngine, scene) {
+        super(gameEngine, "./assets/sprites/white_fight_spritesheet.png", scene); // Pass player sprite sheet
         this.x = 75;
         this.y = 400;
     }
 
     update() {
         super.update();
-
+        if (this.deathCompleted) {
+            console.log("Game Over");
+            
+        }
+        if (this.gameEngine.keys.z) {
+            this.takeDamage(this.health); // Instantly kill player for testing
+        }
         if (this.gameEngine.keys.z) {
             this.takeDamage(this.health); // Instantly kill player for testing
         }
@@ -21,8 +27,14 @@ class Player extends Character {
 
             this.isMoving = movingRight || movingLeft || movingUp || movingDown;
 
-            if (movingRight) this.x += this.speed;
-            if (movingLeft) this.x -= this.speed;
+            if (movingRight) {
+                this.facingLeft = false;
+                this.x += this.speed;
+            }
+            if (movingLeft) {
+                this.facingLeft = true;
+                this.x -= this.speed;
+            }
             if (movingUp) this.y -= this.speed;
             if (movingDown) this.y += this.speed;
         }
@@ -31,4 +43,5 @@ class Player extends Character {
         if (this.gameEngine.keys.k) this.performAttack("kick");
         if (this.gameEngine.keys.p) this.performAttack("punch");
     }
+
 }

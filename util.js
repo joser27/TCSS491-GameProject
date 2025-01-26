@@ -1,10 +1,10 @@
 /** Global Parameters Object */
 const PARAMS = { 
-    canvasWidth: 1024,
-    canvasHeight: 768,
+    canvasWidth: 1280,
+    canvasHeight: 720,
     CELL_SIZE: 64,
     GRID_PERSPECTIVE_ANGLE: 45,
-    DEBUG: true
+    DEBUG: false
 };
 
 /**

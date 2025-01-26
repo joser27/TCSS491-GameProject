@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -10,18 +9,28 @@
     <script type="text/javascript" src="./gameengine.js"></script>
     <script type="text/javascript" src="./animator.js"></script>
     <script type="text/javascript" src="./boundingBox.js"></script>
-    <script type="text/javascript" src="./player.js"></script>
+    <script type="text/javascript" src="./gameOverScene.js"></script>
     <script type="text/javascript" src="./character.js"></script>
+    <script type="text/javascript" src="./player.js"></script>
     <script type="text/javascript" src="./weapon.js"></script>
     <script type="text/javascript" src="./enemy.js"></script>
     <script type="text/javascript" src="./menuScene.js"></script>
     <script type="text/javascript" src="./sceneManager.js"></script>
     <script type="text/javascript" src="./levelManager.js"></script>
-    <script type="text/javascript" src="./PlayingScene.js"></script>
+    <script type="text/javascript" src="./playingScene.js"></script>
+    <script type="text/javascript" src="./background.js"></script>
     <script type="text/javascript" src="./util.js"></script>
     <script type="text/javascript" src="./main.js"></script>
 </head>
 <body>
-    <canvas id="gameWorld" width="1024" height="768" style="background: white; border: 1px solid black" tabindex="0" autofocus></canvas>
+    <div style="position: relative;">
+        <canvas id="gameWorld" width="1280" height="720" style="background: white; border: 1px solid black" tabindex="0" autofocus></canvas>
+        <div>
+            <label>
+                <input type="checkbox" id="debugButton"> Debug
+            </label>
+            <button id="fullscreenButton">Fullscreen</button>
+        </div>
+    </div>
 </body>
 </html>
