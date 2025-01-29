@@ -113,7 +113,9 @@ class Character {
             }
             return;
         }
-        
+        if(this.x <= 0){
+            this.x = 0;
+        }
         this.boundingbox.x = this.x -this.gameEngine.camera.x;
         this.boundingbox.y = this.y;
     }

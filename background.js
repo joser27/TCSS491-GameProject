@@ -32,9 +32,11 @@ class Background {
         if(this.player.x - this.gameEngine.camera.x > PARAMS.canvasWidth / 2){
             this.gameEngine.camera.x += 3;
         }
-        // if(this.player.x + this.gameEngine.camera.x < PARAMS.canvasWidth / 5){
-        //     this.gameEngine.camera.x -= 3;
-        // }
+        if(this.player.x - this.gameEngine.camera.x < 70){
+            this.gameEngine.camera.x -= 3;
+        }
+
+
 
     }   
 
