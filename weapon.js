@@ -1,13 +1,12 @@
 class Weapon {
-    constructor(name, damage, range, cooldown) {
-        Object.assign(this, { name, damage, range, cooldown });
+    constructor(name, damage, range, cooldown, scene) {
+        Object.assign(this, { name, damage, range, cooldown, scene });
         this.cooldownTimer = 0;
     }
 
     attack(player) {
         if (this.cooldownTimer <= 0) {
             console.log(`${player.constructor.name} attacks with ${this.name}!`);
-            // Logic for attack effect (e.g., bullets, melee hits)
             this.cooldownTimer = this.cooldown;
         }
     }
@@ -18,7 +17,3 @@ class Weapon {
         }
     }
 }
-
-
-const sword = new Weapon("Sword", 25, 50, 0.5);
-//player.equipWeapon(sword);

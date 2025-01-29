@@ -5,6 +5,7 @@ class Player extends Character {
         this.x = 75;
         this.y = 400;
         this.hasDealtDamage = false; // Flag to prevent multiple damage during a single attack
+        this.hasWeapon = false;
         this.weapon = null;
     }
 
@@ -19,8 +20,9 @@ class Player extends Character {
             this.takeDamage(this.health); // Instantly kill player for testing
         }
 
-        if(this.gameEngine.keys.g) {
-            this.equipWeapon(new Pistol());
+        if(this.gameEngine.keys.g && !this.hasWeapon) {
+            this.equipWeapon(new Pistol(this.scene));
+            this.hasWeapon = true;
         }
 
         if(this.gameEngine.keys.f && this.weapon instanceof Pistol) {
@@ -90,15 +92,16 @@ class Player extends Character {
     }
 
     draw(ctx) {
-        super.draw(ctx);
-
-        if(this.weapon) {
+        
+        if(!this.hasWeapon){
+            super.draw(ctx);
+        } else {
             if (this.weapon instanceof Pistol) {
                 this.weapon.shootAnimation.drawFrame(
                     this.gameEngine.clockTick,
                     ctx,
-                    this.x-20,
-                    this.y-30
+                    this.x -165,
+                    this.y - 210
                 );
             }
         }

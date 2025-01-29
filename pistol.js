@@ -1,15 +1,20 @@
 class Pistol extends Weapon {
-    constructor() {
-        super("Pistol", 45, 300, 0.5); // Name, Damage, Range, Cooldown
+    constructor(scene) {
+        super("Pistol", 45, 300, 0.5, scene);
         this.bullets = [];
+
+        console.log("Checking asset manager:", ASSET_MANAGER.assets);
+        console.log("Trying to load:", ASSET_MANAGER.getAsset("./assets/sprites/white_pistol_spritesheet.png"));
+
         this.spriteSheet = ASSET_MANAGER.getAsset("./assets/sprites/white_pistol_spritesheet.png");
+
         this.shootAnimation = new Animator(
             this.spriteSheet,
-            512 * 26, // 21st sprite (adjust as needed)
+            512 * 26, 
             0,
             512,
             512,
-            3,  // Number of frames
+            1,
             0.1,
             0.8,
             false
@@ -21,18 +26,19 @@ class Pistol extends Weapon {
             console.log(`${player.constructor.name} fires the pistol!`);
             this.cooldownTimer = this.cooldown;
 
-            // Create a bullet at the player's position
-            this.bullets.push(new Bullet(player.x, player.y, player.facingLeft ? -1 : 1));
+            // Add a bullet to the scene
+            let bullet = new Bullet(player.x, player.y, player.facingLeft ? -1 : 1, this.scene);
+
+            console.log("Bullet Created:", bullet);
+            
+            this.scene.gameEngine.addEntity(bullet);
+            this.bullets.push(bullet);
         }
     }
 
     update(clockTick) {
         super.update(clockTick);
-
-        // Update bullet positions
         this.bullets.forEach(bullet => bullet.update(clockTick));
-
-        // Remove bullets that go off-screen
         this.bullets = this.bullets.filter(bullet => !bullet.offScreen);
     }
 

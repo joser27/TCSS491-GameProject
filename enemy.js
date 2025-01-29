@@ -21,9 +21,9 @@ class Enemy extends Character {
 
         const player = this.scene.player;
 
-        if(player.weapon instanceof Pistol) {
-            player.weapon.bullets.array.forEach(bullet => {
-                if(this.isCollidingWithBullet(bullet)) {
+        if (player.weapon instanceof Pistol) {
+            player.weapon.bullets.forEach(bullet => {
+                if (this.isCollidingWithBullet(bullet)) {
                     console.log("Enemy hit by bullet");
                     this.takeDamage(player.weapon.damage);
                     bullet.offScreen = true;
