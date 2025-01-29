@@ -5,6 +5,7 @@ class Player extends Character {
         this.x = 75;
         this.y = 400;
         this.hasDealtDamage = false; // Flag to prevent multiple damage during a single attack
+        this.weapon = null;
     }
 
     update() {
@@ -18,6 +19,17 @@ class Player extends Character {
             this.takeDamage(this.health); // Instantly kill player for testing
         }
 
+        if(this.gameEngine.keys.g) {
+            this.equipWeapon(new Pistol());
+        }
+
+        if(this.gameEngine.keys.f && this.weapon instanceof Pistol) {
+            this.weapon.attack(this);
+        }
+
+        if(this.weapon) {
+            this.weapon.update(this.gameEngine.clockTick);
+        }
         if (!this.currentAttack) {
             const movingRight = this.gameEngine.keys.d || this.gameEngine.keys["ArrowRight"];
             const movingLeft = this.gameEngine.keys.a || this.gameEngine.keys["ArrowLeft"];
@@ -80,6 +92,16 @@ class Player extends Character {
     draw(ctx) {
         super.draw(ctx);
 
+        if(this.weapon) {
+            if (this.weapon instanceof Pistol) {
+                this.weapon.shootAnimation.drawFrame(
+                    this.gameEngine.clockTick,
+                    ctx,
+                    this.x-20,
+                    this.y-30
+                );
+            }
+        }
         // Draw health bar fixed at the top center of the screen
         const canvasWidth = ctx.canvas.width;
         const healthBarWidth = 300; // Width of the health bar
@@ -100,5 +122,9 @@ class Player extends Character {
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1;
         ctx.strokeRect(xPosition, yPosition, healthBarWidth, healthBarHeight);
+    }
+
+    equipWeapon(weapon) {
+        this.weapon = weapon; 
     }
 }

@@ -1,3 +1,4 @@
+// import { Pistol } from "./pistol.js";
 class Enemy extends Character {
     constructor(gameEngine, scene) {
         super(gameEngine, "./assets/sprites/yellow_fight_spritesheet.png", scene); // Pass enemy sprite sheet
@@ -19,6 +20,16 @@ class Enemy extends Character {
         super.update();
 
         const player = this.scene.player;
+
+        if(player.weapon instanceof Pistol) {
+            player.weapon.bullets.array.forEach(bullet => {
+                if(this.isCollidingWithBullet(bullet)) {
+                    console.log("Enemy hit by bullet");
+                    this.takeDamage(player.weapon.damage);
+                    bullet.offScreen = true;
+                }
+            });
+        }
         const distanceToPlayer = Math.abs(this.x - player.x); // Horizontal distance to the player
 
         // Move towards the player but stop at the attack range
@@ -45,7 +56,13 @@ class Enemy extends Character {
 
             // Check if the punch hits the player
             if (this.isCollidingWithPlayer()) {
-                player.takeDamage(5); // Inflict damage to the player
+                let damageDelay = 500; // Half-second delay in milliseconds
+        
+                setTimeout(() => {
+                    if (this.isCollidingWithPlayer()) { // Recheck if still colliding
+                        player.takeDamage(5); // Inflict damage to the player after delay
+                    }
+                }, damageDelay);
             }
         }
     }
@@ -81,6 +98,15 @@ class Enemy extends Character {
             this.boundingbox.x + this.boundingbox.width > player.boundingbox.x &&
             this.boundingbox.y < player.boundingbox.y + player.boundingbox.height &&
             this.boundingbox.y + this.boundingbox.height > player.boundingbox.y
+        );
+    }
+
+    isCollidingWithBullet(bullet) {
+        return (
+            bullet.x < this.boundingbox.x + this.boundingbox.width &&
+            bullet.x + bullet.width > this.boundingbox.x &&
+            bullet.y < this.boundingbox.y + this.boundingbox.height &&
+            bullet.y + bullet.width > this.boundingbox.y
         );
     }
 }
