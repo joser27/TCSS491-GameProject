@@ -2,10 +2,6 @@ class Pistol extends Weapon {
     constructor(scene) {
         super("Pistol", 45, 300, 0.5, scene);
         this.bullets = [];
-
-        console.log("Checking asset manager:", ASSET_MANAGER.assets);
-        console.log("Trying to load:", ASSET_MANAGER.getAsset("./assets/sprites/white_pistol_spritesheet.png"));
-
         this.spriteSheet = ASSET_MANAGER.getAsset("./assets/sprites/white_pistol_spritesheet.png");
 
         this.shootAnimation = new Animator(
@@ -29,8 +25,6 @@ class Pistol extends Weapon {
             // Add a bullet to the scene
             let bullet = new Bullet(player.x, player.y, player.facingLeft ? -1 : 1, this.scene);
 
-            console.log("Bullet Created:", bullet);
-            
             this.scene.gameEngine.addEntity(bullet);
             this.bullets.push(bullet);
         }
