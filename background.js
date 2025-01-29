@@ -1,43 +1,63 @@
 class Background {
-    constructor(game) {
-      this.game = game;
-      
-      this.image = new Image();
-      this.image.src = "img/background.png"; // Set the source of the background image
-      this.speed = 2; // Speed of the background movement
-      this.x = 0; // X position of the background
-      this.y = 0;
-      this.game.width = window.innerWidth;
-      this.game.height = window.innerHeight;
-      // Resize the game and redraw elements on window resize
-      window.addEventListener("resize", () => this.resizegame());
-  
-      // Start the game loop after the background image is loaded
-  
+    constructor(gameEngine, player) {
+        this.gameEngine = gameEngine;
+        this.ground = ASSET_MANAGER.getAsset("./assets/sprites/evenBiggerGround.png");
+        this.background = ASSET_MANAGER.getAsset("./assets/sprites/background1.png");
+        this.house1 = ASSET_MANAGER.getAsset("./assets/sprites/building1.png");
+        this.house2 = ASSET_MANAGER.getAsset("./assets/sprites/building2.png");
+        this.house3 = ASSET_MANAGER.getAsset("./assets/sprites/building3.png");
+        this.player = player
+        this.x = 0
+        
+        
+        this.groundDetails = {
+            width: this.ground.width,
+            height: this.ground.height,
+        }
+        this.backgroundDetails = {
+            width: this.ground.width,
+            height: this.ground.height,
+        }
+        this.houseDetails = {
+            width: this.house1.width/2,
+            height: this.house1.height/2,
+        }
+
+        
+
+
     }
-  
-    
-  
-    resizegame() {
-        this.game.width = window.innerWidth;
-        this.game.height = window.innerHeight;
-        this.draw(); // Redraw the background to adapt to the new size
-    }
-    // Update background position for seamless looping
+
     update() {
-      this.x -= this.speed;
-      if (this.x <= -this.game.width) {
-        this.x = 0;
-      }
+        if(this.player.x - this.gameEngine.camera.x > PARAMS.canvasWidth / 2){
+            this.gameEngine.camera.x += 3;
+        }
+        // if(this.player.x + this.gameEngine.camera.x < PARAMS.canvasWidth / 5){
+        //     this.gameEngine.camera.x -= 3;
+        // }
+
+    }   
+
+    draw(ctx) {
+        const cameraX = this.gameEngine.camera.x;
+        
+        for (let i = 0; i < 5; i++) {
+            //Draw background
+            ctx.drawImage(this.background, this.x + i * (this.backgroundDetails.width - 5) - cameraX, 0, this.backgroundDetails.width, this.backgroundDetails.height);
+            //Draw ground
+            ctx.drawImage(this.ground, this.x + i * (this.groundDetails.width - 5) - cameraX, 220, this.groundDetails.width, this.groundDetails.height);
+       
+        }
+       
+        ctx.drawImage(this.house1, this.x + 1 * this.houseDetails.width - cameraX, 120, this.houseDetails.width, this.houseDetails.height);
+        ctx.drawImage(this.house2, this.x + 2 * this.houseDetails.width - cameraX, 120, this.houseDetails.width, this.houseDetails.height);
+        ctx.drawImage(this.house3, this.x + 3 * this.houseDetails.width - cameraX, 120, this.houseDetails.width, this.houseDetails.height);
+        
+
+
+
+       
+        
+       
     }
-  
-    // Draw the background
-    draw() {
-      
-      this.game.ctx.drawImage(this.image, this.x, 0, this.game.width, this.game.height);
-      this.game.ctx.drawImage(this.image, this.x + this.game.width, 0, this.game.width, this.game.height);
-    }
-  
-  
-  }
-  
+}
