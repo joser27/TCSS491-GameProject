@@ -4,7 +4,7 @@ class PlayingScene {
         this.camera = sceneManager;
         this.gameEngine = gameEngine;
         this.debugPlayer = true;
-
+        this.gameEngine.camera.x = 0;
         this.initEntities()
     }
 
