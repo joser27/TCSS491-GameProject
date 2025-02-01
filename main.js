@@ -21,6 +21,7 @@ ASSET_MANAGER.queueDownload("./assets/sprites/ladder.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/rocks.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/tree1.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/tree2.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/shopImage.png");
 
 // Keyboard sprites
 ASSET_MANAGER.queueDownload("./assets/sprites/ARROWDOWN.png");
@@ -28,6 +29,7 @@ ASSET_MANAGER.queueDownload("./assets/sprites/ARROWUP.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/ARROWLEFT.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/ARROWRIGHT.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/W.png");
+
 ASSET_MANAGER.queueDownload("./assets/sprites/A.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/S.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/D.png");
