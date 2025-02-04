@@ -24,9 +24,7 @@ class PlayingScene {
 
     update() {
         if (this.player.deathCompleted) {
-            this.sceneManager.clearEntities();
-            this.sceneManager.scene = new GameOverScene(this.gameEngine, this.sceneManager);
-            this.gameEngine.addEntity(this.sceneManager.scene);
+            this.sceneManager.transitionToScene(GameOverScene);
         }
     }
 

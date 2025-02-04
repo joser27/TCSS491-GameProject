@@ -35,12 +35,11 @@ class MenuScene {
 
             switch(this.selectedOption) {
                 case 0: // Play
-                    this.sceneManager.clearEntities();
-                    this.sceneManager.scene = new PlayingScene(this.gameEngine, this.sceneManager);
-                    this.gameEngine.addEntity(this.sceneManager.scene);
+                    this.sceneManager.transitionToScene(PlayingScene);
                     break;
                 case 1: // How to Play
                     console.log("How to Play");
+
                     this.sceneManager.clearEntities();
                     this.howToPlayScene = new HowToPlayScene(this.gameEngine, this.sceneManager);
                     this.gameEngine.addEntity(this.howToPlayScene);
@@ -50,12 +49,11 @@ class MenuScene {
                     // this.sceneManager.clearEntities();
                     // this.creditsScene = new CreditsScene(this.gameEngine, this.sceneManager);
                     // this.gameEngine.addEntity(this.creditsScene);
-                    this.sceneManager.clearEntities();
-                    this.sceneManager.scene = new ShopScene(this.gameEngine, this.sceneManager);
-                    this.gameEngine.addEntity(this.sceneManager.scene);
+                    this.sceneManager.transitionToScene(ShopScene);
                     break;
             }
         }
+
 
     }
 

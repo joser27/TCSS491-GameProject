@@ -3,7 +3,15 @@ class SceneManager {
         this.gameEngine = gameEngine;
         this.gameEngine.camera = this;
         this.x = 0;
-        this.scene = new MenuScene(this.gameEngine, this);
+        this.gameState = new GameState();
+        this.scenes = {
+            MenuScene: new MenuScene(this.gameEngine, this),
+            PlayingScene: null,
+            ShopScene: null,
+            GameOverScene: null,
+        }
+        this.scene = this.scenes.MenuScene;
+
         this.gameEngine.addEntity(this.scene);
         this.initializeButtons();
     };
@@ -54,5 +62,25 @@ class SceneManager {
     draw(ctx) {
 
     };
+
+    transitionToScene(SceneType) {
+        this.clearEntities();
+        
+        if (SceneType === PlayingScene) {
+            this.scene = new PlayingScene(this.gameEngine, this, this.gameState);
+        } else if (SceneType === ShopScene) {
+            this.scene = new ShopScene(this.gameEngine, this, this.gameState);
+        } else if (SceneType === GameOverScene) {
+            this.scene = new GameOverScene(this.gameEngine, this, this.gameState);
+        }
+        
+
+        this.gameEngine.addEntity(this.scene);
+    }
+
+    nextLevel() {
+        this.gameState.currentLevel++;
+        this.transitionToScene(ShopScene);
+    }
 };
 

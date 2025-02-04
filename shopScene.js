@@ -1,12 +1,15 @@
 class ShopScene {
-    constructor(gameEngine, scene) {
+    constructor(gameEngine, sceneManager, gameState) {
         this.gameEngine = gameEngine;
-        this.scene = scene;
+        this.sceneManager = sceneManager;
+        this.gameState = gameState;
+        console.log(this.gameState);
         this.removeFromWorld = false;
         this.name = "Devil's Deal"
+
         this.shopBackground = ASSET_MANAGER.getAsset("./assets/sprites/shopImage.png");
         
-        // shop items
+        // shop items with Exit option added at the end
         this.shopItems = [
             {
                 name: "Berserker Mode",
@@ -42,6 +45,13 @@ class ShopScene {
                 description: "Dodge roll distance is longer and faster.",
                 price: 75,
                 tooltip: "For defensive players who like speed."
+            },
+            {
+                name: "Exit Shop",
+                icon: "🚪",
+                description: "Return to game",
+                price: 0,
+                tooltip: "Press Enter to exit shop"
             }
         ];
         
@@ -50,11 +60,6 @@ class ShopScene {
     }
 
     update() {
-        // Exit shop
-        if (this.gameEngine.keys["o"]) {
-            this.removeFromWorld = true;
-        }
-
         // Handle item selection
         if (!this.keyPressed) {
             if (this.gameEngine.keys["ArrowRight"]) {
@@ -64,8 +69,14 @@ class ShopScene {
                 this.selectedIndex = (this.selectedIndex - 1 + this.shopItems.length) % this.shopItems.length;
                 this.keyPressed = true;
             } else if (this.gameEngine.keys["Enter"]) {
-                // Purchase logic would go here
-                console.log("Attempting to purchase: " + this.shopItems[this.selectedIndex].name);
+                // Check if Exit option is selected
+                if (this.selectedIndex === this.shopItems.length - 1) {
+                    // Exit shop and return to game
+                    this.sceneManager.transitionToScene(PlayingScene);
+                } else {
+                    // Handle purchase logic for other items
+                    console.log("Attempting to purchase: " + this.shopItems[this.selectedIndex].name);
+                }
                 this.keyPressed = true;
             }
         }
@@ -81,6 +92,12 @@ class ShopScene {
     draw(ctx) {
         ctx.drawImage(this.shopBackground, 0, 0);
         
+        // Draw current coins
+        ctx.font = "32px Arial";
+        ctx.fillStyle = "gold";
+        ctx.textAlign = "left";
+        ctx.fillText(`Coins: ${this.gameState.playerStats.coins}`, 50, 50);
+        
         // Draw items
         const startX = 200;
         const spacing = 150;
@@ -93,9 +110,10 @@ class ShopScene {
             ctx.font = "30px Arial";
             ctx.textAlign = "center";
             
-            // Highlight selected item
+            // Highlight selected item and show if affordable
             if (index === this.selectedIndex) {
-                ctx.fillStyle = "#FFD700"; // Gold color for selected item
+                // Gold if can afford, red if cannot
+                ctx.fillStyle = this.gameState.playerStats.coins >= item.price ? "#FFD700" : "#FF0000";
                 ctx.fillText(">" + item.icon + "<", x, y);
             } else {
                 ctx.fillStyle = "white";

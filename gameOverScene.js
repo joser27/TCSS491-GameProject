@@ -6,11 +6,10 @@ class GameOverScene {
 
     update() {
         if (this.gameEngine.keys["Enter"]) {
-            this.sceneManager.clearEntities();
-            this.sceneManager.scene = new PlayingScene(this.gameEngine, this.sceneManager);
-            this.gameEngine.addEntity(this.sceneManager.scene);
+            this.sceneManager.transitionToScene(PlayingScene);
         }
     }           
+
 
     draw(ctx) {
         ctx.fillStyle = "rgba(0, 0, 0, 0.8)";

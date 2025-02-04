@@ -4,10 +4,13 @@ class Player extends Character {
         super(gameEngine, "./assets/sprites/white_fight_spritesheet.png", scene); // Pass player sprite sheet
         this.x = 75;
         this.y = 400;
+        this.coins = 0;
         this.hasDealtDamage = false; // Flag to prevent multiple damage during a single attack
         this.hasWeapon = false;
         this.weapon = null;
+        this.hasPressedO = false;
     }
+
 
     update() {
         super.update();
@@ -70,13 +73,23 @@ class Player extends Character {
         if (!this.currentAttack) {
             this.hasDealtDamage = false;
         }
+
+        if (this.gameEngine.keys.o && !this.hasPressedO) {
+            console.log("Transitioning to Shop");
+            this.scene.sceneManager.transitionToScene(ShopScene);
+            this.hasPressedO = true;
+        }
+
+
     }
 
     attackEnemy(damage) {
+
         const enemy = this.scene.enemy; // Assuming the enemy is stored in the scene
 
         // Only apply damage if the attack has not already dealt damage
         if (this.isCollidingWithEnemy(enemy) && !this.hasDealtDamage) {
+            this.scene.sceneManager.gameState.playerStats.coins += 1;
             enemy.takeDamage(damage);
             this.hasDealtDamage = true; // Mark damage as dealt for this attack
         }
