@@ -74,7 +74,7 @@ class Enemy extends Character {
         const healthBarWidth = 50; // Width of the health bar
         const healthBarHeight = 5; // Height of the health bar
         const healthPercentage = this.health / 100; // Percentage of health remaining
-        const xPosition = this.x - healthBarWidth / 2; // Center health bar above the enemy
+        const xPosition = this.x - healthBarWidth / 2 - this.gameEngine.camera.x; // Center health bar above the enemy
         const yPosition = this.y - 30; // Position the health bar above the sprite
 
         // Draw the red background (full health bar)

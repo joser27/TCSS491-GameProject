@@ -114,8 +114,10 @@ class Character {
             }
             return;
         }
-
-        this.boundingbox.x = this.x;
+        if(this.x <= 0){
+            this.x = 0;
+        }
+        this.boundingbox.x = this.x - this.gameEngine.camera.x;
         this.boundingbox.y = this.y;
     }
 
@@ -132,18 +134,30 @@ class Character {
             ctx.scale(-1, 1);
             // Update translation to account for the offset
             ctx.translate(-this.x * 2 - (512 * 0.8) + (offsetX * 2), 0);
+            if (this.isDead) {
+                this.deathAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX +this.gameEngine.camera.x , this.y - offsetY);
+            } else if (this.currentAttack) {
+                this.attackAnimations[this.currentAttack].drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX + this.gameEngine.camera.x, this.y - offsetY);
+            } else if (this.isMoving) {
+                this.runAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX + this.gameEngine.camera.x, this.y - offsetY);
+            } else {
+                this.idleAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX + this.gameEngine.camera.x, this.y - offsetY);
+            }
+        } else {
+            // Draw the character animations using consistent offsets face right
+            if (this.isDead) {
+                this.deathAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX -this.gameEngine.camera.x , this.y - offsetY);
+            } else if (this.currentAttack) {
+                this.attackAnimations[this.currentAttack].drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX -this.gameEngine.camera.x, this.y - offsetY);
+            } else if (this.isMoving) {
+                this.runAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX -this.gameEngine.camera.x, this.y - offsetY);
+            } else {
+                this.idleAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX -this.gameEngine.camera.x, this.y - offsetY);
+            }
         }
 
-        // Draw the character animations using consistent offsets
-        if (this.isDead) {
-            this.deathAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
-        } else if (this.currentAttack) {
-            this.attackAnimations[this.currentAttack].drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
-        } else if (this.isMoving) {
-            this.runAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
-        } else {
-            this.idleAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
-        }
+        
+
 
 
         // Restore the context state

@@ -7,13 +7,14 @@ class LevelManager {
         this.GRID_ROWS = Math.floor(PARAMS.canvasHeight / PARAMS.CELL_SIZE);
 
         // Background entity
-        this.background = new Background(this.gameEngine);
+        this.background = new Background(this.gameEngine, this.player);
         this.gameEngine.addEntity(this.background);
         this.zIndex = 1;
     }
 
     update() {
         // Update level elements
+        
     }
 
     draw(ctx) {
