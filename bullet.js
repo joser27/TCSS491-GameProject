@@ -15,6 +15,9 @@ class Bullet {
 
     update(clockTick) {
         this.x += this.speed * this.direction;
+
+        this.zIndex = Math.max(this.scene.player.y, this.scene.enemy) + 10;
+        
         if (this.x < 0 || this.x > this.scene.gameEngine.ctx.canvas.width) {
             this.offScreen = true;
         }

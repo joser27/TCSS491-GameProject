@@ -30,10 +30,12 @@ class Enemy extends Character {
                 }
             });
         }
-        const distanceToPlayer = Math.abs(this.x - player.x); // Horizontal distance to the player
+        const distanceToPlayerX = Math.abs(this.x - player.x); // Horizontal distance to the player
+        const distanceToPlayerY = Math.abs(this.y - player.y); //Vertical distance
+        const distanceToPlayer = Math.sqrt(distanceToPlayerX **2 + distanceToPlayerY ** 2); //Total distance
 
         // Move towards the player but stop at the attack range
-        if (distanceToPlayer > this.attackRange) {
+        if (distanceToPlayerX > this.attackRange) {
             if (player.x > this.x) {
                 this.x += 1;
                 this.isMoving = true;
@@ -43,13 +45,42 @@ class Enemy extends Character {
                 this.isMoving = true;
                 this.facingLeft = true;
             }
-        } else {
+        } 
+
+        if(distanceToPlayerY > this.attackRange) {
+            if (player.y > this.y) {
+                this.y += 1;
+                this.isMoving = true;
+            } else if (player.y < this.y) {
+                this.y -= 1;
+                this.isMoving = true;
+            }
+        }
+        
+        if (distanceToPlayer <= this.attackRange || (distanceToPlayerX <= this.attackRange && distanceToPlayerY <= this.attackRange)) {
             this.isMoving = false; // Stop moving if within attack range
         }
 
+        // const isPlayerOnTop = 
+        //     player.y + player.boundingbox.height <= this.y + 60;
+        //     //player.x + player.boundingbox.width > this.x -40 &&
+        //     //player.x < this.x + this.boundingbox.width + 40;
+
+
+        // if (isPlayerOnTop) {
+        //     this.isMoving = true;
+
+        //    // this.x = Math.random() < 0.5 ? -1 : 1;
+
+        //     //this.y += Math.sin(this.gameEngine.clockTick *10) * 2;
+        //     if (Math.random() < 0.1) {
+        //         this.y -= 10; // Small jump
+        //     }
+        // }
+
         // Handle random punch
         this.attackTimer += this.gameEngine.clockTick; // Increment timer by elapsed time
-        if (this.attackTimer >= this.attackInterval && distanceToPlayer <= this.attackRange) {
+        if (this.attackTimer >= this.attackInterval && (distanceToPlayer <= this.attackRange || distanceToPlayerX <=this.attackRange)) {
             this.performAttack("punch"); // Perform a punch attack
             this.attackTimer = 0; // Reset the timer
             this.attackInterval = 2 + Math.random() * 3; // Set a new random interval
@@ -65,6 +96,8 @@ class Enemy extends Character {
                 }, damageDelay);
             }
         }
+
+        this.zIndex = this.y;
     }
 
     draw(ctx) {

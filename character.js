@@ -119,6 +119,8 @@ class Character {
         }
         this.boundingbox.x = this.x - this.gameEngine.camera.x;
         this.boundingbox.y = this.y;
+
+        this.zIndex = this.y;
     }
 
     draw(ctx) {

@@ -70,6 +70,8 @@ class Player extends Character {
         if (!this.currentAttack) {
             this.hasDealtDamage = false;
         }
+
+        this.zIndex = this.y;
     }
 
     attackEnemy(damage) {
