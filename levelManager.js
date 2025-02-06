@@ -12,7 +12,7 @@ class LevelManager {
         
         // Music 
         ASSET_MANAGER.pauseBackgroundMusic();
-        //ASSET_MANAGER.playAsset("./assets/music/music1.mp3");
+        ASSET_MANAGER.playAsset("./assets/music/music1.mp3");
     }
 
     update() {

@@ -205,7 +205,6 @@ class Character {
     performDeath() {
         if(!this.isPlaying){
             ASSET_MANAGER.playAsset("./assets/sound/death.mp3")
-            console.log("1");
             this.isPlaying = true;
         }
            
