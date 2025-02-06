@@ -5,7 +5,9 @@ class Player extends Character {
         this.x = 75;
         this.y = 400;
         this.hasDealtDamage = false; // Flag to prevent multiple damage during a single attack
-        this.isPlaying = false;
+        this.hasWeapon = false;
+        this.weapon = null;
+
     }
 
     update() {
@@ -19,6 +21,18 @@ class Player extends Character {
             this.takeDamage(this.health); // Instantly kill player for testing
         }
 
+        if(this.gameEngine.keys.g && !this.hasWeapon) {
+            this.equipWeapon(new Pistol(this.scene));
+            this.hasWeapon = true;
+        }
+
+        if(this.gameEngine.keys.f && this.weapon instanceof Pistol) {
+            this.weapon.attack(this);
+        }
+
+        if(this.weapon) {
+            this.weapon.update(this.gameEngine.clockTick);
+        }
         if (!this.currentAttack) {
             const movingRight = this.gameEngine.keys.d || this.gameEngine.keys["ArrowRight"];
             const movingLeft = this.gameEngine.keys.a || this.gameEngine.keys["ArrowLeft"];
@@ -57,8 +71,6 @@ class Player extends Character {
         if (!this.currentAttack) {
             this.hasDealtDamage = false;
         }
-
-
     }
 
     attackEnemy(damage) {
@@ -81,8 +93,19 @@ class Player extends Character {
     }
 
     draw(ctx) {
-        super.draw(ctx);
-
+        
+        if(!this.hasWeapon){
+            super.draw(ctx);
+        } else {
+            if (this.weapon instanceof Pistol) {
+                this.weapon.shootAnimation.drawFrame(
+                    this.gameEngine.clockTick,
+                    ctx,
+                    this.x -165,
+                    this.y - 210
+                );
+            }
+        }
         // Draw health bar fixed at the top center of the screen
         const canvasWidth = ctx.canvas.width;
         const healthBarWidth = 300; // Width of the health bar
@@ -103,5 +126,9 @@ class Player extends Character {
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1;
         ctx.strokeRect(xPosition, yPosition, healthBarWidth, healthBarHeight);
+    }
+
+    equipWeapon(weapon) {
+        this.weapon = weapon; 
     }
 }

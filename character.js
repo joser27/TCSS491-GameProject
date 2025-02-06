@@ -17,6 +17,7 @@ class Character {
         this.attackCooldown = false;
         this.isPlaying = false;
 
+
         // Single run animation (right-facing)
         this.runAnimation = new Animator(
             ASSET_MANAGER.getAsset(spriteSheet),
@@ -93,13 +94,11 @@ class Character {
             )
         };
 
-              // Attack sound
         this.attackSound = {
             chop: "./assets/sound/chop.mp3",
             kick: "./assets/sound/kick.mp3",
             punch: "./assets/sound/punch.mp3"
         };
-
         // Direction state
         this.facingLeft = false;
     }
@@ -126,7 +125,7 @@ class Character {
         if(this.x <= 0){
             this.x = 0;
         }
-        this.boundingbox.x = this.x -this.gameEngine.camera.x;
+        this.boundingbox.x = this.x - this.gameEngine.camera.x;
         this.boundingbox.y = this.y;
     }
 
@@ -155,7 +154,7 @@ class Character {
         } else {
             // Draw the character animations using consistent offsets face right
             if (this.isDead) {
-                this.deathAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX +this.gameEngine.camera.x , this.y - offsetY);
+                this.deathAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX -this.gameEngine.camera.x , this.y - offsetY);
             } else if (this.currentAttack) {
                 this.attackAnimations[this.currentAttack].drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX -this.gameEngine.camera.x, this.y - offsetY);
             } else if (this.isMoving) {
@@ -192,7 +191,6 @@ class Character {
             }
         }
     }
-
     performAttack(type) {
         const currentSound = this.attackSound[type];
         if (!this.attackCooldown) {
@@ -201,6 +199,7 @@ class Character {
             this.attackCooldown = true;
         }
     }
+
 
     performDeath() {
         if(!this.isPlaying){

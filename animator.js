@@ -8,6 +8,12 @@ class Animator {
 
 	drawFrame(tick, ctx, x, y) {
 		this.elapsedTime += tick;
+
+		if (!this.spritesheet) {
+			console.error("Spritesheet is missing in Animator");
+			return; // Skip drawing to avoid crashing
+		}
+		
 		if (this.elapsedTime > this.totalTime) {
 			if (this.loop) {
 				this.elapsedTime %= this.totalTime;

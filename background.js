@@ -29,6 +29,7 @@ class Background {
     }
 
     update() {
+        
         if(this.player.x - this.gameEngine.camera.x > PARAMS.canvasWidth / 2){
             this.gameEngine.camera.x += 3;
         }
@@ -45,9 +46,9 @@ class Background {
         
         for (let i = 0; i < 5; i++) {
             //Draw background
-            ctx.drawImage(this.background, this.x + i * (this.backgroundDetails.width - 5) - cameraX, 0, this.backgroundDetails.width, this.backgroundDetails.height);
+            ctx.drawImage(this.background, this.x + i * (this.backgroundDetails.width - 5) - cameraX/2, 0, this.backgroundDetails.width, this.backgroundDetails.height);
             //Draw ground
-            ctx.drawImage(this.ground, this.x + i * (this.groundDetails.width - 5) - cameraX, 220, this.groundDetails.width, this.groundDetails.height);
+            ctx.drawImage(this.ground, this.x + i * (this.groundDetails.width -5) - cameraX, 220, this.groundDetails.width, this.groundDetails.height);
        
         }
        

@@ -45,19 +45,10 @@ class SceneManager {
     };
 
     update() {
-        if(this.x <=0){
+        if(this.x <= 0){
             this.x = 0
-        };
-
-    };
-
-    updateAudio() {
-        var mute = PARAMS.mute;
-        var volume = document.getElementById("volume").value;
-
-        ASSET_MANAGER.muteAudio(mute);
-        ASSET_MANAGER.adjustVolume(volume);
-
+        }
+        
     };
 
     draw(ctx) {
