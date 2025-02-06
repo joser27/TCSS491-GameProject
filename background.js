@@ -1,6 +1,7 @@
 class Background {
     constructor(gameEngine, player) {
         this.gameEngine = gameEngine;
+        this.zIndex = 0;
         this.ground = ASSET_MANAGER.getAsset("./assets/sprites/evenBiggerGround.png");
         this.background = ASSET_MANAGER.getAsset("./assets/sprites/background1.png");
         this.house1 = ASSET_MANAGER.getAsset("./assets/sprites/building1.png");

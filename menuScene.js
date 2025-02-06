@@ -2,6 +2,7 @@ class MenuScene {
     constructor(gameEngine, sceneManager) {
         this.sceneManager = sceneManager;
         this.gameEngine = gameEngine;
+        this.zIndex = 99;
         this.selectedOption = 0;  // Track which option is selected
         this.options = ['Play', 'How to Play', 'Credits'];
         this.howToPlayScene = null;

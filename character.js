@@ -8,6 +8,7 @@ class Character {
         this.y = 0;
         this.speed = 3;
         this.health = 100;
+        this.zIndex = 2;
 
         this.boundingbox = new BoundingBox(this.x, this.y, 80, 80);
         this.isDead = false;

@@ -12,6 +12,8 @@ class SceneManager {
         }
         this.scene = this.scenes.MenuScene;
 
+        this.zindex = 100;
+        this.scene = new MenuScene(this.gameEngine, this);
         this.gameEngine.addEntity(this.scene);
         this.initializeButtons();
     };
