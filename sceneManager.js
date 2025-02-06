@@ -3,6 +3,7 @@ class SceneManager {
         this.gameEngine = gameEngine;
         this.gameEngine.camera = this;
         this.x = 0;
+        this.zindex = 100;
         this.scene = new MenuScene(this.gameEngine, this);
         this.gameEngine.addEntity(this.scene);
         this.initializeButtons();

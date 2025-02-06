@@ -84,14 +84,31 @@ class GameEngine {
         // Clear the whole canvas with transparent color (rgba(0, 0, 0, 0))
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
-       
-
-        // Draw latest things first
-        for (let i = this.entities.length - 1; i >= 0; i--) {
-            this.entities[i].draw(this.ctx, this);
+        if (this.sceneManager) {
+            this.sceneManager.draw(this.ctx);
         }
+
+        // Sort entities based on zIndex before drawing
+        this.entities.sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0));
+
+        // Draw all entities in order
+        this.entities.forEach(entity => entity.draw(this.ctx));
+
         this.camera.draw(this.ctx);
     };
+
+    // draw() {
+    //     // Clear the whole canvas with transparent color (rgba(0, 0, 0, 0))
+    //     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+
+       
+
+    //     // Draw latest things first
+    //     for (let i = this.entities.length - 1; i >= 0; i--) {
+    //         this.entities[i].draw(this.ctx, this);
+    //     }
+    //     this.camera.draw(this.ctx);
+    // };
 
     update() {
         let entitiesCount = this.entities.length;

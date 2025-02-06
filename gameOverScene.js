@@ -2,6 +2,7 @@ class GameOverScene {
     constructor(gameEngine, sceneManager) {
         this.gameEngine = gameEngine;
         this.sceneManager = sceneManager;
+        this.zIndex = 100;
     }
 
     update() {

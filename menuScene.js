@@ -2,6 +2,7 @@ class MenuScene {
     constructor(gameEngine, sceneManager) {
         this.sceneManager = sceneManager;
         this.gameEngine = gameEngine;
+        this.zIndex = 99;
     }
     update() {
         if (this.gameEngine.keys["Enter"]) {

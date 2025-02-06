@@ -1,26 +1,16 @@
 class Bullet {
     constructor(x, y, direction, scene) {
-        this.x = x + (direction === -1 ? -30 : 30); // Offset for better gun alignment
-        this.y = y - 10;
+        this.x = x + (direction === -1 ? -100 : 100); // Offset for better gun alignment
+        this.y = y + 10;
         this.direction = direction;
         this.speed = 5;
         this.width = 38;
         this.height = 24;
+        this.zIndex = 3;
         this.offScreen = false;
         this.scene = scene;
         this.sprite = ASSET_MANAGER.getAsset("./assets/sprites/bullet.png");
-
-       this.bulletAnimation = new Animator(
-            this.sprite,
-            this.x,
-            this.y,
-            this.width,
-            this.height,
-            1,
-            1,
-            1,
-            false
-       );
+        
     }
 
     update(clockTick) {
@@ -32,14 +22,19 @@ class Bullet {
             this.removeFromWorld = true; 
         }
     }
+    
 
     draw(ctx) {
-        this.bulletAnimation.drawFrame(
-            this.scene.gameEngine.clockTick,
-            ctx,
-            this.x,
-            this.y
-        );
-        
+        ctx.save();
+
+        if(this.direction === -1) {
+            ctx.scale(-1,1);
+            ctx.translate(-this.x*2 -this.width, 0);
+        }
+
+        ctx.drawImage(this.sprite, this.x + 10, this.y, this.width, this.height);
+
+        ctx.restore();
     }
+    
 }
