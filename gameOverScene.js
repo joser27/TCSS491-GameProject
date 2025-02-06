@@ -2,6 +2,8 @@ class GameOverScene {
     constructor(gameEngine, sceneManager) {
         this.gameEngine = gameEngine;
         this.sceneManager = sceneManager;
+        ASSET_MANAGER.pauseBackgroundMusic();
+        ASSET_MANAGER.playAsset("./assets/music/gameover.mp3");
     }
 
     update() {

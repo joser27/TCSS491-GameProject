@@ -5,6 +5,7 @@ class Player extends Character {
         this.x = 75;
         this.y = 400;
         this.hasDealtDamage = false; // Flag to prevent multiple damage during a single attack
+        this.isPlaying = false;
     }
 
     update() {
@@ -56,6 +57,8 @@ class Player extends Character {
         if (!this.currentAttack) {
             this.hasDealtDamage = false;
         }
+
+
     }
 
     attackEnemy(damage) {

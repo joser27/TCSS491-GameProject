@@ -9,6 +9,10 @@ class LevelManager {
         // Background entity
         this.background = new Background(this.gameEngine, this.player);
         this.gameEngine.addEntity(this.background);
+        
+        // Music 
+        ASSET_MANAGER.pauseBackgroundMusic();
+        //ASSET_MANAGER.playAsset("./assets/music/music1.mp3");
     }
 
     update() {
@@ -29,45 +33,45 @@ class LevelManager {
         const angleInRadians = (PARAMS.GRID_PERSPECTIVE_ANGLE * Math.PI) / 180;
         const xOffset = (PARAMS.canvasHeight/2) * Math.tan(angleInRadians);
    
-            // Get player's current cell using absolute x position
-            let playerCellX = Math.floor(this.player.x / PARAMS.CELL_SIZE);
-            const playerCellY = Math.floor(this.player.y / PARAMS.CELL_SIZE);
-            
-            // Adjust playerCellX based on perspective if in bottom half
-            if (this.player.y >= PARAMS.canvasHeight/2) {
-                const progress = (this.player.y - PARAMS.canvasHeight/2) / (PARAMS.canvasHeight/2);
-                const angleInRadians = (PARAMS.GRID_PERSPECTIVE_ANGLE * Math.PI) / 180;
-                const xOffset = (PARAMS.canvasHeight/2) * Math.tan(angleInRadians);
-                const adjustedX = this.player.x + (xOffset * progress);
-                playerCellX = Math.floor(adjustedX / PARAMS.CELL_SIZE);
-            }
+        // Get player's current cell using absolute x position
+        let playerCellX = Math.floor(this.player.x / PARAMS.CELL_SIZE);
+        const playerCellY = Math.floor(this.player.y / PARAMS.CELL_SIZE);
+        
+        // Adjust playerCellX based on perspective if in bottom half
+        if (this.player.y >= PARAMS.canvasHeight/2) {
+            const progress = (this.player.y - PARAMS.canvasHeight/2) / (PARAMS.canvasHeight/2);
+            const angleInRadians = (PARAMS.GRID_PERSPECTIVE_ANGLE * Math.PI) / 180;
+            const xOffset = (PARAMS.canvasHeight/2) * Math.tan(angleInRadians);
+            const adjustedX = this.player.x + (xOffset * progress);
+            playerCellX = Math.floor(adjustedX / PARAMS.CELL_SIZE);
+        }
 
-            // Draw the cell highlight
-            ctx.fillStyle = rgba(0, 255, 0, 0.3); // semi-transparent green
-            let cellX = playerCellX * PARAMS.CELL_SIZE - this.gameEngine.camera.x;
-            const cellY = playerCellY * PARAMS.CELL_SIZE;
+        // Draw the cell highlight
+        ctx.fillStyle = rgba(0, 255, 0, 0.3); // semi-transparent green
+        let cellX = playerCellX * PARAMS.CELL_SIZE - this.gameEngine.camera.x;
+        const cellY = playerCellY * PARAMS.CELL_SIZE;
+        
+        // Draw the cell with proper perspective
+        if (cellY >= PARAMS.canvasHeight/2) {
+            // For cells in bottom half, calculate perspective
+            const progress = (cellY - PARAMS.canvasHeight/2) / (PARAMS.canvasHeight/2);
+            const currentXOffset = xOffset * progress;
+            const nextRowOffset = xOffset * ((cellY + PARAMS.CELL_SIZE - PARAMS.canvasHeight/2) / (PARAMS.canvasHeight/2));
             
-            // Draw the cell with proper perspective
-            if (cellY >= PARAMS.canvasHeight/2) {
-                // For cells in bottom half, calculate perspective
-                const progress = (cellY - PARAMS.canvasHeight/2) / (PARAMS.canvasHeight/2);
-                const currentXOffset = xOffset * progress;
-                const nextRowOffset = xOffset * ((cellY + PARAMS.CELL_SIZE - PARAMS.canvasHeight/2) / (PARAMS.canvasHeight/2));
-                
-                // Adjust cellX by the perspective offset
-                cellX -= currentXOffset;
-                
-                // Draw trapezoid shape
-                ctx.beginPath();
-                ctx.moveTo(cellX, cellY);
-                ctx.lineTo(cellX + PARAMS.CELL_SIZE, cellY);
-                ctx.lineTo(cellX + PARAMS.CELL_SIZE - (nextRowOffset - currentXOffset), cellY + PARAMS.CELL_SIZE);
-                ctx.lineTo(cellX - (nextRowOffset - currentXOffset), cellY + PARAMS.CELL_SIZE);
-                ctx.closePath();
-                ctx.fill();
-            } else {
-                // For cells in top half, draw regular rectangle
-                ctx.fillRect(cellX, cellY, PARAMS.CELL_SIZE, PARAMS.CELL_SIZE);
+            // Adjust cellX by the perspective offset
+            cellX -= currentXOffset;
+            
+            // Draw trapezoid shape
+            ctx.beginPath();
+            ctx.moveTo(cellX, cellY);
+            ctx.lineTo(cellX + PARAMS.CELL_SIZE, cellY);
+            ctx.lineTo(cellX + PARAMS.CELL_SIZE - (nextRowOffset - currentXOffset), cellY + PARAMS.CELL_SIZE);
+            ctx.lineTo(cellX - (nextRowOffset - currentXOffset), cellY + PARAMS.CELL_SIZE);
+            ctx.closePath();
+            ctx.fill();
+        } else {
+            // For cells in top half, draw regular rectangle
+            ctx.fillRect(cellX, cellY, PARAMS.CELL_SIZE, PARAMS.CELL_SIZE);
  
         }
 

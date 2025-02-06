@@ -20,6 +20,17 @@ ASSET_MANAGER.queueDownload("./assets/sprites/rocks.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/tree1.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/tree2.png");
 
+// music 
+ASSET_MANAGER.queueDownload("./assets/music/music1.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/gameover.mp3");
+
+//sound effect
+ASSET_MANAGER.queueDownload("./assets/sound/kick.mp3");
+ASSET_MANAGER.queueDownload("./assets/sound/chop.mp3");
+ASSET_MANAGER.queueDownload("./assets/sound/punch.mp3");
+ASSET_MANAGER.queueDownload("./assets/sound/death.mp3");
+
+
 
 ASSET_MANAGER.downloadAll(() => {
 	const canvas = document.getElementById("gameWorld");
