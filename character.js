@@ -1,7 +1,8 @@
 class Character {
-    constructor(gameEngine, spriteSheet, scene) {
+    constructor(gameEngine, spriteSheet, scene, pistolSpriteSheet) {
         this.gameEngine = gameEngine;
         this.spriteSheet = spriteSheet;
+        this.pistolSpriteSheet = pistolSpriteSheet;
         this.scene = scene;
 
         this.x = 0;
@@ -16,6 +17,7 @@ class Character {
         this.isMoving = false;
         this.currentAttack = null;
         this.attackCooldown = false;
+        this.isUsingPistol = false;
 
         // Single run animation (right-facing)
         this.runAnimation = new Animator(
@@ -93,6 +95,43 @@ class Character {
             )
         };
 
+        this.pistolAnimations = {
+            idle: new Animator(
+                ASSET_MANAGER.getAsset(pistolSpriteSheet),
+                512 * 26, 
+                0,
+                512,
+                512,
+                1,
+                1,
+                0.8,
+                true
+            ),
+            run: new Animator (
+                ASSET_MANAGER.getAsset(pistolSpriteSheet),
+                512 * 39,
+                0,
+                512,
+                512,
+                8,
+                0.1,
+                0.8,
+                true
+            ),
+            death: new Animator (
+                ASSET_MANAGER.getAsset(pistolSpriteSheet),
+                512 * 13,
+                0,
+                512,
+                512,
+                8,
+                0.1,
+                0.8,
+                false
+            )
+
+        }
+
         // Direction state
         this.facingLeft = false;
     }
@@ -131,37 +170,33 @@ class Character {
         const offsetX = 165;  // Adjust this value to move sprites left/right
         const offsetY = 210;
 
-        // If facing left, flip the context
+
         if (this.facingLeft) {
             ctx.scale(-1, 1);
-            // Update translation to account for the offset
             ctx.translate(-this.x * 2 - (512 * 0.8) + (offsetX * 2), 0);
+        }
+    
+        if (this.usingPistol) {
             if (this.isDead) {
-                this.deathAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX +this.gameEngine.camera.x , this.y - offsetY);
-            } else if (this.currentAttack) {
-                this.attackAnimations[this.currentAttack].drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX + this.gameEngine.camera.x, this.y - offsetY);
+                this.pistolAnimations.death.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
             } else if (this.isMoving) {
-                this.runAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX + this.gameEngine.camera.x, this.y - offsetY);
+                this.pistolAnimations.run.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
             } else {
-                this.idleAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX + this.gameEngine.camera.x, this.y - offsetY);
+                this.pistolAnimations.idle.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
             }
         } else {
-            // Draw the character animations using consistent offsets face right
+            // Default animations (for both player & enemy)
             if (this.isDead) {
-                this.deathAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX -this.gameEngine.camera.x , this.y - offsetY);
-            } else if (this.currentAttack) {
-                this.attackAnimations[this.currentAttack].drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX -this.gameEngine.camera.x, this.y - offsetY);
+                this.deathAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
             } else if (this.isMoving) {
-                this.runAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX -this.gameEngine.camera.x, this.y - offsetY);
-            } else {
-                this.idleAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX -this.gameEngine.camera.x, this.y - offsetY);
+                this.runAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
+            } else if (this.currentAttack) {
+                this.attackAnimations[this.currentAttack].drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
+            }else {
+                this.idleAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
             }
         }
-
-        
-
-
-
+    
         // Restore the context state
         ctx.restore();
 
@@ -187,6 +222,10 @@ class Character {
     }
 
     performAttack(type) {
+        if (this.usingPistol) {
+            // If using pistol, stay idle while shooting
+            return;
+        }
         if (!this.attackCooldown) {
             this.currentAttack = type;
             this.attackCooldown = true;

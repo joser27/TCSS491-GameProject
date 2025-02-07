@@ -1,7 +1,7 @@
 // import { Character } from "./character.js";
 class Player extends Character {
     constructor(gameEngine, scene) {
-        super(gameEngine, "./assets/sprites/white_fight_spritesheet.png", scene); // Pass player sprite sheet
+        super(gameEngine, "./assets/sprites/white_fight_spritesheet.png", scene, "./assets/sprites/white_pistol_spritesheet.png"); // Pass player sprite sheet
         this.x = 75;
         this.y = 400;
         this.hasDealtDamage = false; // Flag to prevent multiple damage during a single attack
@@ -94,19 +94,19 @@ class Player extends Character {
     }
 
     draw(ctx) {
-        
-        if(!this.hasWeapon){
-            super.draw(ctx);
-        } else {
-            if (this.weapon instanceof Pistol) {
-                this.weapon.shootAnimation.drawFrame(
-                    this.gameEngine.clockTick,
-                    ctx,
-                    this.x -165,
-                    this.y - 210
-                );
-            }
-        }
+        super.draw(ctx);
+        // if(!this.hasWeapon){
+        //     super.draw(ctx);
+        // } else {
+        //     if (this.weapon instanceof Pistol) {
+        //         this.weapon.shootAnimation.drawFrame(
+        //             this.gameEngine.clockTick,
+        //             ctx,
+        //             this.x -165,
+        //             this.y - 210
+        //         );
+        //     }
+        // }
         // Draw health bar fixed at the top center of the screen
         const canvasWidth = ctx.canvas.width;
         const healthBarWidth = 300; // Width of the health bar
@@ -130,6 +130,13 @@ class Player extends Character {
     }
 
     equipWeapon(weapon) {
-        this.weapon = weapon; 
+        this.weapon = weapon;
+
+        if (weapon instanceof Pistol) {
+            this.usingPistol = true;  // Set pistol mode
+        } else {
+            this.usingPistol = false; // Switch back to normal
+        }
+            
     }
 }

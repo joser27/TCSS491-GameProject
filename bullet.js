@@ -1,7 +1,7 @@
 class Bullet {
     constructor(x, y, direction, scene) {
         this.x = x + (direction === -1 ? -100 : 100); // Offset for better gun alignment
-        this.y = y + 10;
+        this.y = y + 15;
         this.direction = direction;
         this.speed = 5;
         this.width = 38;
@@ -17,7 +17,7 @@ class Bullet {
         this.x += this.speed * this.direction;
 
         this.zIndex = Math.max(this.scene.player.y, this.scene.enemy) + 10;
-        
+
         if (this.x < 0 || this.x > this.scene.gameEngine.ctx.canvas.width) {
             this.offScreen = true;
         }

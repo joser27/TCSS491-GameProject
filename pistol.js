@@ -2,19 +2,6 @@ class Pistol extends Weapon {
     constructor(scene) {
         super("Pistol", 45, 300, 0.5, scene);
         this.bullets = [];
-        this.spriteSheet = ASSET_MANAGER.getAsset("./assets/sprites/white_pistol_spritesheet.png");
-
-        this.shootAnimation = new Animator(
-            this.spriteSheet,
-            512 * 26, 
-            0,
-            512,
-            512,
-            1,
-            0.1,
-            0.8,
-            false
-        );
     }
 
     attack(player) {
