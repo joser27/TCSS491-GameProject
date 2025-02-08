@@ -182,31 +182,31 @@ class Character {
         // Define offsets consistently
         const offsetX = 165;  // Adjust this value to move sprites left/right
         const offsetY = 210;
-
+        const screenX = this.x - this.gameEngine.camera.x;
 
         if (this.facingLeft) {
             ctx.scale(-1, 1);
-            ctx.translate(-this.x * 2 - (512 * 0.8) + (offsetX * 2), 0);
+            ctx.translate(-screenX * 2 - (512 * 0.8) + (offsetX * 2), 0);
         }
     
         if (this.usingPistol) {
             if (this.isDead) {
-                this.pistolAnimations.death.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
+                this.pistolAnimations.death.drawFrame(this.gameEngine.clockTick, ctx, screenX- offsetX, this.y - offsetY);
             } else if (this.isMoving) {
-                this.pistolAnimations.run.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
+                this.pistolAnimations.run.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             } else {
-                this.pistolAnimations.idle.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
+                this.pistolAnimations.idle.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             }
         } else {
             // Default animations (for both player & enemy)
             if (this.isDead) {
-                this.deathAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
+                this.deathAnimation.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             } else if (this.isMoving) {
-                this.runAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
+                this.runAnimation.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             } else if (this.currentAttack) {
-                this.attackAnimations[this.currentAttack].drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
+                this.attackAnimations[this.currentAttack].drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             }else {
-                this.idleAnimation.drawFrame(this.gameEngine.clockTick, ctx, this.x - offsetX, this.y - offsetY);
+                this.idleAnimation.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             }
         }
     

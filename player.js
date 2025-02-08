@@ -1,9 +1,9 @@
 // import { Character } from "./character.js";
 class Player extends Character {
-    constructor(gameEngine, scene) {
-        super(gameEngine, "./assets/sprites/white_fight_spritesheet.png", scene); // Pass player sprite sheet
-        this.x = 75;
-        this.y = 400;
+    constructor(gameEngine, scene, x, y) {
+        super(gameEngine, "./assets/sprites/white_fight_spritesheet.png", scene, "./assets/sprites/white_pistol_spritesheet.png" ); // Pass player sprite sheet
+        this.x = x;
+        this.y = y;
         this.hasDealtDamage = false; // Flag to prevent multiple damage during a single attack
         this.hasWeapon = false;
 
@@ -59,10 +59,53 @@ class Player extends Character {
             }
             if (movingLeft) {
                 this.facingLeft = true;
-                this.x -= this.speed;
+                // Prevent moving backward beyond the camera's left edge
+                if (newX - this.speed > this.scene.camera.x) {
+                    newX -= this.speed;
+                } else {
+                    newX = this.scene.camera.x; // Snap to the camera's left edge
+                }
             }
-            if (movingUp) this.y -= this.speed;
-            if (movingDown) this.y += this.speed;
+            if (movingUp) newY -= this.speed;
+            if (movingDown) newY += this.speed;
+    
+            // Add vertical movement constraints
+            const minY = 5 * PARAMS.CELL_SIZE;
+            const maxY = 9 * PARAMS.CELL_SIZE;
+            if (newY < minY) newY = minY;
+            if (newY > maxY) newY = maxY;
+    
+            // Check combat zone boundaries before applying movement
+            const currentZone = this.scene.levelManager.currentCombatZone;
+            if (currentZone && !currentZone.isCompleted) {
+                // Don't allow moving past zone boundaries
+                if (newX < currentZone.startX) {
+                    newX = currentZone.startX;
+                }
+                if (newX > currentZone.endX - this.boundingbox.width) {
+                    newX = currentZone.endX - this.boundingbox.width;
+                }
+            } else {
+                // When not in a combat zone, only prevent going backwards
+                const previousZone = this.scene.levelManager.combatZones
+                    .find(zone => zone.isCompleted && zone.endX < newX);
+    
+                if (previousZone) {
+                    // Don't allow going back into completed zones
+                    if (newX < previousZone.endX) {
+                        newX = previousZone.endX;
+                    }
+                }
+            }
+    
+            // Apply the validated position
+            this.x = newX;
+            this.y = newY;
+    
+            // Update the camera to follow the player when moving forward
+            if (movingRight && newX > this.scene.camera.x + this.scene.camera.width / 2) {
+                this.scene.camera.x = newX - this.scene.camera.width / 2;
+            }
         }
     
         // Perform attacks
@@ -178,19 +221,19 @@ class Player extends Character {
     }
 
     draw(ctx) {
-        
-        if(!this.hasWeapon){
-            super.draw(ctx);
-        } else {
-            if (this.weapon instanceof Pistol) {
-                this.weapon.shootAnimation.drawFrame(
-                    this.gameEngine.clockTick,
-                    ctx,
-                    this.x -165,
-                    this.y - 210
-                );
-            }
-        }
+        super.draw(ctx);
+        // if(!this.hasWeapon){
+        //     super.draw(ctx);
+        // } else {
+        //     if (this.weapon instanceof Pistol) {
+        //         this.weapon.shootAnimation.drawFrame(
+        //             this.gameEngine.clockTick,
+        //             ctx,
+        //             this.x -165,
+        //             this.y - 210
+        //         );
+        //     }
+        // }
         // Draw health bar fixed at the top center of the screen
         const canvasWidth = ctx.canvas.width;
         const healthBarWidth = 300; // Width of the health bar
