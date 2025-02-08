@@ -58,6 +58,19 @@ class Character {
             false
         );
 
+        // Jump animation
+        this.jumpAnimation = new Animator(
+            ASSET_MANAGER.getAsset(spriteSheet),
+            512*53,
+            0,
+            512,
+            512,
+            5,
+            0.2,
+            0.8,
+            true
+        );
+
         // Attack Animations
         this.attackAnimations = {
             chop: new Animator(

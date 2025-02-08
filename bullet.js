@@ -1,11 +1,11 @@
 class Bullet {
     constructor(x, y, direction, scene) {
         this.x = x + (direction === -1 ? -100 : 100); // Offset for better gun alignment
-        this.y = y + 15;
+        this.y = y + 20;
         this.direction = direction;
         this.speed = 5;
-        this.width = 38;
-        this.height = 24;
+        this.width = 19; //38
+        this.height = 12;   //24
         this.zIndex = 3;
         this.offScreen = false;
         this.scene = scene;

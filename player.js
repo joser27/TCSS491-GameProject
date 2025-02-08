@@ -37,6 +37,7 @@ class Player extends Character {
             const movingLeft = this.gameEngine.keys.a || this.gameEngine.keys["ArrowLeft"];
             const movingUp = this.gameEngine.keys.w || this.gameEngine.keys["ArrowUp"];
             const movingDown = this.gameEngine.keys.s || this.gameEngine.keys["ArrowDown"];
+            const jump = this.gameEngine.keys[" "];
 
             this.isMoving = movingRight || movingLeft || movingUp || movingDown;
 
@@ -50,6 +51,10 @@ class Player extends Character {
             }
             if (movingUp) this.y -= this.speed;
             if (movingDown) this.y += this.speed;
+
+            if(jump){
+                
+            }
         }
 
         // Perform attacks
