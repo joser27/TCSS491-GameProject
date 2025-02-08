@@ -147,12 +147,20 @@ class Character {
 
         // Direction state
         this.facingLeft = false;
+
+        this.attackSound = {
+            chop: "./assets/sound/chop.mp3",
+            kick: "./assets/sound/kick.mp3",
+            punch: "./assets/sound/punch.mp3",
+        };
     }
 
     update() {
         if (this.isDead) {
+            this.performDeath();
             if (this.deathAnimation.isDone()) {
                 this.deathCompleted = true;
+                this.isPlaying = false;
             }
             return;
         }
@@ -235,14 +243,24 @@ class Character {
     }
 
     performAttack(type) {
+        const currentSound = this.attackSound[type];
         if (this.usingPistol) {
             // If using pistol, stay idle while shooting
             return;
         }
         if (!this.attackCooldown) {
+            ASSET_MANAGER.playAsset(currentSound);
             this.currentAttack = type;
             this.attackCooldown = true;
         }
+    }
+
+    performDeath() {
+        if(!this.isPlaying){
+            this.isPlaying = true;
+            ASSET_MANAGER.playAsset("./assets/sound/death.mp3")
+            this.isPlaying = true;
+        }         
     }
 
     drawGameOver(ctx) {

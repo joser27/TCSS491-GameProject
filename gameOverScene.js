@@ -3,6 +3,8 @@ class GameOverScene {
         this.gameEngine = gameEngine;
         this.sceneManager = sceneManager;
         this.zIndex = 3;
+        ASSET_MANAGER.pauseBackgroundMusic();
+        ASSET_MANAGER.playAsset("./assets/music/gameover.mp3");
     }
 
     update() {

@@ -20,6 +20,10 @@ class LevelManager {
         this.cameraLeftBound = 0;
         this.cameraRightBound = null;
 
+        // Music 
+        ASSET_MANAGER.pauseBackgroundMusic();
+        ASSET_MANAGER.playAsset("./assets/music/music1.mp3");
+
         // Initialize current level
         this.currentLevel = this.sceneManager.gameState.currentLevel;
         this.levelConfigs = {

@@ -11,8 +11,10 @@ class AssetManager {
         console.log("Queueing " + path);
         if (path.toLowerCase().endsWith('.ttf')) {
             this.downloadQueue.push({ path, type: 'font' });
-        } else {
+        } else if (path.toLowerCase().endsWith('.png')) {
             this.downloadQueue.push({ path, type: 'image' });
+        } else if (path.toLowerCase().endsWith('.mp3')) {
+            this.downloadQueue.push({ path, type: 'music' });
         }
     };
 
@@ -46,7 +48,7 @@ class AssetManager {
                         this.errorCount++;
                         if (this.isDone()) callback();
                     });
-            } else {
+            } else if (item.type === 'image'){
                 const img = new Image();
                 img.addEventListener("load", () => {
                     console.log("Loaded " + img.src);
@@ -59,9 +61,36 @@ class AssetManager {
                     this.errorCount++;
                     if (this.isDone()) callback();
                 });
+                img.addEventListener("error", () => {
+                    console.log("Error loading " + img.src);
+                    this.errorCount++;
+                    if (this.isDone()) callback();
+                });
 
                 img.src = item.path;
                 this.cache[item.path] = img;
+            } else if (item.type === 'music'){
+                const aud = new Audio();
+                aud.addEventListener("loadeddata", () => {
+                    console.log("Loaded " + aud.src);
+                    this.successCount++;
+                    if (this.isDone()) callback();
+                });
+    
+                aud.addEventListener("error", () => {
+                    console.log("Error loading " + aud.src);
+                    this.errorCount++;
+                    if (this.isDone()) callback();
+                });
+
+                aud.addEventListener("ended", function () {
+                    aud.pause();
+                    aud.currentTime = 0;
+                });
+
+                aud.src = item.path;
+                aud.load();
+                this.cache[item.path] = aud;
             }
         }
     };
@@ -69,5 +98,52 @@ class AssetManager {
     getAsset(path) {
         return this.cache[path] || this.fonts[path];
     };
-};
 
+    playAsset(path) {
+        let audio = this.cache[path];
+        if (audio.currentTime != 0) {
+            let bak = audio.cloneNode();
+            bak.currentTime = 0;
+            bak.volume = audio.volume;
+            bak.play();
+        } else {
+            audio.currentTime = 0;
+            audio.play();
+        }
+    };
+
+    muteAudio(mute) {
+        for (var key in this.cache) {
+            let asset = this.cache[key];
+            if (asset instanceof Audio) {
+                asset.muted = mute;
+            }
+        }
+    };
+
+    adjustVolume(volume) {
+        for (var key in this.cache) {
+            let asset = this.cache[key];
+            if (asset instanceof Audio) {
+                asset.volume = volume;
+            }
+        }
+    };
+
+    pauseBackgroundMusic() {
+        for (var key in this.cache) {
+            let asset = this.cache[key];
+            if (asset instanceof Audio) {
+                asset.pause();
+                asset.currentTime = 0;
+            }
+        }
+    };
+
+    autoRepeat(path) {
+        var aud = this.cache[path];
+        aud.addEventListener("ended", function () {
+            aud.play();
+        });
+    };
+};
