@@ -9,6 +9,8 @@ class SceneManager {
             PlayingScene: null,
             ShopScene: null,
             GameOverScene: null,
+            HowToPlayScene: null,
+            CreditsScene: null,
         }
         this.scene = this.scenes.MenuScene;
 
@@ -58,29 +60,40 @@ class SceneManager {
         if(this.x <= 0){
             this.x = 0
         }
-        
     };
+
 
     draw(ctx) {
 
     };
 
+    resetCamera() {
+        this.x = 0;
+    }
+
     transitionToScene(SceneType) {
         this.clearEntities();
         
         if (SceneType === PlayingScene) {
-            this.scene = new PlayingScene(this.gameEngine, this, this.gameState);
+            this.scenes.PlayingScene = new PlayingScene(this.gameEngine, this, this.gameState);
+            this.scene = this.scenes.PlayingScene;
         } else if (SceneType === ShopScene) {
             this.scene = new ShopScene(this.gameEngine, this, this.gameState);
         } else if (SceneType === GameOverScene) {
             this.scene = new GameOverScene(this.gameEngine, this, this.gameState);
+        } else if (SceneType === HowToPlayScene) {
+            this.scene = new HowToPlayScene(this.gameEngine, this);
+        } else if (SceneType === CreditsScene) {
+            this.scene = new CreditsScene(this.gameEngine, this);
+        } else if (SceneType === MenuScene) {
+            this.scene = new MenuScene(this.gameEngine, this);
         }
-        
 
         this.gameEngine.addEntity(this.scene);
     }
 
     nextLevel() {
+        this.resetCamera();
         this.gameState.currentLevel++;
         this.transitionToScene(ShopScene);
     }

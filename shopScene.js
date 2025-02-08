@@ -3,7 +3,6 @@ class ShopScene {
         this.gameEngine = gameEngine;
         this.sceneManager = sceneManager;
         this.gameState = gameState;
-        console.log(this.gameState);
         this.removeFromWorld = false;
         this.name = "Devil's Deal"
 
@@ -15,35 +14,35 @@ class ShopScene {
                 name: "Berserker Mode",
                 icon: "🩸",
                 description: "When HP is below 50%, attacks deal +20% more damage.",
-                price: 100,
+                price: 1,
                 tooltip: "For aggressive players who take risks."
             },
             {
                 name: "Titan Guard",
                 icon: "🛡️",
                 description: "Taking damage briefly makes you invincible for 1 second.",
-                price: 125,
+                price: 1,
                 tooltip: "For defensive players who struggle against combos."
             },
             {
                 name: "Sharpened Steel",
                 icon: "⚔️",
                 description: "Sword deals +15% more damage.",
-                price: 75,
+                price: 1,
                 tooltip: "For sword-focused players."
             },
             {
                 name: "Gunslinger",
                 icon: "🔫",
                 description: "Gun reloads twice as fast.",
-                price: 75,
+                price: 1,
                 tooltip: "For gun-focused players."
             },
             {
                 name: "Shadow Step",
                 icon: "👣",
                 description: "Dodge roll distance is longer and faster.",
-                price: 75,
+                price: 1,
                 tooltip: "For defensive players who like speed."
             },
             {
@@ -57,9 +56,19 @@ class ShopScene {
         
         this.selectedIndex = 0;
         this.keyPressed = false;
+        
+        // cooldown timer for entering the shop
+        this.entryCooldown = 1;
+        this.currentCooldown = this.entryCooldown;
     }
 
     update() {
+        // Handle cooldown timer
+        if (this.currentCooldown > 0) {
+            this.currentCooldown -= this.gameEngine.clockTick;
+            return; // Skip input handling during cooldown
+        }
+
         // Handle item selection
         if (!this.keyPressed) {
             if (this.gameEngine.keys["ArrowRight"]) {
@@ -74,8 +83,19 @@ class ShopScene {
                     // Exit shop and return to game
                     this.sceneManager.transitionToScene(PlayingScene);
                 } else {
-                    // Handle purchase logic for other items
-                    console.log("Attempting to purchase: " + this.shopItems[this.selectedIndex].name);
+                    // Handle purchase logic
+                    const selectedItem = this.shopItems[this.selectedIndex];
+                    const playerStats = this.gameState.playerStats;
+                    
+                    // Check if player has enough coins and hasn't already bought the upgrade
+                    if (playerStats.coins >= selectedItem.price && 
+                        !playerStats.upgrades[this.getUpgradeKey(selectedItem.name)]) {
+                        
+                        // Deduct coins and apply upgrade
+                        playerStats.coins -= selectedItem.price;
+                        playerStats.upgrades[this.getUpgradeKey(selectedItem.name)] = true;
+                        console.log(`Purchased ${selectedItem.name}`);
+                    }
                 }
                 this.keyPressed = true;
             }
@@ -87,6 +107,18 @@ class ShopScene {
             !this.gameEngine.keys["Enter"]) {
             this.keyPressed = false;
         }
+    }
+
+    // Helper method to convert item names to upgrade keys
+    getUpgradeKey(itemName) {
+        const keyMap = {
+            "Berserker Mode": "berserkerMode",
+            "Titan Guard": "titanGuard",
+            "Sharpened Steel": "sharpenedSteel",
+            "Gunslinger": "gunslinger",
+            "Shadow Step": "shadowStep"
+        };
+        return keyMap[itemName];
     }
 
     draw(ctx) {
@@ -110,19 +142,32 @@ class ShopScene {
             ctx.font = "30px Arial";
             ctx.textAlign = "center";
             
-            // Highlight selected item and show if affordable
+            // Determine item color based on selection, affordability, and purchase status
             if (index === this.selectedIndex) {
-                // Gold if can afford, red if cannot
-                ctx.fillStyle = this.gameState.playerStats.coins >= item.price ? "#FFD700" : "#FF0000";
+                if (this.gameState.playerStats.upgrades[this.getUpgradeKey(item.name)]) {
+                    ctx.fillStyle = "#808080"; // Gray for already purchased
+                } else if (this.gameState.playerStats.coins >= item.price) {
+                    ctx.fillStyle = "#FFD700"; // Gold if can afford
+                } else {
+                    ctx.fillStyle = "#FF0000"; // Red if cannot afford
+                }
                 ctx.fillText(">" + item.icon + "<", x, y);
             } else {
-                ctx.fillStyle = "white";
+                if (this.gameState.playerStats.upgrades[this.getUpgradeKey(item.name)]) {
+                    ctx.fillStyle = "#808080"; // Gray for already purchased
+                } else {
+                    ctx.fillStyle = "white";
+                }
                 ctx.fillText(item.icon, x, y);
             }
             
-            // Draw price
+            // Draw price or "OWNED" text
             ctx.font = "16px Arial";
-            ctx.fillText(`${item.price} Coins`, x, y + 30);
+            if (this.gameState.playerStats.upgrades[this.getUpgradeKey(item.name)]) {
+                ctx.fillText("OWNED", x, y + 30);
+            } else {
+                ctx.fillText(`${item.price} Coins`, x, y + 30);
+            }
         });
         
         // Draw description of selected item

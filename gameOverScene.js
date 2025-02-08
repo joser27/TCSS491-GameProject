@@ -2,12 +2,28 @@ class GameOverScene {
     constructor(gameEngine, sceneManager) {
         this.gameEngine = gameEngine;
         this.sceneManager = sceneManager;
-        this.zIndex = 100;
+        this.zIndex = 3;
     }
 
     update() {
         if (this.gameEngine.keys["Enter"]) {
+
+            // Reset player stats
+            this.sceneManager.gameState.playerStats.coins = 0;
+            this.sceneManager.gameState.playerStats.upgrades = {
+                berserkerMode: false,
+                titanGuard: false,
+                sharpenedSteel: false,
+                gunslinger: false,
+                shadowStep: false
+            };
+            this.sceneManager.gameState.currentLevel = 1;
+            this.sceneManager.gameState.playerStats.health = 100;
+
+            // Reset camera and transition to playing scene
+            this.sceneManager.resetCamera();
             this.sceneManager.transitionToScene(PlayingScene);
+
         }
     }           
 

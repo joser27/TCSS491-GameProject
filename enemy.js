@@ -1,24 +1,25 @@
 // import { Pistol } from "./pistol.js";
 class Enemy extends Character {
-    constructor(gameEngine, scene) {
+    constructor(gameEngine, scene,x,y) {
         super(gameEngine, "./assets/sprites/yellow_fight_spritesheet.png", scene); // Pass enemy sprite sheet
-        this.x = 500;
-        this.y = 400;
+        this.x = x;
+        this.y = y;
         this.attackTimer = 0; // Timer to track random punch intervals
+
         this.attackInterval = 2 + Math.random() * 3; // Random interval between 2 to 5 seconds
         this.attackRange = 70; // Minimum distance from the player to attack
     }
 
     update() {
+
+
+        super.update();
         if (this.isDead) {
             // Stop all actions if the enemy is dead
             this.isMoving = false;
             this.currentAttack = null;
             return;
         }
-
-        super.update();
-
         const player = this.scene.player;
 
         if (player.weapon instanceof Pistol) {

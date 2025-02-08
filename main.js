@@ -22,6 +22,13 @@ ASSET_MANAGER.queueDownload("./assets/sprites/rocks.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/tree1.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/tree2.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/shopImage.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/testStreet.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/testbuilding1.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/testbuilding2.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/testbuilding3.png");
+
+
+
 
 // Keyboard sprites
 ASSET_MANAGER.queueDownload("./assets/sprites/ARROWDOWN.png");

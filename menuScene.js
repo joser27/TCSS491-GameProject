@@ -39,18 +39,10 @@ class MenuScene {
                     this.sceneManager.transitionToScene(PlayingScene);
                     break;
                 case 1: // How to Play
-                    console.log("How to Play");
-
-                    this.sceneManager.clearEntities();
-                    this.howToPlayScene = new HowToPlayScene(this.gameEngine, this.sceneManager);
-                    this.gameEngine.addEntity(this.howToPlayScene);
+                    this.sceneManager.transitionToScene(HowToPlayScene);
                     break;
                 case 2: // Credits
-                    // console.log("Credits");
-                    // this.sceneManager.clearEntities();
-                    // this.creditsScene = new CreditsScene(this.gameEngine, this.sceneManager);
-                    // this.gameEngine.addEntity(this.creditsScene);
-                    this.sceneManager.transitionToScene(ShopScene);
+                    this.sceneManager.transitionToScene(CreditsScene);
                     break;
             }
         }

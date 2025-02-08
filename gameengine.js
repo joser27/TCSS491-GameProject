@@ -88,29 +88,26 @@ class GameEngine {
             this.sceneManager.draw(this.ctx);
         }
 
-        // Sort entities based on zIndex before drawing
-        this.entities.sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0));
+        // Separate fixed and non-fixed entities
+        const fixedEntities = this.entities.filter(entity => entity.isFixedZ);
+        const dynamicEntities = this.entities.filter(entity => !entity.isFixedZ);
 
-        // Draw all entities in order
-        this.entities.forEach(entity => entity.draw(this.ctx));
+        // Update zIndex based on y position for dynamic entities only
+        dynamicEntities.forEach(entity => {
+            entity.zIndex = entity.y * 0.1;
+        });
+
+        // Combine and sort ALL entities by zIndex
+        const allEntities = [...fixedEntities, ...dynamicEntities].sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0));
+
+        // Draw all entities in zIndex order
+        allEntities.forEach(entity => entity.draw(this.ctx));
 
         this.camera.draw(this.ctx);
     };
 
-    // draw() {
-    //     // Clear the whole canvas with transparent color (rgba(0, 0, 0, 0))
-    //     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-
-       
-
-    //     // Draw latest things first
-    //     for (let i = this.entities.length - 1; i >= 0; i--) {
-    //         this.entities[i].draw(this.ctx, this);
-    //     }
-    //     this.camera.draw(this.ctx);
-    // };
-
     update() {
+        //console.log(this.entities);
         let entitiesCount = this.entities.length;
 
         for (let i = 0; i < entitiesCount; i++) {
