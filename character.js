@@ -161,6 +161,7 @@ class Character {
             if (this.deathAnimation.isDone()) {
                 this.deathCompleted = true;
                 this.isPlaying = false;
+                this.removeFromWorld = true;
             }
             return;
         }
