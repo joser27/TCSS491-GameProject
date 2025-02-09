@@ -1,8 +1,10 @@
 class Bullet {
-    constructor(x, y, direction, scene) {
-        this.x = x + (direction === -1 ? -100 : 100); // Offset for better gun alignment
-        this.y = y + 20;
-        this.direction = direction;
+    constructor(player, scene) {
+        this.direction = player.facingLeft ? -1 : 1;
+        
+        // Adjust starting position based on facing direction
+        this.x = (player.x - scene.gameEngine.camera.x) + (this.direction === -1 ? -100: 100);
+        this.y = player.y + 20;
         this.speed = 5;
         this.width = 19; //38
         this.height = 12;   //24
@@ -15,6 +17,7 @@ class Bullet {
 
     update(clockTick) {
         this.x += this.speed * this.direction;
+       
 
         this.zIndex = Math.max(this.scene.player.y, this.scene.enemy) + 10;
 
@@ -28,15 +31,18 @@ class Bullet {
     
 
     draw(ctx) {
+        //debuging
+       // ctx.fillStyle = "yellow";
+        //ctx.fillRect(this.x, this.y, 50, 50);
         ctx.save();
-        const screenX = this.x - this.scene.gameEngine.camera.x;
+        const screenX = this.x - this.scene.gameEngine.camera.x ;
 
         if(this.direction === -1) {
             ctx.scale(-1,1);
             ctx.translate(-screenX*2 -this.width, 0);
         }
 
-        ctx.drawImage(this.sprite, screenX + 10, this.y, this.width, this.height);
+        ctx.drawImage(this.sprite, this.x , this.y, this.width, this.height);
 
         ctx.restore();
     }

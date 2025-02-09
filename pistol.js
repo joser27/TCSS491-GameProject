@@ -10,7 +10,7 @@ class Pistol extends Weapon {
             this.cooldownTimer = this.cooldown;
 
             // Add a bullet to the scene
-            let bullet = new Bullet(player.x, player.y, player.facingLeft ? -1 : 1, this.scene);
+            let bullet = new Bullet(player, this.scene);
 
             this.scene.gameEngine.addEntity(bullet);
             this.bullets.push(bullet);
