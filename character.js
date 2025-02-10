@@ -191,18 +191,31 @@ class Character {
             return;
         }
 
-        // Check if we are using pistol damage or normal damage
-        if (this.isUsingPistol) {
-            if (this.damageTaken && this.pistolAnimations.damage.isDone()) {
-                this.damageTaken = false;
-                this.pistolAnimations.damage.elapsedTime = 0;
+        if(this.damageTaken){
+            if(this.isUsingPistol){
+                if(this.pistolAnimations.damage.isDone()){
+                    this.damageTaken = false;
+                    this.pistolAnimations.damage.elapsedTime = 0;
+                }
+            } else {
+                if(this.damageAnimation.isDone()){
+                    this.damageTaken = false;
+                    this.damageAnimation.elapsedTime = 0;
+                }
             }
-        } else {
-            if (this.damageTaken && this.damageAnimation.isDone()) {
-                this.damageTaken = false;
-                this.damageAnimation.elapsedTime = 0;
-            }
+            return;
         }
+        // if (this.isUsingPistol) {
+        //     if (this.damageTaken && this.pistolAnimations.damage.isDone()) {
+        //         this.damageTaken = false;
+        //         this.pistolAnimations.damage.elapsedTime = 0;
+        //     }
+        // } else {
+        //     if (this.damageTaken && this.damageAnimation.isDone()) {
+        //         this.damageTaken = false;
+        //         this.damageAnimation.elapsedTime = 0;
+        //     }
+        // }
 
         if (this.currentAttack) {
             const currentAnimation = this.attackAnimations[this.currentAttack];
@@ -239,10 +252,10 @@ class Character {
         if (this.isUsingPistol) {
             if (this.isDead) {
                 this.pistolAnimations.death.drawFrame(this.gameEngine.clockTick, ctx, screenX- offsetX, this.y - offsetY);
-            } else if (this.isMoving) {
-                this.pistolAnimations.run.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             } else if(this.damageTaken) {
                 this.pistolAnimations.damage.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
+            } else if (this.isMoving) {
+                this.pistolAnimations.run.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             }else {
                 this.pistolAnimations.idle.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             }
@@ -250,13 +263,13 @@ class Character {
             // Default animations (for both player & enemy)
             if (this.isDead) {
                 this.deathAnimation.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
-            } else if (this.isMoving) {
-                this.runAnimation.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
+            } else if(this.damageTaken){
+                this.damageAnimation.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             } else if (this.currentAttack) {
                 this.attackAnimations[this.currentAttack].drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
-            }else if(this.damageTaken){
-                this.damageAnimation.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
-            }else {
+            } else if (this.isMoving) {
+                this.runAnimation.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
+            } else {
                 this.idleAnimation.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             }
         }
@@ -279,6 +292,8 @@ class Character {
     takeDamage(amount) {
         if (!this.isDead) {
             this.health -= amount;
+            this.isMoving = false;
+            this.currentAttack = null;
 
             if (this.isUsingPistol) {
                 this.pistolAnimations.damage.elapsedTime = 0;
