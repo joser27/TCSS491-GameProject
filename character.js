@@ -18,6 +18,7 @@ class Character {
         this.currentAttack = null;
         this.attackCooldown = false;
         this.isUsingPistol = false;
+        this.damageTaken = false;
 
         // Single run animation (right-facing)
         this.runAnimation = new Animator(
@@ -69,6 +70,19 @@ class Character {
             0.2,
             0.8,
             true
+        );
+
+        //damage animation
+        this.damageAnimation = new Animator (
+            ASSET_MANAGER.getAsset(spriteSheet),
+            512 * 41,
+            0,
+            512,
+            512,
+            4,
+            0.1,
+            0.8,
+            false
         );
 
         // Attack Animations
@@ -141,6 +155,17 @@ class Character {
                 0.1,
                 0.8,
                 false
+            ),
+            damage: new Animator (
+                ASSET_MANAGER.getAsset(pistolSpriteSheet),
+                512 * 22,
+                0,
+                512,
+                512,
+                4,
+                0.1,
+                0.8,
+                false
             )
 
         }
@@ -164,6 +189,19 @@ class Character {
                 this.removeFromWorld = true;
             }
             return;
+        }
+
+        // Check if we are using pistol damage or normal damage
+        if (this.isUsingPistol) {
+            if (this.damageTaken && this.pistolAnimations.damage.isDone()) {
+                this.damageTaken = false;
+                this.pistolAnimations.damage.elapsedTime = 0;
+            }
+        } else {
+            if (this.damageTaken && this.damageAnimation.isDone()) {
+                this.damageTaken = false;
+                this.damageAnimation.elapsedTime = 0;
+            }
         }
 
         if (this.currentAttack) {
@@ -198,12 +236,14 @@ class Character {
             ctx.translate(-screenX * 2 - (512 * 0.8) + (offsetX * 2), 0);
         }
     
-        if (this.usingPistol) {
+        if (this.isUsingPistol) {
             if (this.isDead) {
                 this.pistolAnimations.death.drawFrame(this.gameEngine.clockTick, ctx, screenX- offsetX, this.y - offsetY);
             } else if (this.isMoving) {
                 this.pistolAnimations.run.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
-            } else {
+            } else if(this.damageTaken) {
+                this.pistolAnimations.damage.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
+            }else {
                 this.pistolAnimations.idle.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             }
         } else {
@@ -214,6 +254,8 @@ class Character {
                 this.runAnimation.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             } else if (this.currentAttack) {
                 this.attackAnimations[this.currentAttack].drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
+            }else if(this.damageTaken){
+                this.damageAnimation.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             }else {
                 this.idleAnimation.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             }
@@ -237,6 +279,14 @@ class Character {
     takeDamage(amount) {
         if (!this.isDead) {
             this.health -= amount;
+
+            if (this.isUsingPistol) {
+                this.pistolAnimations.damage.elapsedTime = 0;
+            } else {
+                this.damageAnimation.elapsedTime = 0;
+            }
+            this.damageTaken = true;
+            
             if (this.health <= 0) {
                 this.isDead = true;
             }
@@ -245,7 +295,7 @@ class Character {
 
     performAttack(type) {
         const currentSound = this.attackSound[type];
-        if (this.usingPistol) {
+        if (this.isUsingPistol) {
             // If using pistol, stay idle while shooting
             return;
         }

@@ -145,10 +145,17 @@ class Player extends Character {
             // Only apply damage if the attack has not already dealt damage
             if (this.isCollidingWithEnemy(enemy) && !this.hasDealtDamage) {
                 this.scene.sceneManager.gameState.playerStats.coins += 1;
-                enemy.takeDamage(damage);
+                let damageDelay = 250;
                 this.hasDealtDamage = true; // Mark damage as dealt for this attack
-                break; // Only damage one enemy per attack
+
+                setTimeout(() => {
+                    if(this.isCollidingWithEnemy(enemy)){
+                        enemy.takeDamage(damage);
+                    }
+                }, damageDelay)
+                break;
             }
+            
         }
     }
 
@@ -259,9 +266,9 @@ class Player extends Character {
         this.weapon = weapon;
 
         if (weapon instanceof Pistol) {
-            this.usingPistol = true;  // Set pistol mode
+            this.isUsingPistol = true;  // Set pistol mode
         } else {
-            this.usingPistol = false; // Switch back to normal
+            this.isUsingPistol = false; // Switch back to normal
         }
             
     }
