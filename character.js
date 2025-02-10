@@ -293,7 +293,7 @@ class Character {
         if (!this.isDead) {
             this.health -= amount;
             this.isMoving = false;
-            this.currentAttack = null;
+            
 
             if (this.isUsingPistol) {
                 this.pistolAnimations.damage.elapsedTime = 0;
