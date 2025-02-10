@@ -4,6 +4,7 @@ class Player extends Character {
         super(gameEngine, "./assets/sprites/white_fight_spritesheet.png", scene, "./assets/sprites/white_pistol_spritesheet.png" ); // Pass player sprite sheet
         this.x = x;
         this.y = y;
+        this.initialGroundY = y;
         this.hasDealtDamage = false; // Flag to prevent multiple damage during a single attack
         this.hasWeapon = false;
 
@@ -47,6 +48,7 @@ class Player extends Character {
             const movingLeft = this.gameEngine.keys.a || this.gameEngine.keys["ArrowLeft"];
             const movingUp = this.gameEngine.keys.w || this.gameEngine.keys["ArrowUp"];
             const movingDown = this.gameEngine.keys.s || this.gameEngine.keys["ArrowDown"];
+            const jump = this.gameEngine.keys[" "];
 
             this.isMoving = movingRight || movingLeft || movingUp || movingDown;
     
@@ -66,8 +68,20 @@ class Player extends Character {
                     newX = this.scene.camera.x; // Snap to the camera's left edge
                 }
             }
-            if (movingUp) newY -= this.speed;
-            if (movingDown) newY += this.speed;
+            if (movingUp) {
+                newY -= this.speed;
+                this.initialGroundY = newY;
+            }
+            if (movingDown) {
+                newY += this.speed;
+                this.initialGroundY = newY;
+            }
+
+            if(jump && !this.isJumping){
+                console.log("Player is jumping");
+                this.isJumping = true;
+                this.velocity = this.jumpStrength;
+            }
     
             // Add vertical movement constraints
             const minY = 5 * PARAMS.CELL_SIZE;
@@ -106,6 +120,8 @@ class Player extends Character {
             if (movingRight && newX > this.scene.camera.x + this.scene.camera.width / 2) {
                 this.scene.camera.x = newX - this.scene.camera.width / 2;
             }
+
+            
         }
     
         // Perform attacks
@@ -127,8 +143,21 @@ class Player extends Character {
             this.hasDealtDamage = false;
         }
 
+        if(this.isJumping){
+            this.velocity += this.gravity;
+            this.y += this.velocity;
+         if(this.y >= this.initialGroundY) {
+            this.isJumping = false;
+            this.velocity = 0;
+            this.y = this.initialGroundY;
+            }
+            console.log("this.y " + this.y);
+            console.log("Initial y: " + this.initialGroundY);
+        }
+
         this.zIndex = this.y;
-    }
+    }    
+    
 
     attackEnemy(damage) {
         // Get current combat zone's enemies from level manager

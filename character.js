@@ -20,6 +20,11 @@ class Character {
         this.isUsingPistol = false;
         this.damageTaken = false;
 
+        this.isJumping = false;
+        this.velocity = 0;
+        this.gravity = 0.7;
+        this.jumpStrength = -15;
+
         // Single run animation (right-facing)
         this.runAnimation = new Animator(
             ASSET_MANAGER.getAsset(spriteSheet),
@@ -267,7 +272,9 @@ class Character {
                 this.damageAnimation.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             } else if (this.currentAttack) {
                 this.attackAnimations[this.currentAttack].drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
-            } else if (this.isMoving) {
+            } else if (this.isJumping){
+                this.jumpAnimation.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
+            }else if (this.isMoving) {
                 this.runAnimation.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             } else {
                 this.idleAnimation.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
