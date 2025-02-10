@@ -27,6 +27,7 @@ class Enemy extends Character {
                 if (this.isCollidingWithBullet(bullet)) {
                     console.log("Enemy hit by bullet");
                     this.takeDamage(player.weapon.damage);
+                    this.scene.sceneManager.gameState.playerStats.coins += 1;
                     bullet.offScreen = true;
                 }
             });

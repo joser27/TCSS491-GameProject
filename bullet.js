@@ -32,14 +32,13 @@ class Bullet {
 
     draw(ctx) {
         //debuging
-       // ctx.fillStyle = "yellow";
+        //ctx.fillStyle = "yellow";
         //ctx.fillRect(this.x, this.y, 50, 50);
         ctx.save();
-        const screenX = this.x - this.scene.gameEngine.camera.x ;
 
         if(this.direction === -1) {
             ctx.scale(-1,1);
-            ctx.translate(-screenX*2 -this.width, 0);
+            ctx.translate(-this.x*2 -this.width, 0);
         }
 
         ctx.drawImage(this.sprite, this.x , this.y, this.width, this.height);
