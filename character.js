@@ -1,8 +1,9 @@
 class Character {
-    constructor(gameEngine, spriteSheet, scene, pistolSpriteSheet) {
+    constructor(gameEngine, spriteSheet, scene, pistolSpriteSheet, swordSpriteSheet) {
         this.gameEngine = gameEngine;
         this.spriteSheet = spriteSheet;
         this.pistolSpriteSheet = pistolSpriteSheet;
+        this.swordSpriteSheet = swordSpriteSheet;
         this.scene = scene;
 
         this.x = 0;
@@ -19,6 +20,7 @@ class Character {
         this.attackCooldown = false;
         this.isUsingPistol = false;
         this.damageTaken = false;
+        this.isUsingSword = false;
 
         this.isJumping = false;
         this.velocity = 0;
@@ -127,6 +129,7 @@ class Character {
             )
         };
 
+        //Pistol animations
         this.pistolAnimations = {
             idle: new Animator(
                 ASSET_MANAGER.getAsset(pistolSpriteSheet),
@@ -175,6 +178,66 @@ class Character {
 
         }
 
+        //Sword animations
+        this.swordAnimations = {
+            idle: new Animator(
+                ASSET_MANAGER.getAsset(swordSpriteSheet),
+                512 * 39, 
+                0,
+                512,
+                512,
+                1,
+                1,
+                0.8,
+                true
+            ),
+            run: new Animator (
+                ASSET_MANAGER.getAsset(swordSpriteSheet),
+                512 * 50,
+                0,
+                512,
+                512,
+                8,
+                0.1,
+                0.8,
+                true
+            ),
+            death: new Animator (
+                ASSET_MANAGER.getAsset(swordSpriteSheet),
+                512 * 25,
+                0,
+                512,
+                512,
+                8,
+                0.1,
+                0.8,
+                false
+            ),
+            damage: new Animator (
+                ASSET_MANAGER.getAsset(swordSpriteSheet),
+                512 * 35,
+                0,
+                512,
+                512,
+                4,
+                0.1,
+                0.8,
+                false
+            ),
+            attack: new Animator (
+                ASSET_MANAGER.getAsset(swordSpriteSheet),
+                512 * 0,
+                0,
+                512,
+                512,
+                2,
+                0.2,
+                0.8,
+                false
+            )
+
+        }
+
         // Direction state
         this.facingLeft = false;
 
@@ -188,10 +251,24 @@ class Character {
     update() {
         if (this.isDead) {
             this.performDeath();
-            if (this.deathAnimation.isDone()) {
-                this.deathCompleted = true;
-                this.isPlaying = false;
-                this.removeFromWorld = true;
+            if(this.isUsingPistol){
+                if(this.pistolAnimations.death.isDone()){
+                    this.deathCompleted = true;
+                    this.isPlaying = false;
+                    this.removeFromWorld = true;
+                }
+            } else if (this.isUsingSword) {
+                if(this.swordAnimations.death.isDone()) {
+                    this.deathCompleted = true;
+                    this.isPlaying = false;
+                    this.removeFromWorld = true;
+                }
+            } else {
+                if (this.deathAnimation.isDone()) {
+                    this.deathCompleted = true;
+                    this.isPlaying = false;
+                    this.removeFromWorld = true;
+                }
             }
             return;
         }
@@ -202,7 +279,12 @@ class Character {
                     this.damageTaken = false;
                     this.pistolAnimations.damage.elapsedTime = 0;
                 }
-            } else {
+            } else if (this.isUsingSword) {
+                if(this.swordAnimations.damage.isDone()){
+                    this.damageTaken = false;
+                    this.swordAnimations.damage.elapsedTime = 0;
+                }
+            }else {
                 if(this.damageAnimation.isDone()){
                     this.damageTaken = false;
                     this.damageAnimation.elapsedTime = 0;
@@ -210,6 +292,7 @@ class Character {
             }
             return;
         }
+
         // if (this.isUsingPistol) {
         //     if (this.damageTaken && this.pistolAnimations.damage.isDone()) {
         //         this.damageTaken = false;
@@ -223,11 +306,19 @@ class Character {
         // }
 
         if (this.currentAttack) {
-            const currentAnimation = this.attackAnimations[this.currentAttack];
-            if (currentAnimation.isDone()) {
-                currentAnimation.elapsedTime = 0;
-                this.currentAttack = null;
-                this.attackCooldown = false;
+            if(this.isUsingSword){
+                if(this.swordAnimations.attack.isDone()){
+                    this.swordAnimations.attack.elapsedTime = 0;
+                    this.currentAttack = null;
+                    this.attackCooldown = false;
+                }
+            } else {
+                const currentAnimation = this.attackAnimations[this.currentAttack];
+                if (currentAnimation.isDone()) {
+                    currentAnimation.elapsedTime = 0;
+                    this.currentAttack = null;
+                    this.attackCooldown = false;
+                }
             }
             return;
         }
@@ -263,6 +354,18 @@ class Character {
                 this.pistolAnimations.run.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             }else {
                 this.pistolAnimations.idle.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
+            }
+        } else if (this.isUsingSword) {
+            if (this.isDead) {
+                this.swordAnimations.death.drawFrame(this.gameEngine.clockTick, ctx, screenX- offsetX, this.y - offsetY);
+            } else if(this.damageTaken) {
+                this.swordAnimations.damage.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
+            } else if (this.currentAttack) {
+                this.swordAnimations.attack.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
+            }else if(this.isMoving){
+                this.swordAnimations.run.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
+            } else {
+                this.swordAnimations.idle.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             }
         } else {
             // Default animations (for both player & enemy)
@@ -321,12 +424,17 @@ class Character {
             // If using pistol, stay idle while shooting
             return;
         }
+        if(this.isUsingSword) {
+            this.currentAttack = type;
+            this.attackCooldown = true;
+        }
         if (!this.attackCooldown) {
             ASSET_MANAGER.playAsset(currentSound);
             this.currentAttack = type;
             this.attackCooldown = true;
         }
     }
+    
 
     performDeath() {
         if(!this.isPlaying){

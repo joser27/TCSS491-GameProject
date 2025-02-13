@@ -1,7 +1,8 @@
 // import { Character } from "./character.js";
 class Player extends Character {
     constructor(gameEngine, scene, x, y) {
-        super(gameEngine, "./assets/sprites/white_fight_spritesheet.png", scene, "./assets/sprites/white_pistol_spritesheet.png" ); // Pass player sprite sheet
+        super(gameEngine, "./assets/sprites/white_fight_spritesheet.png", scene,
+             "./assets/sprites/white_pistol_spritesheet.png", "./assets/sprites/white_sword_spritesheet.png"); // Pass player sprite sheet
         this.x = x;
         this.y = y;
         this.initialGroundY = y;
@@ -30,13 +31,44 @@ class Player extends Character {
             this.takeDamage(this.health); // Instantly kill player for testing
         }
     
-        if (this.gameEngine.keys.g && !this.hasWeapon) {
-            this.equipWeapon(new Pistol(this.scene));
-            this.hasWeapon = true;
+        if (this.gameEngine.keys.g && !this.gKeyPressed) {
+            if (!this.hasWeapon) {
+                this.equipWeapon(new Pistol(this.scene));
+                this.hasWeapon = true;
+            } else {
+                this.unequipWeapon();
+                this.hasWeapon = false;
+            }
+            this.gKeyPressed = true; // Prevent multiple toggles in one press
         }
-    
+        
+        // Reset key state when released
+        if (!this.gameEngine.keys.g) {
+            this.gKeyPressed = false;
+        }
+
         if (this.gameEngine.keys.f && this.weapon instanceof Pistol) {
             this.weapon.attack(this);
+        }
+        
+        if(this.gameEngine.keys.q && !this.qKeyPressed) {
+            if(!this.hasWeapon) {
+                this.equipWeapon(new Sword(this.scene));
+                this.hasWeapon = true;
+            } else {
+                this.unequipWeapon();
+                this.hasWeapon = false;
+            }
+            this.qKeyPressed = true;
+            
+        }
+        if(!this.gameEngine.keys.q) {
+            this.qKeyPressed = false;
+        }
+    
+        if(this.gameEngine.keys.r && this.weapon instanceof Sword) {
+            this.weapon.attack(this);
+            this.performAttack("slash");
         }
     
         if (this.weapon) {
@@ -123,19 +155,21 @@ class Player extends Character {
 
             
         }
-    
+        
+        if(!this.isUsingPistol && !this.isUsingSword) {
         // Perform attacks
-        if (this.gameEngine.keys.c) {
-            this.performAttack("chop");
-            this.attackEnemy(10); // Chop deals 10 damage
-        }
-        if (this.gameEngine.keys.k) {
-            this.performAttack("kick");
-            this.attackEnemy(25); // Kick deals 25 damage
-        }
-        if (this.gameEngine.keys.p) {
-            this.performAttack("punch");
-            this.attackEnemy(15); // Punch deals 15 damage
+            if (this.gameEngine.keys.c) {
+                this.performAttack("chop");
+                this.attackEnemy(10); // Chop deals 10 damage
+            }
+            if (this.gameEngine.keys.k) {
+                this.performAttack("kick");
+                this.attackEnemy(25); // Kick deals 25 damage
+            }
+            if (this.gameEngine.keys.p) {
+                this.performAttack("punch");
+                this.attackEnemy(15); // Punch deals 15 damage
+            }
         }
     
         // Reset the damage flag when the attack animation is done
@@ -188,6 +222,17 @@ class Player extends Character {
         }
     }
 
+    unequipWeapon() {
+        this.weapon = null;
+        if(this.isUsingPistol) {
+            this.isUsingPistol = false;
+        }
+        if(this.isUsingSword) {
+            this.isUsingSword = false;
+        }
+        
+    }
+    
     isCollidingWithEnemy(enemy) {
         if (!enemy || !enemy.boundingbox) return false;
 
@@ -293,12 +338,7 @@ class Player extends Character {
 
     equipWeapon(weapon) {
         this.weapon = weapon;
-
-        if (weapon instanceof Pistol) {
-            this.isUsingPistol = true;  // Set pistol mode
-        } else {
-            this.isUsingPistol = false; // Switch back to normal
-        }
-            
+        this.isUsingPistol = weapon instanceof Pistol;
+        this.isUsingSword = weapon instanceof Sword;
     }
 }
