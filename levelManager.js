@@ -34,8 +34,9 @@ class LevelManager {
                         startX: 14*PARAMS.CELL_SIZE,
                         endX: 34*PARAMS.CELL_SIZE,
                         enemies: [
-                            { type: 'BasicYellowEnemy', x: 35*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 34*PARAMS.CELL_SIZE, y: 9*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 34*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 33*PARAMS.CELL_SIZE, y: 9*PARAMS.CELL_SIZE },
+                            
                         ]
                     },
                     {
@@ -65,10 +66,8 @@ class LevelManager {
                         startX: 100*PARAMS.CELL_SIZE,
                         endX: 120*PARAMS.CELL_SIZE,
                         enemies: [
-                            { type: 'BasicYellowEnemy', x: 108*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 120*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 128*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 127*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
+                            { type: 'BossEnemy', x: 108*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
+
                         ]
                     }
                 ]
@@ -134,6 +133,7 @@ class LevelManager {
     }
 
     initializeLevel(levelNumber) {
+        console.log(`Initializing level ${levelNumber}`); // Debug log
         this.combatZones = [];
         this.currentCombatZone = null;
 
@@ -154,10 +154,12 @@ class LevelManager {
     createEnemies(enemyConfigs) {
         const enemyTypes = {
             'BasicYellowEnemy': (x, y) => new Enemy(this.gameEngine, this.sceneManager.scene, x, y),
-            'BossEnemy': (x, y) => new BossEnemy(this.gameEngine,this.sceneManager.scene, x, y),
-            'RangedEnemy': (x, y) => new RangedEnemy(this.gameEngine, x, y)//TODO: add
+            'BossEnemy': (x, y) => {
+                console.log("Creating BossEnemy at", x, y); // Debug log
+                return new BossEnemy(this.gameEngine, this.sceneManager.scene, x, y);
+            },
+            'RangedEnemy': (x, y) => new RangedEnemy(this.gameEngine, x, y) // TODO: add
         };
-
 
         return enemyConfigs.map(config => {
             const createEnemy = enemyTypes[config.type] || ((x, y) => new BasicEnemy(this.gameEngine, x, y));

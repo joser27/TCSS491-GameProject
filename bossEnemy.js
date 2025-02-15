@@ -3,7 +3,7 @@ class BossEnemy extends Enemy {
         super(gameEngine, scene, x, y);
 
         this.health = 500; // Boss has more health
-        this.speed = 3; 
+        this.speed = 2; 
         this.attackTimer = 0;
         this.attackInterval = 2 + Math.random() * 3; // Random interval between 2 to 5 sec
         this.attackRange = 70; // Slightly larger attack range
@@ -31,9 +31,13 @@ class BossEnemy extends Enemy {
         };
 
         this.currentAttack = null;
+        this.isActive = false;
     }
 
     update() {
+
+        if (!this.isActive) return; // Skip drawing if not active
+        
         
         //Update bounding box before calling super.updater()
         this.boundingbox.x = this.x - this.gameEngine.camera.x;
@@ -41,7 +45,7 @@ class BossEnemy extends Enemy {
 
         super.update(); // Keep base enemy movement logic
 
-        console.log("boss", this.boundingbox);
+        //console.log("boss", this.boundingbox);
         if(this.isDead && this.bossAnimations.death.isDone()){
             this.isMoving = false;
             this.headbuttAttack = false;

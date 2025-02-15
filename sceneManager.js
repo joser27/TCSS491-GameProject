@@ -13,9 +13,7 @@ class SceneManager {
             CreditsScene: null,
         }
         this.scene = this.scenes.MenuScene;
-
         this.zindex = 100;
-        this.scene = new MenuScene(this.gameEngine, this);
         this.gameEngine.addEntity(this.scene);
         this.initializeButtons();
     };
@@ -79,15 +77,20 @@ class SceneManager {
             this.scenes.PlayingScene = new PlayingScene(this.gameEngine, this, this.gameState);
             this.scene = this.scenes.PlayingScene;
         } else if (SceneType === ShopScene) {
-            this.scene = new ShopScene(this.gameEngine, this, this.gameState);
+            this.scenes.ShopScene = new ShopScene(this.gameEngine, this, this.gameState);
+            this.scene = this.scenes.ShopScene;
         } else if (SceneType === GameOverScene) {
-            this.scene = new GameOverScene(this.gameEngine, this, this.gameState);
+            this.scenes.GameOverScene = new GameOverScene(this.gameEngine, this, this.gameState);
+            this.scene = this.scenes.GameOverScene;
         } else if (SceneType === HowToPlayScene) {
-            this.scene = new HowToPlayScene(this.gameEngine, this);
+            this.scenes.HowToPlayScene = new HowToPlayScene(this.gameEngine, this);
+            this.scene = this.scenes.HowToPlayScene;
         } else if (SceneType === CreditsScene) {
-            this.scene = new CreditsScene(this.gameEngine, this);
+            this.scenes.CreditsScene = new CreditsScene(this.gameEngine, this);
+            this.scene = this.scenes.CreditsScene;
         } else if (SceneType === MenuScene) {
-            this.scene = new MenuScene(this.gameEngine, this);
+            this.scenes.MenuScene = new MenuScene(this.gameEngine, this);
+            this.scene = this.scenes.MenuScene;
         }
 
         this.gameEngine.addEntity(this.scene);
