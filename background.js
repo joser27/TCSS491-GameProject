@@ -128,8 +128,7 @@ class Background {
                     { x: this.level1.streetBackground.width*11, y: -190, type: 'streetBackground' },
                 ]
             },
-            2
-            : {
+            2: {
                 assets: this.level2,
                 details: {
                     background: { width: this.level2.background.width/2, height: this.level2.background.height/2 },
@@ -142,21 +141,29 @@ class Background {
                 },
                 sceneElements: [
                     // Background and Ground
-                    { x: 0, y: 0, type: 'background' },
-                    { x: 0, y: 0, type: 'ground' },
-                    
-                    // Buildings
-                    { x: 0, y: 170, type: 'building1' },
-                    { x: this.level2.building1.width, y: 170, type: 'building2' },
-                    { x: this.level2.building1.width*2, y: 170, type: 'building2' },
-                    { x: this.level2.building1.width*3, y: 170, type: 'building1' },
-                    { x: this.level2.building1.width*4, y: 170, type: 'building1' },
+                    //{ x: 0, y: 0, type: 'background' },
 
-                    { x: 0, y: -430, type: 'building3' },
-                    { x: this.level2.building1.width, y: -430, type: 'building3' },
-                    { x: this.level2.building1.width*2, y: -430, type: 'building3' },
-                    { x: this.level2.building1.width*3, y: -430, type: 'building3' },
-                    { x: this.level2.building1.width*4, y: -430, type: 'building3' },
+                    // Buildings
+                    { x: 0, y: 120, type: 'building1' },
+                    { x: this.level2.building1.width, y: 120, type: 'building2' },
+                    { x: this.level2.building1.width*2, y: 120, type: 'building2' },
+                    { x: this.level2.building1.width*3, y: 120, type: 'building1' },
+                    { x: this.level2.building1.width*4, y: 120, type: 'building1' },
+
+                    { x: 0, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width*2, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width*3, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width*4, y: -480, type: 'building3' },
+
+                    // Ground
+                    { x: 0, y: 120, type: 'ground' },
+                    { x: this.level2.ground.width, y: 120, type: 'ground' },
+                    { x: this.level2.ground.width*2, y: 120, type: 'ground' },
+                    { x: this.level2.ground.width*3, y: 120, type: 'ground' },
+                    { x: this.level2.ground.width*4, y: 120, type: 'ground' },
+                    { x: this.level2.ground.width*5, y: 120, type: 'ground' },
+                    
                 ]
             },
         };
@@ -170,23 +177,43 @@ class Background {
         const cameraX = Math.round(this.gameEngine.camera.x);
         const currentLevel = this.levelManager.sceneManager.gameState.currentLevel;
         const config = this.levelConfigs[currentLevel];
-
+        
         if (!config) return;
-
+        
+        // Get canvas width for culling
+        const canvasWidth = ctx.canvas.width;
+        
         if (config.sceneElements) {
             const elementIndices = Array.from(config.sceneElements.keys()).reverse();
             
-            elementIndices.forEach(index => {
+            // Only process elements that are visible on screen
+            const visibleElements = elementIndices.filter(index => {
                 const pos = config.sceneElements[index];
-                const asset = config.assets[pos.type];
-                // Check all categories for dimensions
                 const dimensions = 
                     config.details.buildings?.[pos.type] ||
                     config.details.streets?.[pos.type] ||
                     config.details.fences?.[pos.type] ||
                     config.details.walls?.[pos.type] ||
                     config.details.misc?.[pos.type] ||
-                    config.details[pos.type]; // fallback for background/ground
+                    config.details[pos.type];
+                    
+                if (!dimensions) return false;
+                
+                // Check if element is within visible area
+                const elementX = this.x + pos.x - cameraX;
+                return elementX + dimensions.width >= 0 && elementX <= canvasWidth;
+            });
+            
+            visibleElements.forEach(index => {
+                const pos = config.sceneElements[index];
+                const asset = config.assets[pos.type];
+                const dimensions = 
+                    config.details.buildings?.[pos.type] ||
+                    config.details.streets?.[pos.type] ||
+                    config.details.fences?.[pos.type] ||
+                    config.details.walls?.[pos.type] ||
+                    config.details.misc?.[pos.type] ||
+                    config.details[pos.type];
                 
                 if (asset && dimensions) {
                     ctx.drawImage(asset,

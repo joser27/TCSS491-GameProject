@@ -30,37 +30,37 @@ class LevelManager {
             1: {
                 zones: [
                     {
-                        startX: 19*PARAMS.CELL_SIZE,
-                        endX: 39*PARAMS.CELL_SIZE,
+                        triggerX: 24*PARAMS.CELL_SIZE,
+                        startX: 14*PARAMS.CELL_SIZE,
+                        endX: 34*PARAMS.CELL_SIZE,
                         enemies: [
-                            { type: 'BasicYellowEnemy', x: 29*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 36*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 34*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 33*PARAMS.CELL_SIZE, y: 9*PARAMS.CELL_SIZE },
                         ]
                     },
                     {
+                        triggerX: 48*PARAMS.CELL_SIZE,
                         startX: 40*PARAMS.CELL_SIZE,
                         endX: 60*PARAMS.CELL_SIZE,
                         enemies: [
                             { type: 'BasicYellowEnemy', x: 40*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
                             { type: 'BasicYellowEnemy', x: 52*PARAMS.CELL_SIZE, y: 10*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 59*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 63*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
-                            
+                            { type: 'BasicYellowEnemy', x: 60*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
+
                         ]
                     },
                     {
+                        triggerX: 78*PARAMS.CELL_SIZE,
                         startX: 68*PARAMS.CELL_SIZE,
                         endX: 88*PARAMS.CELL_SIZE,
                         enemies: [
                             { type: 'BasicYellowEnemy', x: 76*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
                             { type: 'BasicYellowEnemy', x: 77*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 73*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 77*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
-                            
+                            { type: 'BasicYellowEnemy', x: 67*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE },
                         ]
                     },
-                    // //Boss zone here
                     {
+                        triggerX: 101*PARAMS.CELL_SIZE,
                         startX: 100*PARAMS.CELL_SIZE,
                         endX: 120*PARAMS.CELL_SIZE,
                         enemies: [
@@ -68,7 +68,6 @@ class LevelManager {
                             { type: 'BasicYellowEnemy', x: 120*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
                             { type: 'BasicYellowEnemy', x: 128*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
                             { type: 'BasicYellowEnemy', x: 127*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
-                            
                         ]
                     }
                 ]
@@ -76,12 +75,34 @@ class LevelManager {
             2: {
                 zones: [
                     {
+                        triggerX: 22*PARAMS.CELL_SIZE,
                         startX: 15*PARAMS.CELL_SIZE,
                         endX: 35*PARAMS.CELL_SIZE,
                         enemies: [
-                            { type: 'BasicYellowEnemy', x: 10*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 26*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 24*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE }
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 1*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 2*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 3*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 9*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 10*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 11*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 12*PARAMS.CELL_SIZE },
+                            
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 0*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 1*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 2*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 3*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 9*PARAMS.CELL_SIZE },
+                            
                         ]
                     }
                     // Add more zones for level 2
@@ -107,7 +128,7 @@ class LevelManager {
 
         this.zIndex = 5;
         this.initializeLevel(this.currentLevel);
-
+        this.lastCombatCameraX = null;
     }
 
     initializeLevel(levelNumber) {
@@ -124,7 +145,7 @@ class LevelManager {
                 enemy.isActive = false; 
                 this.gameEngine.addEntity(enemy);
             });
-            this.addCombatZone(zoneConfig.startX, zoneConfig.endX, enemies);
+            this.addCombatZone(zoneConfig.triggerX, zoneConfig.startX, zoneConfig.endX, enemies);
         });
     }
 
@@ -149,8 +170,9 @@ class LevelManager {
         this.initializeLevel(levelNumber);
     }
 
-    addCombatZone(startX, endX, enemies) {
+    addCombatZone(triggerX, startX, endX, enemies) {
         this.combatZones.push({
+            triggerX,
             startX,
             endX,
             enemies: enemies,
@@ -162,23 +184,25 @@ class LevelManager {
     update() {
         const playerX = this.player.x;
         
-
         for (let zone of this.combatZones) {
-            if (zone.isCompleted || playerX < zone.startX || playerX > zone.endX) continue;
-
-            if (!zone.isActive) {
+            if (zone.isCompleted) continue;
+            
+            if (!zone.isActive && playerX >= zone.triggerX) {
                 this.activateZone(zone);
             }
+            
+            if (zone.isActive) {
+                // Lock player within zone boundaries once activated
+                const minX = Math.max(zone.startX, this.camera.x);
+                this.player.x = Math.max(minX, Math.min(this.player.x, zone.endX));
 
-            // Lock player within zone boundaries
-            this.player.x = Math.max(zone.startX, Math.min(this.player.x, zone.endX));
+                this.updateCamera();
 
-            this.updateCamera();
-
-            if (this.isZoneCleared(zone)) {
-                this.completeZone(zone);
+                if (this.isZoneCleared(zone)) {
+                    this.completeZone(zone);
+                }
+                return;
             }
-            return; // Exit after processing relevant zone
         }
 
         // If not in a combat zone, update camera normally
@@ -200,8 +224,7 @@ class LevelManager {
     completeZone(zone) {
         zone.isCompleted = true;
         this.currentCombatZone = null;
-        this.cameraLeftBound = 0;
-        this.cameraRightBound = null;
+        this.lastCombatCameraX = this.camera.x;  // Store the last camera position
 
         // Check if this was the last zone in the level
         const allZonesCompleted = this.combatZones.every(zone => zone.isCompleted);
@@ -211,7 +234,7 @@ class LevelManager {
             this.player.isLevelComplete = true;
             
             // Create and add the overlay
-            const statsOverlay = new LevelCompleteOverlay(this.gameEngine, this,{
+            const statsOverlay = new LevelCompleteOverlay(this.gameEngine, this, {
                 coins: this.sceneManager.gameState.playerStats.coins,
                 health: this.player.health,
                 onComplete: () => {
@@ -220,26 +243,31 @@ class LevelManager {
                 }
             });
             
-            
             statsOverlay.zIndex = 50;
             this.gameEngine.addEntity(statsOverlay);
         }
     }
 
     updateCamera() {
-        // Target camera position (centered on player)
+        // centered on player
         let targetX = Math.round(this.player.x - PARAMS.canvasWidth / 2);
-
-        // Only prevent backward camera movement when not in combat
-        if (!this.currentCombatZone && targetX < this.camera.x) {
-            targetX = this.camera.x;
+        targetX = Math.max(0, targetX); // Prevent going before start of level
+        
+        // If in combat zone, prevent camera from moving backwards and going past zone end
+        if (this.currentCombatZone) {
+            const maxX = this.currentCombatZone.endX - PARAMS.canvasWidth;
+            targetX = Math.max(this.camera.x, Math.min(targetX, maxX));
+        } 
+        // If we have a last combat camera position, don't let camera move back past it
+        else if (this.lastCombatCameraX !== null) {
+            if (targetX > this.lastCombatCameraX) {
+                this.lastCombatCameraX = null;  // Clear the stored position once we move past it
+            } else {
+                targetX = this.lastCombatCameraX;
+            }
         }
-
-        // Ensure camera doesn't go before start of level
-        targetX = Math.max(0, targetX);
-
-        // Direct camera positioning - no smoothing
-        this.camera.x = Math.round(targetX);
+        
+        this.camera.x = targetX;
     }
 
     draw(ctx) {
@@ -330,16 +358,31 @@ class LevelManager {
     }
 
     drawCombatZones(ctx) {
-        // Debug visualization of combat zones
-        ctx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
-        ctx.lineWidth = 4;
-        
         this.combatZones.forEach(zone => {
-            const startScreenX = zone.startX - this.camera.x;
-            const width = zone.endX - zone.startX;
+            // Draw combat area boundaries in red
+            ctx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
+            ctx.lineWidth = 4;
             
+            // Draw start line
+            const startScreenX = zone.startX - this.camera.x;
             ctx.beginPath();
-            ctx.rect(startScreenX, 0, width, PARAMS.canvasHeight);
+            ctx.moveTo(startScreenX, 0);
+            ctx.lineTo(startScreenX, PARAMS.canvasHeight);
+            ctx.stroke();
+            
+            // Draw end line
+            const endScreenX = zone.endX - this.camera.x;
+            ctx.beginPath();
+            ctx.moveTo(endScreenX, 0);
+            ctx.lineTo(endScreenX, PARAMS.canvasHeight);
+            ctx.stroke();
+            
+            // Draw trigger line in green
+            ctx.strokeStyle = 'rgba(0, 255, 0, 0.5)';
+            const triggerScreenX = zone.triggerX - this.camera.x;
+            ctx.beginPath();
+            ctx.moveTo(triggerScreenX, 0);
+            ctx.lineTo(triggerScreenX, PARAMS.canvasHeight);
             ctx.stroke();
             
             // Draw zone status
