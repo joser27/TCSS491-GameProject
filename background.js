@@ -90,8 +90,8 @@ class Background {
                     // Misc
                     { x: 42*PARAMS.CELL_SIZE+15, y: -110, type: 'grass' },
                     { x: 50*PARAMS.CELL_SIZE+15, y: -110, type: 'grass' },
-                    { x: 118*PARAMS.CELL_SIZE, y: -110, type: 'street_car' },
-                    { x: 118*PARAMS.CELL_SIZE, y: +200, type: 'street_car' },
+                    { x: 114*PARAMS.CELL_SIZE, y: -110, type: 'street_car' },
+                    { x: 116*PARAMS.CELL_SIZE, y: +200, type: 'street_car' },
 
 
                      // Streets

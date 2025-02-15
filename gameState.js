@@ -1,6 +1,6 @@
 class GameState {
     constructor() {
-        this.currentLevel = 2;
+        this.currentLevel = 1;
         this.playerStats = {
             health: 100,
             coins: 0,

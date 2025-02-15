@@ -34,12 +34,12 @@ class LevelManager {
                         startX: 14*PARAMS.CELL_SIZE,
                         endX: 34*PARAMS.CELL_SIZE,
                         enemies: [
-                            { type: 'BasicYellowEnemy', x: 34*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 33*PARAMS.CELL_SIZE, y: 9*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 35*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 34*PARAMS.CELL_SIZE, y: 9*PARAMS.CELL_SIZE },
                         ]
                     },
                     {
-                        triggerX: 48*PARAMS.CELL_SIZE,
+                        triggerX: 42*PARAMS.CELL_SIZE,
                         startX: 40*PARAMS.CELL_SIZE,
                         endX: 60*PARAMS.CELL_SIZE,
                         enemies: [
@@ -50,13 +50,14 @@ class LevelManager {
                         ]
                     },
                     {
-                        triggerX: 78*PARAMS.CELL_SIZE,
+                        triggerX: 74*PARAMS.CELL_SIZE,
                         startX: 68*PARAMS.CELL_SIZE,
                         endX: 88*PARAMS.CELL_SIZE,
                         enemies: [
-                            { type: 'BasicYellowEnemy', x: 76*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 73*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
                             { type: 'BasicYellowEnemy', x: 77*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 67*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 92*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE },
+                            
                         ]
                     },
                     {
@@ -129,6 +130,7 @@ class LevelManager {
         this.zIndex = 5;
         this.initializeLevel(this.currentLevel);
         this.lastCombatCameraX = null;
+        this.goIndicator = null; // Track the GoIndicator instance
     }
 
     initializeLevel(levelNumber) {
@@ -184,6 +186,11 @@ class LevelManager {
     update() {
         const playerX = this.player.x;
         
+        // Add this check to reset goIndicator when it's removed
+        if (this.goIndicator && this.goIndicator.removeFromWorld) {
+            this.goIndicator = null;
+        }
+        
         for (let zone of this.combatZones) {
             if (zone.isCompleted) continue;
             
@@ -224,9 +231,8 @@ class LevelManager {
     completeZone(zone) {
         zone.isCompleted = true;
         this.currentCombatZone = null;
-        this.lastCombatCameraX = this.camera.x;  // Store the last camera position
+        this.lastCombatCameraX = this.camera.x;
 
-        // Check if this was the last zone in the level
         const allZonesCompleted = this.combatZones.every(zone => zone.isCompleted);
         
         if (allZonesCompleted) {
@@ -245,6 +251,14 @@ class LevelManager {
             
             statsOverlay.zIndex = 50;
             this.gameEngine.addEntity(statsOverlay);
+        } else {
+            // Add the GoIndicator only if there isn't one already
+            if (!this.goIndicator) {
+                const arrowX = zone.endX - this.camera.x - 100; // Offset from zone end
+                const arrowY = PARAMS.canvasHeight / 2;
+                this.goIndicator = new GoIndicator(arrowX, arrowY, this.player, zone.endX, this.gameEngine.timer);
+                this.gameEngine.addEntity(this.goIndicator);
+            }
         }
     }
 
@@ -298,6 +312,7 @@ class LevelManager {
             const timeLeft = Math.ceil((10000 - (Date.now() - this.levelCompleteStats.startTime)) / 1000);
             ctx.fillText(`Next Level in: ${timeLeft}`, ctx.canvas.width / 2, 450);
         }
+
     }
 
     drawGrid(ctx) {
