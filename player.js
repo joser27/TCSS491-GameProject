@@ -323,13 +323,13 @@ class Player extends Character {
         const yPosition = 10; // Position near the top
         const healthPercentage = this.health / 100;
 
+        const img = new Image();
+        img.src = './assets/sprites/healthbar.png';
+
         // Draw the red background (full health bar)
         ctx.fillStyle = "red";
-        ctx.fillRect(xPosition, yPosition, healthBarWidth, healthBarHeight);
-
-        // Draw the green foreground (current health)
-        ctx.fillStyle = "green";
-        ctx.fillRect(xPosition, yPosition, healthBarWidth * healthPercentage, healthBarHeight);
+        ctx.fillRect(xPosition+ 60, yPosition +25, 236 * healthPercentage, 25);
+        ctx.drawImage(img,xPosition, yPosition, healthBarWidth, healthBarHeight);
 
 
 

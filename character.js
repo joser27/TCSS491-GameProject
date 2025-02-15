@@ -247,6 +247,11 @@ class Character {
             kick: "./assets/sound/kick.mp3",
             punch: "./assets/sound/punch.mp3",
         };
+
+        this.getHurtSound = [
+            "./assets/sound/oof1.mp3",
+            "./assets/sound/oof2.mp3"
+        ];
     }
 
     update() {
@@ -275,6 +280,7 @@ class Character {
         }
 
         if(this.damageTaken){
+            this.performHits();
             if(this.isUsingPistol){
                 if(this.pistolAnimations.damage.isDone()){
                     this.damageTaken = false;
@@ -441,6 +447,15 @@ class Character {
         if(!this.isPlaying){
             this.isPlaying = true;
             ASSET_MANAGER.playAsset("./assets/sound/death.mp3")
+            this.isPlaying = true;
+        }         
+    }
+
+    performHits() {
+        const randomIndex = Math.floor(Math.random() * this.getHurtSound.length);
+        const currentSound = this.getHurtSound[randomIndex];
+        if(!this.isPlaying){
+            ASSET_MANAGER.playAsset(currentSound);
             this.isPlaying = true;
         }         
     }

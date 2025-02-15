@@ -50,6 +50,7 @@ ASSET_MANAGER.queueDownload("./assets/sprites/I.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/J.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/K.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/L.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/healthbar.png");
 
 // Fonts
 ASSET_MANAGER.queueDownload("./assets/fonts/eager___.ttf");
@@ -63,6 +64,9 @@ ASSET_MANAGER.queueDownload("./assets/sound/kick.mp3");
 ASSET_MANAGER.queueDownload("./assets/sound/chop.mp3");
 ASSET_MANAGER.queueDownload("./assets/sound/punch.mp3");
 ASSET_MANAGER.queueDownload("./assets/sound/death.mp3");
+ASSET_MANAGER.queueDownload("./assets/sound/shoot.mp3");
+ASSET_MANAGER.queueDownload("./assets/sound/oof1.mp3");
+ASSET_MANAGER.queueDownload("./assets/sound/oof2.mp3");
 
 ASSET_MANAGER.downloadAll(() => {
 	const canvas = document.getElementById("gameWorld");
