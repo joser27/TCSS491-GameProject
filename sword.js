@@ -1,6 +1,6 @@
 class Sword extends Weapon {
     constructor(scene) {
-        super("Sword", 30, 120, 0.8, scene);
+        super("Sword", 40, 120, 0.5, scene);
         //this.swordSwingSound = "./assets/sound/sword_swing.mp3";
     }
 

@@ -22,7 +22,7 @@ class Player extends Character {
         }
 
         super.update();
-    
+        console.log("player ", this.boundingbox);
         if (this.deathCompleted) {
             console.log("Game Over");
         }

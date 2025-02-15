@@ -80,22 +80,24 @@ class Enemy extends Character {
         //     }
         // }
 
-        // Handle random punch
-        this.attackTimer += this.gameEngine.clockTick; // Increment timer by elapsed time
-        if (this.attackTimer >= this.attackInterval && (distanceToPlayer <= this.attackRange || distanceToPlayerX <=this.attackRange)) {
-            this.performAttack("punch"); // Perform a punch attack
-            this.attackTimer = 0; // Reset the timer
-            this.attackInterval = 2 + Math.random() * 3; // Set a new random interval
+        if (!this.isBoss) {
+            // Handle random punch
+            this.attackTimer += this.gameEngine.clockTick; // Increment timer by elapsed time
+            if (this.attackTimer >= this.attackInterval && (distanceToPlayer <= this.attackRange || distanceToPlayerX <=this.attackRange)) {
+                this.performAttack("punch"); // Perform a punch attack
+                this.attackTimer = 0; // Reset the timer
+                this.attackInterval = 2 + Math.random() * 3; // Set a new random interval
 
-            // Check if the punch hits the player
-            if (this.isCollidingWithPlayer()) {
-                let damageDelay = 500; // Half-second delay in milliseconds
-        
-                setTimeout(() => {
-                    if (this.isCollidingWithPlayer()) { // Recheck if still colliding
-                        player.takeDamage(5); // Inflict damage to the player after delay
-                    }
-                }, damageDelay);
+                // Check if the punch hits the player
+                if (this.isCollidingWithPlayer()) {
+                    let damageDelay = 500; // Half-second delay in milliseconds
+            
+                    setTimeout(() => {
+                        if (this.isCollidingWithPlayer()) { // Recheck if still colliding
+                            player.takeDamage(5); // Inflict damage to the player after delay
+                        }
+                    }, damageDelay);
+                }
             }
         }
 

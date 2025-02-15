@@ -21,6 +21,7 @@ class Character {
         this.isUsingPistol = false;
         this.damageTaken = false;
         this.isUsingSword = false;
+        this.isBoss = false;
 
         this.isJumping = false;
         this.velocity = 0;
@@ -182,7 +183,7 @@ class Character {
         this.swordAnimations = {
             idle: new Animator(
                 ASSET_MANAGER.getAsset(swordSpriteSheet),
-                512 * 39, 
+                512 * 41, 
                 0,
                 512,
                 512,
@@ -314,7 +315,7 @@ class Character {
                 }
             } else {
                 const currentAnimation = this.attackAnimations[this.currentAttack];
-                if (currentAnimation.isDone()) {
+                if (currentAnimation && currentAnimation.isDone()) {
                     currentAnimation.elapsedTime = 0;
                     this.currentAttack = null;
                     this.attackCooldown = false;

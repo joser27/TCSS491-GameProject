@@ -36,6 +36,13 @@ class LevelManager {
                             { type: 'BasicYellowEnemy', x: 23*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
                         ]
                     },
+                    {
+                        startX: 35* PARAMS.CELL_SIZE,
+                        endX: 60* PARAMS.CELL_SIZE,
+                        enemies: [
+                            { type: 'BossEnemy', x: 45 * PARAMS.CELL_SIZE, y: 7 * PARAMS.CELL_SIZE }
+                        ]
+                    }
                     // {
                     //     startX: 35*PARAMS.CELL_SIZE,
                     //     endX: 55*PARAMS.CELL_SIZE,
@@ -86,7 +93,7 @@ class LevelManager {
     createEnemies(enemyConfigs) {
         const enemyTypes = {
             'BasicYellowEnemy': (x, y) => new Enemy(this.gameEngine, this.sceneManager.scene, x, y),
-            'StrongEnemy': (x, y) => new StrongEnemy(this.gameEngine, x, y),//TODO: add strong enemy
+            'BossEnemy': (x, y) => new BossEnemy(this.gameEngine,this.sceneManager.scene, x, y),
             'RangedEnemy': (x, y) => new RangedEnemy(this.gameEngine, x, y)//TODO: add
         };
 

@@ -29,6 +29,10 @@ ASSET_MANAGER.queueDownload("./assets/sprites/testbuilding1.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/testbuilding2.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/testbuilding3.png");
 
+ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_point.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_sprint.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_death.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_headbutt.png");
 
 
 
