@@ -10,6 +10,7 @@ class Bullet {
         this.height = 12;   //24
         this.zIndex = 3;
         this.offScreen = false;
+        this.isPlaying = false;
         this.scene = scene;
         this.sprite = ASSET_MANAGER.getAsset("./assets/sprites/bullet.png");
         
@@ -26,6 +27,7 @@ class Bullet {
         }
         if (this.offScreen) {
             this.removeFromWorld = true; 
+            this.isPlaying = false;
         }
     }
     
@@ -42,7 +44,10 @@ class Bullet {
         }
 
         ctx.drawImage(this.sprite, this.x , this.y, this.width, this.height);
-
+        if(!this.isPlaying){
+            this.isPlaying = true;
+            ASSET_MANAGER.playAsset("./assets/sound/shoot.mp3");
+        }
         ctx.restore();
     }
     
