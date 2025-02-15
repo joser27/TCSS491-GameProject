@@ -22,13 +22,25 @@ ASSET_MANAGER.queueDownload("./assets/sprites/rocks.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/tree1.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/tree2.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/shopImage.png");
-ASSET_MANAGER.queueDownload("./assets/sprites/testStreet.png");
-ASSET_MANAGER.queueDownload("./assets/sprites/testbuilding1.png");
-ASSET_MANAGER.queueDownload("./assets/sprites/testbuilding2.png");
-ASSET_MANAGER.queueDownload("./assets/sprites/testbuilding3.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/street_intersection.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/street_intersection2.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/street_intersection3.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/streetGroundAseprite.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/street_building1.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/street_gasStation.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/street_building2.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/street_building3.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/fenceAseprite.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/brickWallAseprite.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/grassBrickWallAseprite.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/grassAseprite.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/street_car.png");
 
-
-
+ASSET_MANAGER.queueDownload("./assets/sprites/mallwallAseprite1.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/mallwallAseprite2.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/mallfloorAseprite.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/backgroundMallAseprite.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/streetBackgroundAseprite.png");
 
 // Keyboard sprites
 ASSET_MANAGER.queueDownload("./assets/sprites/ARROWDOWN.png");

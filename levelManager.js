@@ -30,20 +30,47 @@ class LevelManager {
             1: {
                 zones: [
                     {
-                        startX: 10*PARAMS.CELL_SIZE,
-                        endX: 30*PARAMS.CELL_SIZE,
+                        startX: 19*PARAMS.CELL_SIZE,
+                        endX: 39*PARAMS.CELL_SIZE,
                         enemies: [
-                            { type: 'BasicYellowEnemy', x: 23*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 29*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 36*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
                         ]
                     },
-                    // {
-                    //     startX: 35*PARAMS.CELL_SIZE,
-                    //     endX: 55*PARAMS.CELL_SIZE,
-                    //     enemies: [
-                    //         { type: 'BasicYellowEnemy', x: 50*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
-                    //     ]
-                    // }
-                    // Add more zones for level 1. Boss zone at the end
+                    {
+                        startX: 40*PARAMS.CELL_SIZE,
+                        endX: 60*PARAMS.CELL_SIZE,
+                        enemies: [
+                            { type: 'BasicYellowEnemy', x: 40*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 52*PARAMS.CELL_SIZE, y: 10*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 59*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 63*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
+                            
+                        ]
+                    },
+                    {
+                        startX: 68*PARAMS.CELL_SIZE,
+                        endX: 88*PARAMS.CELL_SIZE,
+                        enemies: [
+                            { type: 'BasicYellowEnemy', x: 76*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 77*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 73*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 77*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
+                            
+                        ]
+                    },
+                    // //Boss zone here
+                    {
+                        startX: 100*PARAMS.CELL_SIZE,
+                        endX: 120*PARAMS.CELL_SIZE,
+                        enemies: [
+                            { type: 'BasicYellowEnemy', x: 108*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 120*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 128*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 127*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
+                            
+                        ]
+                    }
                 ]
             },
             2: {
@@ -58,6 +85,19 @@ class LevelManager {
                         ]
                     }
                     // Add more zones for level 2
+                ]
+            },
+            3: {
+                zones: [
+                    {
+                        startX: 15*PARAMS.CELL_SIZE,
+                        endX: 35*PARAMS.CELL_SIZE,
+                        enemies: [
+                            { type: 'BasicYellowEnemy', x: 26*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 26*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE }
+                        ]
+                    }
+                    // Add more zones for level 3
                 ]
             }
             // Add more levels
@@ -79,6 +119,11 @@ class LevelManager {
 
         levelConfig.zones.forEach(zoneConfig => {
             const enemies = this.createEnemies(zoneConfig.enemies);
+            // Add enemies to game engine immediately but set them as inactive
+            enemies.forEach(enemy => {
+                enemy.isActive = false; 
+                this.gameEngine.addEntity(enemy);
+            });
             this.addCombatZone(zoneConfig.startX, zoneConfig.endX, enemies);
         });
     }
@@ -143,9 +188,9 @@ class LevelManager {
     activateZone(zone) {
         zone.isActive = true;
         this.currentCombatZone = zone;
-        this.cameraLeftBound = zone.startX;
-        this.cameraRightBound = zone.endX - PARAMS.canvasWidth;
-        zone.enemies.forEach(enemy => this.gameEngine.addEntity(enemy));
+        
+        // Just activate the enemies instead of adding them
+        zone.enemies.forEach(enemy => enemy.isActive = true);
     }
 
     isZoneCleared(zone) {
@@ -176,30 +221,25 @@ class LevelManager {
             });
             
             
-            statsOverlay.zIndex = 1000;
+            statsOverlay.zIndex = 50;
             this.gameEngine.addEntity(statsOverlay);
         }
     }
 
     updateCamera() {
         // Target camera position (centered on player)
-        let targetX = this.player.x - PARAMS.canvasWidth / 2;
+        let targetX = Math.round(this.player.x - PARAMS.canvasWidth / 2);
 
-        // Apply bounds if in combat zone
-        if (this.currentCombatZone) {
-            targetX = Math.max(this.cameraLeftBound, Math.min(targetX, this.cameraRightBound));
-        } else {
-            // When not in combat zone, only move camera forward
-            if (targetX > this.camera.x) {
-                targetX = Math.max(0, targetX);
-            } else {
-                targetX = this.camera.x; // Keep camera stationary when moving left
-            }
+        // Only prevent backward camera movement when not in combat
+        if (!this.currentCombatZone && targetX < this.camera.x) {
+            targetX = this.camera.x;
         }
 
-        // Smooth camera movement
-        const cameraSpeed = 0.1;
-        this.camera.x += (targetX - this.camera.x) * cameraSpeed;
+        // Ensure camera doesn't go before start of level
+        targetX = Math.max(0, targetX);
+
+        // Direct camera positioning - no smoothing
+        this.camera.x = Math.round(targetX);
     }
 
     draw(ctx) {

@@ -11,8 +11,8 @@ class Enemy extends Character {
     }
 
     update() {
-
-
+        if (!this.isActive) return; // Skip update if not active
+        
         super.update();
         if (this.isDead) {
             // Stop all actions if the enemy is dead
@@ -103,6 +103,8 @@ class Enemy extends Character {
     }
 
     draw(ctx) {
+        if (!this.isActive) return; // Skip drawing if not active
+        
         super.draw(ctx);
 
         // Draw a small health bar above the enemy's head
