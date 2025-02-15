@@ -34,6 +34,11 @@ class BossEnemy extends Enemy {
     }
 
     update() {
+        
+        //Update bounding box before calling super.updater()
+        this.boundingbox.x = this.x - this.gameEngine.camera.x;
+        this.boundingbox.y = this.y;
+
         super.update(); // Keep base enemy movement logic
 
         console.log("boss", this.boundingbox);
@@ -105,7 +110,7 @@ class BossEnemy extends Enemy {
         ctx.save();
         if (this.facingLeft) {
             ctx.scale(-1, 1);
-            ctx.translate(-screenX * 2 - (512 * 1) + (offsetX * 2), 0);
+            ctx.translate(-screenX * 2 - (512 * 0.8) + (offsetX * 2), 0);
         }
 
         if (this.isDead) {
