@@ -54,4 +54,3 @@ class GoIndicator {
         ctx.restore();
     }
 }
-//update
