@@ -1,6 +1,8 @@
 const gameEngine = new GameEngine();
 
 const ASSET_MANAGER = new AssetManager();
+
+ASSET_MANAGER.queueDownload("./assets/sprites/white_sword_spritesheet.png")
 ASSET_MANAGER.queueDownload("./assets/sprites/white_fight_spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/yellow_fight_spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/white_pistol_spritesheet.png");
@@ -27,6 +29,10 @@ ASSET_MANAGER.queueDownload("./assets/sprites/testbuilding1.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/testbuilding2.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/testbuilding3.png");
 
+ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_point.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_sprint.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_death.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_headbutt.png");
 
 
 

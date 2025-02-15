@@ -1,9 +1,11 @@
 // import { Character } from "./character.js";
 class Player extends Character {
     constructor(gameEngine, scene, x, y) {
-        super(gameEngine, "./assets/sprites/white_fight_spritesheet.png", scene, "./assets/sprites/white_pistol_spritesheet.png" ); // Pass player sprite sheet
+        super(gameEngine, "./assets/sprites/white_fight_spritesheet.png", scene,
+             "./assets/sprites/white_pistol_spritesheet.png", "./assets/sprites/white_sword_spritesheet.png"); // Pass player sprite sheet
         this.x = x;
         this.y = y;
+        this.initialGroundY = y;
         this.hasDealtDamage = false; // Flag to prevent multiple damage during a single attack
         this.hasWeapon = false;
 
@@ -20,7 +22,7 @@ class Player extends Character {
         }
 
         super.update();
-    
+        console.log("player ", this.boundingbox);
         if (this.deathCompleted) {
             console.log("Game Over");
         }
@@ -29,13 +31,44 @@ class Player extends Character {
             this.takeDamage(this.health); // Instantly kill player for testing
         }
     
-        if (this.gameEngine.keys.g && !this.hasWeapon) {
-            this.equipWeapon(new Pistol(this.scene));
-            this.hasWeapon = true;
+        if (this.gameEngine.keys.g && !this.gKeyPressed) {
+            if (!this.hasWeapon) {
+                this.equipWeapon(new Pistol(this.scene));
+                this.hasWeapon = true;
+            } else {
+                this.unequipWeapon();
+                this.hasWeapon = false;
+            }
+            this.gKeyPressed = true; // Prevent multiple toggles in one press
         }
-    
+        
+        // Reset key state when released
+        if (!this.gameEngine.keys.g) {
+            this.gKeyPressed = false;
+        }
+
         if (this.gameEngine.keys.f && this.weapon instanceof Pistol) {
             this.weapon.attack(this);
+        }
+        
+        if(this.gameEngine.keys.q && !this.qKeyPressed) {
+            if(!this.hasWeapon) {
+                this.equipWeapon(new Sword(this.scene));
+                this.hasWeapon = true;
+            } else {
+                this.unequipWeapon();
+                this.hasWeapon = false;
+            }
+            this.qKeyPressed = true;
+            
+        }
+        if(!this.gameEngine.keys.q) {
+            this.qKeyPressed = false;
+        }
+    
+        if(this.gameEngine.keys.r && this.weapon instanceof Sword) {
+            this.weapon.attack(this);
+            this.performAttack("slash");
         }
     
         if (this.weapon) {
@@ -47,6 +80,7 @@ class Player extends Character {
             const movingLeft = this.gameEngine.keys.a || this.gameEngine.keys["ArrowLeft"];
             const movingUp = this.gameEngine.keys.w || this.gameEngine.keys["ArrowUp"];
             const movingDown = this.gameEngine.keys.s || this.gameEngine.keys["ArrowDown"];
+            const jump = this.gameEngine.keys[" "];
 
             this.isMoving = movingRight || movingLeft || movingUp || movingDown;
     
@@ -66,8 +100,20 @@ class Player extends Character {
                     newX = this.scene.camera.x; // Snap to the camera's left edge
                 }
             }
-            if (movingUp) newY -= this.speed;
-            if (movingDown) newY += this.speed;
+            if (movingUp) {
+                newY -= this.speed;
+                this.initialGroundY = newY;
+            }
+            if (movingDown) {
+                newY += this.speed;
+                this.initialGroundY = newY;
+            }
+
+            if(jump && !this.isJumping){
+                console.log("Player is jumping");
+                this.isJumping = true;
+                this.velocity = this.jumpStrength;
+            }
     
             // Add vertical movement constraints
             const minY = 5 * PARAMS.CELL_SIZE;
@@ -106,20 +152,24 @@ class Player extends Character {
             if (movingRight && newX > this.scene.camera.x + this.scene.camera.width / 2) {
                 this.scene.camera.x = newX - this.scene.camera.width / 2;
             }
+
+            
         }
-    
+        
+        if(!this.isUsingPistol && !this.isUsingSword) {
         // Perform attacks
-        if (this.gameEngine.keys.c) {
-            this.performAttack("chop");
-            this.attackEnemy(10); // Chop deals 10 damage
-        }
-        if (this.gameEngine.keys.k) {
-            this.performAttack("kick");
-            this.attackEnemy(25); // Kick deals 25 damage
-        }
-        if (this.gameEngine.keys.p) {
-            this.performAttack("punch");
-            this.attackEnemy(15); // Punch deals 15 damage
+            if (this.gameEngine.keys.c) {
+                this.performAttack("chop");
+                this.attackEnemy(10); // Chop deals 10 damage
+            }
+            if (this.gameEngine.keys.k) {
+                this.performAttack("kick");
+                this.attackEnemy(25); // Kick deals 25 damage
+            }
+            if (this.gameEngine.keys.p) {
+                this.performAttack("punch");
+                this.attackEnemy(15); // Punch deals 15 damage
+            }
         }
     
         // Reset the damage flag when the attack animation is done
@@ -127,8 +177,21 @@ class Player extends Character {
             this.hasDealtDamage = false;
         }
 
+        if(this.isJumping){
+            this.velocity += this.gravity;
+            this.y += this.velocity;
+         if(this.y >= this.initialGroundY) {
+            this.isJumping = false;
+            this.velocity = 0;
+            this.y = this.initialGroundY;
+            }
+            console.log("this.y " + this.y);
+            console.log("Initial y: " + this.initialGroundY);
+        }
+
         this.zIndex = this.y;
-    }
+    }    
+    
 
     attackEnemy(damage) {
         // Get current combat zone's enemies from level manager
@@ -159,6 +222,17 @@ class Player extends Character {
         }
     }
 
+    unequipWeapon() {
+        this.weapon = null;
+        if(this.isUsingPistol) {
+            this.isUsingPistol = false;
+        }
+        if(this.isUsingSword) {
+            this.isUsingSword = false;
+        }
+        
+    }
+    
     isCollidingWithEnemy(enemy) {
         if (!enemy || !enemy.boundingbox) return false;
 
@@ -264,12 +338,7 @@ class Player extends Character {
 
     equipWeapon(weapon) {
         this.weapon = weapon;
-
-        if (weapon instanceof Pistol) {
-            this.isUsingPistol = true;  // Set pistol mode
-        } else {
-            this.isUsingPistol = false; // Switch back to normal
-        }
-            
+        this.isUsingPistol = weapon instanceof Pistol;
+        this.isUsingSword = weapon instanceof Sword;
     }
 }
