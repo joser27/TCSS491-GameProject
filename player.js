@@ -327,7 +327,7 @@ class Player extends Character {
         img.src = './assets/sprites/healthbar.png';
 
         // Draw the red background (full health bar)
-        ctx.fillStyle = "red";
+        ctx.fillStyle = "green";
         ctx.fillRect(xPosition+ 60, yPosition +25, 236 * healthPercentage, 25);
         ctx.drawImage(img,xPosition, yPosition, healthBarWidth, healthBarHeight);
 
