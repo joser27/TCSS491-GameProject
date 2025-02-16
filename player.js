@@ -203,24 +203,65 @@ class Player extends Character {
 
         // Check collision with all active enemies in the zone
         for (const enemy of currentZone.enemies) {
-            // TODO: Check if enemy is dead
+            if(this.isUsingSword){
+                if (this.isEnemyInAttackRange(enemy) && !this.hasDealtDamage) {
+                    this.scene.sceneManager.gameState.playerStats.coins += 1;
+                    let damageDelay = 250;
+                    this.hasDealtDamage = true; // Mark damage as dealt for this attack
 
+                    setTimeout(() => {
+                        if(this.isEnemyInAttackRange(enemy)){
+                            enemy.takeDamage(damage);
+                            if (enemy.health <= 0) {
+                                console.log(`Enemy at (${enemy.x}, ${enemy.y}) is dead. Resetting attack.`);
+                                this.hasDealtDamage = false; // Reset so another enemy can be hit next
+                            }
+                        }
+                    }, damageDelay)
+                    break;
+                }
+
+            } else {
             // Only apply damage if the attack has not already dealt damage
-            if (this.isCollidingWithEnemy(enemy) && !this.hasDealtDamage) {
-                this.scene.sceneManager.gameState.playerStats.coins += 1;
-                let damageDelay = 250;
-                this.hasDealtDamage = true; // Mark damage as dealt for this attack
+                if (this.isCollidingWithEnemy(enemy) && !this.hasDealtDamage) {
+                    this.scene.sceneManager.gameState.playerStats.coins += 1;
+                    let damageDelay = 250;
+                    this.hasDealtDamage = true; // Mark damage as dealt for this attack
 
-                setTimeout(() => {
-                    if(this.isCollidingWithEnemy(enemy)){
-                        enemy.takeDamage(damage);
-                    }
-                }, damageDelay)
-                break;
+                    setTimeout(() => {
+                        if(this.isCollidingWithEnemy(enemy)){
+                            enemy.takeDamage(damage);
+                        }
+                    }, damageDelay)
+                    break;
+                }
             }
             
         }
     }
+
+    isEnemyInAttackRange(enemy) {
+        if (!enemy || !enemy.boundingbox) return false;
+    
+        const range = (this.boundingbox.x + this.weapon.range);
+        const leftRange = this.boundingbox.x - this.weapon.range;
+        if(this.facingLeft){
+            return (
+                leftRange - this.boundingbox.width < enemy.boundingbox.x + enemy.boundingbox.width &&
+                leftRange + this.boundingbox.width > enemy.boundingbox.x &&
+                this.boundingbox.y < enemy.boundingbox.y + enemy.boundingbox.height &&
+                this.boundingbox.y + this.boundingbox.height > enemy.boundingbox.y
+            );
+        } else {
+            return (
+                range < enemy.boundingbox.x + enemy.boundingbox.width &&
+                range + this.boundingbox.width > enemy.boundingbox.x &&
+                this.boundingbox.y < enemy.boundingbox.y + enemy.boundingbox.height &&
+                this.boundingbox.y + this.boundingbox.height > enemy.boundingbox.y
+            );
+        }
+    }
+    
 
     unequipWeapon() {
         this.weapon = null;
@@ -236,9 +277,10 @@ class Player extends Character {
     isCollidingWithEnemy(enemy) {
         if (!enemy || !enemy.boundingbox) return false;
 
+
         return (
             this.boundingbox.x < enemy.boundingbox.x + enemy.boundingbox.width &&
-            this.boundingbox.x + this.boundingbox.width > enemy.boundingbox.x &&
+            this.boundingbox.x + this.boundingbox.width > enemy.boundingbox.x  &&
             this.boundingbox.y < enemy.boundingbox.y + enemy.boundingbox.height &&
             this.boundingbox.y + this.boundingbox.height > enemy.boundingbox.y
         );
@@ -326,7 +368,7 @@ class Player extends Character {
         const img = new Image();
         img.src = './assets/sprites/healthbar.png';
 
-        // Draw the red background (full health bar)
+        
         ctx.fillStyle = "green";
         ctx.fillRect(xPosition+ 60, yPosition +25, 236 * healthPercentage, 25);
         ctx.drawImage(img,xPosition, yPosition, healthBarWidth, healthBarHeight);

@@ -109,12 +109,16 @@ class Enemy extends Character {
         
         super.draw(ctx);
 
+        if(this.health < 0){
+            this.health = 0;
+        }
+
         // Draw a small health bar above the enemy's head
-        const healthBarWidth = 50; // Width of the health bar
-        const healthBarHeight = 5; // Height of the health bar
+        const healthBarWidth = 75; // Width of the health bar
+        const healthBarHeight = 10; // Height of the health bar
         const healthPercentage = this.health / 100; // Percentage of health remaining
         const xPosition = this.x - healthBarWidth / 2 - this.gameEngine.camera.x; // Center health bar above the enemy
-        const yPosition = this.y - 30; // Position the health bar above the sprite
+        const yPosition = this.y - 50; // Position the health bar above the sprite
 
         // Draw the red background (full health bar)
         ctx.fillStyle = "red";
@@ -126,7 +130,7 @@ class Enemy extends Character {
 
         // Add a black border around the health bar
         ctx.strokeStyle = "black";
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 2;
         ctx.strokeRect(xPosition, yPosition, healthBarWidth, healthBarHeight);
     }
 

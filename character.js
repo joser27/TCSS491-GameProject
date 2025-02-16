@@ -205,7 +205,7 @@ class Character {
             ),
             run: new Animator (
                 ASSET_MANAGER.getAsset(swordSpriteSheet),
-                512 * 50,
+                512 * 51,
                 0,
                 512,
                 512,

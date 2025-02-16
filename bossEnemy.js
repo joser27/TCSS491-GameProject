@@ -92,20 +92,21 @@ class BossEnemy extends Enemy {
     }
 
     draw(ctx) {
+        if (this.isActive) {
+            const healthBarWidth = 300; 
+            const healthBarHeight = 70;
+            const healthPercentage = this.health / 500;
+            const xPosition = 950;
+            const yPosition = 30;
 
-        const healthBarWidth = 100; // Bigger health bar
-        const healthBarHeight = 10;
-        const healthPercentage = this.health / 500;
-        const xPosition = this.x - healthBarWidth / 2 - this.gameEngine.camera.x;
-        const yPosition = this.y - 30;
+            const img = new Image();
+            img.src = './assets/sprites/healthbar.png';
 
-        ctx.fillStyle = "red";
-        ctx.fillRect(xPosition, yPosition, healthBarWidth, healthBarHeight);
-        ctx.fillStyle = "green";
-        ctx.fillRect(xPosition, yPosition, healthBarWidth * healthPercentage, healthBarHeight);
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(xPosition, yPosition, healthBarWidth, healthBarHeight);
+            ctx.fillStyle = "red";
+            ctx.fillRect(xPosition+60, yPosition+25, 236*healthPercentage, 25);
+            ctx.drawImage(img, xPosition, yPosition, healthBarWidth, healthBarHeight);
+        }
+        
 
         const offsetX = 165;
         const offsetY = 210;
