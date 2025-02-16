@@ -22,7 +22,7 @@ class Player extends Character {
         }
 
         super.update();
-        console.log("player ", this.boundingbox);
+        //console.log("player ", this.boundingbox);
         if (this.deathCompleted) {
             console.log("Game Over");
         }
@@ -318,16 +318,16 @@ class Player extends Character {
         // Draw health bar fixed at the top center of the screen
         const canvasWidth = ctx.canvas.width;
         const healthBarWidth = 300; // Width of the health bar
-        const healthBarHeight = 30; // Height of the health bar
-        const xPosition = (canvasWidth - healthBarWidth) / 2; // Center horizontally
-        const yPosition = 10; // Position near the top
+        const healthBarHeight = 70; // Height of the health bar
+        const xPosition = 20; // Center horizontally
+        const yPosition = 30; // Position near the top
         const healthPercentage = this.health / 100;
 
         const img = new Image();
         img.src = './assets/sprites/healthbar.png';
 
         // Draw the red background (full health bar)
-        ctx.fillStyle = "red";
+        ctx.fillStyle = "green";
         ctx.fillRect(xPosition+ 60, yPosition +25, 236 * healthPercentage, 25);
         ctx.drawImage(img,xPosition, yPosition, healthBarWidth, healthBarHeight);
 

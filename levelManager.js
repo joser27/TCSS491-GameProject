@@ -30,41 +30,95 @@ class LevelManager {
             1: {
                 zones: [
                     {
-                        startX: 10*PARAMS.CELL_SIZE,
-                        endX: 30*PARAMS.CELL_SIZE,
+                        triggerX: 24*PARAMS.CELL_SIZE,
+                        startX: 14*PARAMS.CELL_SIZE,
+                        endX: 34*PARAMS.CELL_SIZE,
                         enemies: [
-                            { type: 'BasicYellowEnemy', x: 23*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 34*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 33*PARAMS.CELL_SIZE, y: 9*PARAMS.CELL_SIZE },
+                            
                         ]
                     },
                     {
-                        startX: 35* PARAMS.CELL_SIZE,
-                        endX: 60* PARAMS.CELL_SIZE,
+                        triggerX: 42*PARAMS.CELL_SIZE,
+                        startX: 40*PARAMS.CELL_SIZE,
+                        endX: 60*PARAMS.CELL_SIZE,
                         enemies: [
-                            { type: 'BossEnemy', x: 45 * PARAMS.CELL_SIZE, y: 7 * PARAMS.CELL_SIZE }
+                            { type: 'BasicYellowEnemy', x: 40*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 52*PARAMS.CELL_SIZE, y: 10*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 60*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
+
+                        ]
+                    },
+                    {
+                        triggerX: 74*PARAMS.CELL_SIZE,
+                        startX: 68*PARAMS.CELL_SIZE,
+                        endX: 88*PARAMS.CELL_SIZE,
+                        enemies: [
+                            { type: 'BasicYellowEnemy', x: 73*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 77*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 92*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE },
+                            
+                        ]
+                    },
+                    {
+                        triggerX: 101*PARAMS.CELL_SIZE,
+                        startX: 100*PARAMS.CELL_SIZE,
+                        endX: 120*PARAMS.CELL_SIZE,
+                        enemies: [
+                            { type: 'BossEnemy', x: 108*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
+
                         ]
                     }
-                    // {
-                    //     startX: 35*PARAMS.CELL_SIZE,
-                    //     endX: 55*PARAMS.CELL_SIZE,
-                    //     enemies: [
-                    //         { type: 'BasicYellowEnemy', x: 50*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
-                    //     ]
-                    // }
-                    // Add more zones for level 1. Boss zone at the end
                 ]
             },
             2: {
                 zones: [
                     {
+                        triggerX: 22*PARAMS.CELL_SIZE,
                         startX: 15*PARAMS.CELL_SIZE,
                         endX: 35*PARAMS.CELL_SIZE,
                         enemies: [
-                            { type: 'BasicYellowEnemy', x: 10*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 26*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 24*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE }
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 1*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 2*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 3*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 9*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 10*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 11*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 12*PARAMS.CELL_SIZE },
+                            
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 0*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 1*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 2*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 3*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 9*PARAMS.CELL_SIZE },
+                            
                         ]
                     }
                     // Add more zones for level 2
+                ]
+            },
+            3: {
+                zones: [
+                    {
+                        startX: 15*PARAMS.CELL_SIZE,
+                        endX: 35*PARAMS.CELL_SIZE,
+                        enemies: [
+                            { type: 'BasicYellowEnemy', x: 26*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 26*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE }
+                        ]
+                    }
+                    // Add more zones for level 3
                 ]
             }
             // Add more levels
@@ -74,10 +128,12 @@ class LevelManager {
 
         this.zIndex = 5;
         this.initializeLevel(this.currentLevel);
-
+        this.lastCombatCameraX = null;
+        this.goIndicator = null; // Track the GoIndicator instance
     }
 
     initializeLevel(levelNumber) {
+        console.log(`Initializing level ${levelNumber}`); // Debug log
         this.combatZones = [];
         this.currentCombatZone = null;
 
@@ -86,17 +142,24 @@ class LevelManager {
 
         levelConfig.zones.forEach(zoneConfig => {
             const enemies = this.createEnemies(zoneConfig.enemies);
-            this.addCombatZone(zoneConfig.startX, zoneConfig.endX, enemies);
+            // Add enemies to game engine immediately but set them as inactive
+            enemies.forEach(enemy => {
+                enemy.isActive = false; 
+                this.gameEngine.addEntity(enemy);
+            });
+            this.addCombatZone(zoneConfig.triggerX, zoneConfig.startX, zoneConfig.endX, enemies);
         });
     }
 
     createEnemies(enemyConfigs) {
         const enemyTypes = {
             'BasicYellowEnemy': (x, y) => new Enemy(this.gameEngine, this.sceneManager.scene, x, y),
-            'BossEnemy': (x, y) => new BossEnemy(this.gameEngine,this.sceneManager.scene, x, y),
-            'RangedEnemy': (x, y) => new RangedEnemy(this.gameEngine, x, y)//TODO: add
+            'BossEnemy': (x, y) => {
+                console.log("Creating BossEnemy at", x, y); // Debug log
+                return new BossEnemy(this.gameEngine, this.sceneManager.scene, x, y);
+            },
+            'RangedEnemy': (x, y) => new RangedEnemy(this.gameEngine, x, y) // TODO: add
         };
-
 
         return enemyConfigs.map(config => {
             const createEnemy = enemyTypes[config.type] || ((x, y) => new BasicEnemy(this.gameEngine, x, y));
@@ -111,8 +174,9 @@ class LevelManager {
         this.initializeLevel(levelNumber);
     }
 
-    addCombatZone(startX, endX, enemies) {
+    addCombatZone(triggerX, startX, endX, enemies) {
         this.combatZones.push({
+            triggerX,
             startX,
             endX,
             enemies: enemies,
@@ -124,23 +188,30 @@ class LevelManager {
     update() {
         const playerX = this.player.x;
         
-
+        // Add this check to reset goIndicator when it's removed
+        if (this.goIndicator && this.goIndicator.removeFromWorld) {
+            this.goIndicator = null;
+        }
+        
         for (let zone of this.combatZones) {
-            if (zone.isCompleted || playerX < zone.startX || playerX > zone.endX) continue;
-
-            if (!zone.isActive) {
+            if (zone.isCompleted) continue;
+            
+            if (!zone.isActive && playerX >= zone.triggerX) {
                 this.activateZone(zone);
             }
+            
+            if (zone.isActive) {
+                // Lock player within zone boundaries once activated
+                const minX = Math.max(zone.startX, this.camera.x);
+                this.player.x = Math.max(minX, Math.min(this.player.x, zone.endX));
 
-            // Lock player within zone boundaries
-            this.player.x = Math.max(zone.startX, Math.min(this.player.x, zone.endX));
+                this.updateCamera();
 
-            this.updateCamera();
-
-            if (this.isZoneCleared(zone)) {
-                this.completeZone(zone);
+                if (this.isZoneCleared(zone)) {
+                    this.completeZone(zone);
+                }
+                return;
             }
-            return; // Exit after processing relevant zone
         }
 
         // If not in a combat zone, update camera normally
@@ -150,9 +221,9 @@ class LevelManager {
     activateZone(zone) {
         zone.isActive = true;
         this.currentCombatZone = zone;
-        this.cameraLeftBound = zone.startX;
-        this.cameraRightBound = zone.endX - PARAMS.canvasWidth;
-        zone.enemies.forEach(enemy => this.gameEngine.addEntity(enemy));
+        
+        // Just activate the enemies instead of adding them
+        zone.enemies.forEach(enemy => enemy.isActive = true);
     }
 
     isZoneCleared(zone) {
@@ -162,10 +233,8 @@ class LevelManager {
     completeZone(zone) {
         zone.isCompleted = true;
         this.currentCombatZone = null;
-        this.cameraLeftBound = 0;
-        this.cameraRightBound = null;
+        this.lastCombatCameraX = this.camera.x;
 
-        // Check if this was the last zone in the level
         const allZonesCompleted = this.combatZones.every(zone => zone.isCompleted);
         
         if (allZonesCompleted) {
@@ -173,7 +242,7 @@ class LevelManager {
             this.player.isLevelComplete = true;
             
             // Create and add the overlay
-            const statsOverlay = new LevelCompleteOverlay(this.gameEngine, this,{
+            const statsOverlay = new LevelCompleteOverlay(this.gameEngine, this, {
                 coins: this.sceneManager.gameState.playerStats.coins,
                 health: this.player.health,
                 onComplete: () => {
@@ -182,31 +251,39 @@ class LevelManager {
                 }
             });
             
-            
-            statsOverlay.zIndex = 1000;
+            statsOverlay.zIndex = 50;
             this.gameEngine.addEntity(statsOverlay);
+        } else {
+            // Add the GoIndicator only if there isn't one already
+            if (!this.goIndicator) {
+                const arrowX = zone.endX - this.camera.x - 100; // Offset from zone end
+                const arrowY = PARAMS.canvasHeight / 2;
+                this.goIndicator = new GoIndicator(arrowX, arrowY, this.player, zone.endX, this.gameEngine.timer);
+                this.gameEngine.addEntity(this.goIndicator);
+            }
         }
     }
 
     updateCamera() {
-        // Target camera position (centered on player)
-        let targetX = this.player.x - PARAMS.canvasWidth / 2;
-
-        // Apply bounds if in combat zone
+        // centered on player
+        let targetX = Math.round(this.player.x - PARAMS.canvasWidth / 2);
+        targetX = Math.max(0, targetX); // Prevent going before start of level
+        
+        // If in combat zone, prevent camera from moving backwards and going past zone end
         if (this.currentCombatZone) {
-            targetX = Math.max(this.cameraLeftBound, Math.min(targetX, this.cameraRightBound));
-        } else {
-            // When not in combat zone, only move camera forward
-            if (targetX > this.camera.x) {
-                targetX = Math.max(0, targetX);
+            const maxX = this.currentCombatZone.endX - PARAMS.canvasWidth;
+            targetX = Math.max(this.camera.x, Math.min(targetX, maxX));
+        } 
+        // If we have a last combat camera position, don't let camera move back past it
+        else if (this.lastCombatCameraX !== null) {
+            if (targetX > this.lastCombatCameraX) {
+                this.lastCombatCameraX = null;  // Clear the stored position once we move past it
             } else {
-                targetX = this.camera.x; // Keep camera stationary when moving left
+                targetX = this.lastCombatCameraX;
             }
         }
-
-        // Smooth camera movement
-        const cameraSpeed = 0.1;
-        this.camera.x += (targetX - this.camera.x) * cameraSpeed;
+        
+        this.camera.x = targetX;
     }
 
     draw(ctx) {
@@ -237,6 +314,7 @@ class LevelManager {
             const timeLeft = Math.ceil((10000 - (Date.now() - this.levelCompleteStats.startTime)) / 1000);
             ctx.fillText(`Next Level in: ${timeLeft}`, ctx.canvas.width / 2, 450);
         }
+
     }
 
     drawGrid(ctx) {
@@ -297,16 +375,31 @@ class LevelManager {
     }
 
     drawCombatZones(ctx) {
-        // Debug visualization of combat zones
-        ctx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
-        ctx.lineWidth = 4;
-        
         this.combatZones.forEach(zone => {
-            const startScreenX = zone.startX - this.camera.x;
-            const width = zone.endX - zone.startX;
+            // Draw combat area boundaries in red
+            ctx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
+            ctx.lineWidth = 4;
             
+            // Draw start line
+            const startScreenX = zone.startX - this.camera.x;
             ctx.beginPath();
-            ctx.rect(startScreenX, 0, width, PARAMS.canvasHeight);
+            ctx.moveTo(startScreenX, 0);
+            ctx.lineTo(startScreenX, PARAMS.canvasHeight);
+            ctx.stroke();
+            
+            // Draw end line
+            const endScreenX = zone.endX - this.camera.x;
+            ctx.beginPath();
+            ctx.moveTo(endScreenX, 0);
+            ctx.lineTo(endScreenX, PARAMS.canvasHeight);
+            ctx.stroke();
+            
+            // Draw trigger line in green
+            ctx.strokeStyle = 'rgba(0, 255, 0, 0.5)';
+            const triggerScreenX = zone.triggerX - this.camera.x;
+            ctx.beginPath();
+            ctx.moveTo(triggerScreenX, 0);
+            ctx.lineTo(triggerScreenX, PARAMS.canvasHeight);
             ctx.stroke();
             
             // Draw zone status

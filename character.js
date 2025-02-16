@@ -161,7 +161,7 @@ class Character {
                 512,
                 512,
                 8,
-                0.1,
+                0.2,
                 0.8,
                 false
             ),
@@ -175,6 +175,17 @@ class Character {
                 0.1,
                 0.8,
                 false
+            ),
+            jump: new Animator (
+                ASSET_MANAGER.getAsset(pistolSpriteSheet),
+                512*34,
+                0,
+                512,
+                512,
+                5,
+                0.2,
+                0.8,
+                true
             )
 
         }
@@ -210,7 +221,7 @@ class Character {
                 512,
                 512,
                 8,
-                0.1,
+                0.2,
                 0.8,
                 false
             ),
@@ -235,6 +246,17 @@ class Character {
                 0.2,
                 0.8,
                 false
+            ),
+            jump: new Animator (
+                ASSET_MANAGER.getAsset(swordSpriteSheet),
+                512*46,
+                0,
+                512,
+                512,
+                5,
+                0.2,
+                0.8,
+                true
             )
 
         }
@@ -300,6 +322,26 @@ class Character {
             return;
         }
 
+        if(this.isJumping) {
+            if(this.isUsingPistol){
+                if(this.pistolAnimations.jump.isDone()) {
+                    this.isJumping = false;
+                    this.pistolAnimations.jump.elapsedTime = 0;
+                }
+            }else if(this.isUsingSword) {
+                if(this.swordAnimations.jump.isDone()){
+                    this.isJumping = false;
+                    this.swordAnimations.jump.elapsedTime = 0;
+                }
+            } else {
+                if(this.jumpAnimation.isDone()) {
+                    this.isJumping = false;
+                    this.jumpAnimation.elapsedTime = 0;
+                }
+            }
+        }
+        
+
         // if (this.isUsingPistol) {
         //     if (this.damageTaken && this.pistolAnimations.damage.isDone()) {
         //         this.damageTaken = false;
@@ -357,6 +399,8 @@ class Character {
                 this.pistolAnimations.death.drawFrame(this.gameEngine.clockTick, ctx, screenX- offsetX, this.y - offsetY);
             } else if(this.damageTaken) {
                 this.pistolAnimations.damage.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
+            } else if(this.isJumping){
+                this.pistolAnimations.jump.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             } else if (this.isMoving) {
                 this.pistolAnimations.run.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             }else {
@@ -369,6 +413,8 @@ class Character {
                 this.swordAnimations.damage.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             } else if (this.currentAttack) {
                 this.swordAnimations.attack.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
+            }else if(this.isJumping) {
+                this.swordAnimations.jump.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             }else if(this.isMoving){
                 this.swordAnimations.run.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             } else {
