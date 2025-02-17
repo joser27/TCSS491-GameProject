@@ -23,6 +23,11 @@ class Background {
             street_intersection2: ASSET_MANAGER.getAsset("./assets/sprites/street_intersection2.png"),
             street_intersection3: ASSET_MANAGER.getAsset("./assets/sprites/street_intersection3.png"),
             street_car: ASSET_MANAGER.getAsset("./assets/sprites/street_car.png"),
+            street_car2: ASSET_MANAGER.getAsset("./assets/sprites/street_car2.png"),
+            street_car3: ASSET_MANAGER.getAsset("./assets/sprites/street_car3.png"),
+            trashcan: ASSET_MANAGER.getAsset("./assets/sprites/trashcan.png"),
+            mailbox: ASSET_MANAGER.getAsset("./assets/sprites/city_mailbox.png"),
+            bus_sign: ASSET_MANAGER.getAsset("./assets/sprites/bus_sign.png"),
         };
 
         this.level2 = {
@@ -64,11 +69,21 @@ class Background {
                     },
                     misc: {
                         grass: { width: this.level1.grass.width, height: this.level1.grass.height },
-                        street_car: { width: this.level1.street_car.width, height: this.level1.street_car.height },
+                        street_car: { width: this.level1.street_car.width*1.5, height: this.level1.street_car.height*1.5 },
+                        street_car2: { width: this.level1.street_car2.width*1.5, height: this.level1.street_car2.height*1.5 },
+                        street_car3: { width: this.level1.street_car3.width*1.5, height: this.level1.street_car3.height*1.5 },
+                        trashcan: { width: this.level1.trashcan.width, height: this.level1.trashcan.height },
+                        mailbox: { width: this.level1.mailbox.width, height: this.level1.mailbox.height },
+                        bus_sign: { width: this.level1.bus_sign.width, height: this.level1.bus_sign.height },
                     }
+
                 },
                 sceneElements: [
-                 
+                    
+                    { x: 1*PARAMS.CELL_SIZE, y: 0, type: 'trashcan' },
+                    { x: 3*PARAMS.CELL_SIZE, y: 0, type: 'mailbox' },
+                    { x: 13*PARAMS.CELL_SIZE, y: 0, type: 'bus_sign' },
+
                     // Walls
                     { x: 60*PARAMS.CELL_SIZE, y: -110, type: 'grassWall' },
                     { x: 70*PARAMS.CELL_SIZE-40, y: -110, type: 'brickWall' },
@@ -92,6 +107,7 @@ class Background {
                     { x: 50*PARAMS.CELL_SIZE+15, y: -110, type: 'grass' },
                     { x: 114*PARAMS.CELL_SIZE, y: -110, type: 'street_car' },
                     { x: 116*PARAMS.CELL_SIZE, y: +200, type: 'street_car' },
+
 
 
                      // Streets
@@ -174,6 +190,11 @@ class Background {
     }   
 
     draw(ctx) {
+        // Save the current context state
+        ctx.save();
+        
+        ctx.imageSmoothingEnabled = false;
+        
         const cameraX = Math.round(this.gameEngine.camera.x);
         const currentLevel = this.levelManager.sceneManager.gameState.currentLevel;
         const config = this.levelConfigs[currentLevel];
@@ -225,5 +246,8 @@ class Background {
                 }
             });
         }
+        
+        // Restore the original context state
+        ctx.restore();
     }
 }
