@@ -33,41 +33,82 @@ class LevelManager {
                         triggerX: 24*PARAMS.CELL_SIZE,
                         startX: 14*PARAMS.CELL_SIZE,
                         endX: 34*PARAMS.CELL_SIZE,
-                        enemies: [
-                            { type: 'BasicYellowEnemy', x: 34*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 33*PARAMS.CELL_SIZE, y: 9*PARAMS.CELL_SIZE },
-                            
+                        waves: [
+                            {
+                                enemies: [
+                                    { 
+                                        type: 'BasicYellowEnemy', 
+                                        x: 34*PARAMS.CELL_SIZE, 
+                                        y: 7*PARAMS.CELL_SIZE,
+                                        spawnDelay: 0 
+                                    },
+                                    { 
+                                        type: 'BasicYellowEnemy', 
+                                        x: 33*PARAMS.CELL_SIZE, 
+                                        y: 9*PARAMS.CELL_SIZE,
+                                        spawnDelay: 2
+                                    },
+                                    { 
+                                        type: 'BasicYellowEnemy', 
+                                        x: 32*PARAMS.CELL_SIZE, 
+                                        y: 8*PARAMS.CELL_SIZE,
+                                        spawnDelay: 4
+                                    }
+                                ]
+                            },
+
                         ]
                     },
                     {
                         triggerX: 42*PARAMS.CELL_SIZE,
-                        startX: 40*PARAMS.CELL_SIZE,
-                        endX: 60*PARAMS.CELL_SIZE,
-                        enemies: [
-                            { type: 'BasicYellowEnemy', x: 40*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 52*PARAMS.CELL_SIZE, y: 10*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 60*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
-
+                        startX: 38*PARAMS.CELL_SIZE,
+                        endX: 58*PARAMS.CELL_SIZE,
+                        waves: [
+                            {
+                                enemies: [
+                                    { type: 'BasicYellowEnemy', x: 56*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE, spawnDelay: 0 },
+                                    { type: 'BasicYellowEnemy', x: 57*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE, spawnDelay: 2 },
+                                ]
+                            },
+                            {
+                                enemies: [
+                                    { type: 'BasicYellowEnemy', x: 39*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE, spawnDelay: 0 },
+                                    { type: 'BasicYellowEnemy', x: 39*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE, spawnDelay: 2 },
+                                ]
+                            },
                         ]
                     },
                     {
                         triggerX: 74*PARAMS.CELL_SIZE,
                         startX: 68*PARAMS.CELL_SIZE,
                         endX: 88*PARAMS.CELL_SIZE,
-                        enemies: [
-                            { type: 'BasicYellowEnemy', x: 73*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 77*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 92*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE },
-                            
+                        waves: [
+                            {
+                                enemies: [
+                                    { type: 'BasicYellowEnemy', x: 73*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE, spawnDelay: 0 },
+                                    { type: 'BasicYellowEnemy', x: 77*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE, spawnDelay: 0 },
+                                ]
+                            },
+                            {
+                                enemies: [
+                                    { type: 'BasicYellowEnemy', x: 73*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE, spawnDelay: 2 },
+                                    { type: 'BasicYellowEnemy', x: 77*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE, spawnDelay: 0 },
+                                ]
+                            }
                         ]
                     },
                     {
                         triggerX: 101*PARAMS.CELL_SIZE,
                         startX: 100*PARAMS.CELL_SIZE,
                         endX: 120*PARAMS.CELL_SIZE,
-                        enemies: [
-                            { type: 'BossEnemy', x: 108*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
-
+                        waves: [
+                            {
+                                enemies: [
+                                    { type: 'BossEnemy', x: 108*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE, spawnDelay: 0 },
+                                    { type: 'BasicYellowEnemy', x: 99*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE, spawnDelay: 5 },
+                                    { type: 'BasicYellowEnemy', x: 121*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE, spawnDelay: 8 },
+                                ]
+                            }
                         ]
                     }
                 ]
@@ -78,50 +119,38 @@ class LevelManager {
                         triggerX: 22*PARAMS.CELL_SIZE,
                         startX: 15*PARAMS.CELL_SIZE,
                         endX: 35*PARAMS.CELL_SIZE,
-                        enemies: [
-                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 1*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 2*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 3*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 9*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 10*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 11*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 12*PARAMS.CELL_SIZE },
-                            
-                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 0*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 1*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 2*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 3*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 31*PARAMS.CELL_SIZE, y: 9*PARAMS.CELL_SIZE },
-                            
+                        waves: [
+                            {
+                                enemies: [
+                                    { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 1*PARAMS.CELL_SIZE },
+                                    { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 2*PARAMS.CELL_SIZE },
+                                    { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 3*PARAMS.CELL_SIZE },
+                                    { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
+                                    { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
+                                    { type: 'BasicYellowEnemy', x: 14*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
+                                ]
+                            }
                         ]
                     }
-                    // Add more zones for level 2
                 ]
             },
             3: {
                 zones: [
                     {
+                        triggerX: 22*PARAMS.CELL_SIZE,
                         startX: 15*PARAMS.CELL_SIZE,
                         endX: 35*PARAMS.CELL_SIZE,
-                        enemies: [
-                            { type: 'BasicYellowEnemy', x: 26*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 26*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE }
+                        waves: [
+                            {
+                                enemies: [
+                                    { type: 'BasicYellowEnemy', x: 26*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
+                                    { type: 'BasicYellowEnemy', x: 26*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE }
+                                ]
+                            }
                         ]
                     }
-                    // Add more zones for level 3
                 ]
             }
-            // Add more levels
         };
 
         
@@ -133,7 +162,7 @@ class LevelManager {
     }
 
     initializeLevel(levelNumber) {
-        console.log(`Initializing level ${levelNumber}`); // Debug log
+        console.log(`Initializing level ${levelNumber}`);
         this.combatZones = [];
         this.currentCombatZone = null;
 
@@ -141,29 +170,40 @@ class LevelManager {
         if (!levelConfig) return;
 
         levelConfig.zones.forEach(zoneConfig => {
-            const enemies = this.createEnemies(zoneConfig.enemies);
-            // Add enemies to game engine immediately but set them as inactive
-            enemies.forEach(enemy => {
-                enemy.isActive = false; 
-                this.gameEngine.addEntity(enemy);
+            // Create all enemies but don't activate them yet
+            const waves = zoneConfig.waves.map(wave => ({
+                enemies: this.createEnemies(wave.enemies)
+            }));
+            
+            // Add all enemies to game engine as inactive
+            waves.forEach(wave => {
+                wave.enemies.forEach(enemyData => {
+                    enemyData.enemy.isActive = false;
+                    this.gameEngine.addEntity(enemyData.enemy);
+                });
             });
-            this.addCombatZone(zoneConfig.triggerX, zoneConfig.startX, zoneConfig.endX, enemies);
+
+            this.addCombatZone(zoneConfig.triggerX, zoneConfig.startX, zoneConfig.endX, waves);
         });
     }
 
     createEnemies(enemyConfigs) {
         const enemyTypes = {
             'BasicYellowEnemy': (x, y) => new Enemy(this.gameEngine, this.sceneManager.scene, x, y),
-            'BossEnemy': (x, y) => {
-                console.log("Creating BossEnemy at", x, y); // Debug log
-                return new BossEnemy(this.gameEngine, this.sceneManager.scene, x, y);
-            },
-            'RangedEnemy': (x, y) => new RangedEnemy(this.gameEngine, x, y) // TODO: add
+            'BossEnemy': (x, y) => new BossEnemy(this.gameEngine, this.sceneManager.scene, x, y),
+            'RangedEnemy': (x, y) => new RangedEnemy(this.gameEngine, x, y)
         };
 
         return enemyConfigs.map(config => {
-            const createEnemy = enemyTypes[config.type] || ((x, y) => new BasicEnemy(this.gameEngine, x, y));
-            return createEnemy(config.x, config.y);
+            const enemy = enemyTypes[config.type]?.(config.x, config.y) || 
+                         new Enemy(this.gameEngine, this.sceneManager.scene, config.x, config.y);
+            
+            // Store spawn delay in the wave data instead of on the enemy
+            enemy.isActive = false;
+            return {
+                enemy: enemy,
+                spawnDelay: config.spawnDelay || 0
+            };
         });
     }
 
@@ -174,12 +214,17 @@ class LevelManager {
         this.initializeLevel(levelNumber);
     }
 
-    addCombatZone(triggerX, startX, endX, enemies) {
+    addCombatZone(triggerX, startX, endX, waves) {
         this.combatZones.push({
             triggerX,
             startX,
             endX,
-            enemies: enemies,
+            waves: waves.map(wave => ({
+                enemies: wave.enemies,
+                isActive: false,
+                isCompleted: false
+            })),
+            currentWave: 0,
             isActive: false,
             isCompleted: false
         });
@@ -188,7 +233,6 @@ class LevelManager {
     update() {
         const playerX = this.player.x;
         
-        // Add this check to reset goIndicator when it's removed
         if (this.goIndicator && this.goIndicator.removeFromWorld) {
             this.goIndicator = null;
         }
@@ -201,11 +245,32 @@ class LevelManager {
             }
             
             if (zone.isActive) {
-                // Lock player within zone boundaries once activated
+                // Lock player within zone boundaries
                 const minX = Math.max(zone.startX, this.camera.x);
                 this.player.x = Math.max(minX, Math.min(this.player.x, zone.endX));
 
                 this.updateCamera();
+
+                // Update current wave's delayed spawns
+                const currentWave = zone.waves[zone.currentWave];
+                if (currentWave && currentWave.isActive) {
+                    currentWave.elapsedTime += this.gameEngine.clockTick;  // Add time since last frame
+                    
+                    currentWave.enemies.forEach(enemyData => {
+                        if (!enemyData.enemy.isActive && !enemyData.enemy.isDead && 
+                            enemyData.spawnDelay <= currentWave.elapsedTime) {
+                            enemyData.enemy.isActive = true;
+                        }
+                    });
+                }
+
+                // Check if wave is cleared
+                if (this.isWaveCleared(currentWave)) {
+                    zone.currentWave++;
+                    if (zone.currentWave < zone.waves.length) {
+                        this.activateWave(zone, zone.currentWave);
+                    }
+                }
 
                 if (this.isZoneCleared(zone)) {
                     this.completeZone(zone);
@@ -214,7 +279,6 @@ class LevelManager {
             }
         }
 
-        // If not in a combat zone, update camera normally
         this.updateCamera();
     }
 
@@ -222,12 +286,34 @@ class LevelManager {
         zone.isActive = true;
         this.currentCombatZone = zone;
         
-        // Just activate the enemies instead of adding them
-        zone.enemies.forEach(enemy => enemy.isActive = true);
+        // Activate only the first wave
+        this.activateWave(zone, 0);
+    }
+
+    activateWave(zone, waveIndex) {
+        if (waveIndex >= zone.waves.length) return;
+        
+        const wave = zone.waves[waveIndex];
+        wave.isActive = true;
+        wave.elapsedTime = 0;  // Track elapsed time using the timer
+        
+        // Only activate enemies with no delay
+        wave.enemies.forEach(enemyData => {
+            if (enemyData.spawnDelay === 0) {
+                enemyData.enemy.isActive = true;
+            }
+        });
+    }
+
+    isWaveCleared(wave) {
+        return wave.enemies.every(enemyData => enemyData.enemy.isDead);
     }
 
     isZoneCleared(zone) {
-        return zone.enemies.every(enemy => enemy.isDead);
+        return zone.waves.every(wave => {
+            // A wave must be active to be considered for clearing
+            return wave.isActive && this.isWaveCleared(wave);
+        });
     }
 
     completeZone(zone) {
