@@ -89,11 +89,11 @@ class Enemy extends Character {
                 this.attackInterval = 2 + Math.random() * 3; // Set a new random interval
 
                 // Check if the punch hits the player
-                if (this.isCollidingWithPlayer()) {
+                if (this.isCollidingWithEntity(player)) {
                     let damageDelay = 500; // Half-second delay in milliseconds
             
                     setTimeout(() => {
-                        if (this.isCollidingWithPlayer()) { // Recheck if still colliding
+                        if (this.isCollidingWithEntity(player)) { // Recheck if still colliding
                             player.takeDamage(5); // Inflict damage to the player after delay
                         }
                     }, damageDelay);
@@ -134,22 +134,22 @@ class Enemy extends Character {
         ctx.strokeRect(xPosition, yPosition, healthBarWidth, healthBarHeight);
     }
 
-    isCollidingWithPlayer() {
-        const player = this.scene.player;
-        return (
-            this.boundingbox.x < player.boundingbox.x + player.boundingbox.width &&
-            this.boundingbox.x + this.boundingbox.width > player.boundingbox.x &&
-            this.boundingbox.y < player.boundingbox.y + player.boundingbox.height &&
-            this.boundingbox.y + this.boundingbox.height > player.boundingbox.y
-        );
-    }
+    // isCollidingWithPlayer() {
+    //     const player = this.scene.player;
+    //     return (
+    //         this.boundingbox.x < player.boundingbox.x + player.boundingbox.width &&
+    //         this.boundingbox.x + this.boundingbox.width > player.boundingbox.x &&
+    //         this.boundingbox.y < player.boundingbox.y + player.boundingbox.height &&
+    //         this.boundingbox.y + this.boundingbox.height > player.boundingbox.y
+    //     );
+    // }
 
-    isCollidingWithBullet(bullet) {
-        return (
-            bullet.x < this.boundingbox.x + this.boundingbox.width &&
-            bullet.x + bullet.width > this.boundingbox.x &&
-            bullet.y < this.boundingbox.y + this.boundingbox.height &&
-            bullet.y + bullet.width > this.boundingbox.y
-        );
-    }
+    // isCollidingWithBullet(bullet) {
+    //     return (
+    //         bullet.x < this.boundingbox.x + this.boundingbox.width &&
+    //         bullet.x + bullet.width > this.boundingbox.x &&
+    //         bullet.y < this.boundingbox.y + this.boundingbox.height &&
+    //         bullet.y + bullet.width > this.boundingbox.y
+    //     );
+    // }
 }

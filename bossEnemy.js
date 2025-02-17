@@ -85,7 +85,7 @@ class BossEnemy extends Enemy {
         //ASSET_MANAGER.playAsset("./assets/sound/boss_headbutt.mp3"); // Play headbutt sound
 
         setTimeout(() => {
-            if (this.scene.player.isCollidingWithEnemy(this)) {
+            if (this.isCollidingWithEntity(this.scene.player)) {
                 this.scene.player.takeDamage(25); // Higher boss attack damage
             }
         }, 500); // Attack delay for animation
