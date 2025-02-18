@@ -307,16 +307,19 @@ class Character {
                 if(this.pistolAnimations.damage.isDone()){
                     this.damageTaken = false;
                     this.pistolAnimations.damage.elapsedTime = 0;
+                    this.isPlaying = false;
                 }
             } else if (this.isUsingSword) {
                 if(this.swordAnimations.damage.isDone()){
                     this.damageTaken = false;
                     this.swordAnimations.damage.elapsedTime = 0;
+                    this.isPlaying = false;
                 }
             }else {
                 if(this.damageAnimation.isDone()){
                     this.damageTaken = false;
                     this.damageAnimation.elapsedTime = 0;
+                    this.isPlaying = false;
                 }
             }
             return;
@@ -542,7 +545,6 @@ class Character {
 
     performDeath() {
         if(!this.isPlaying){
-            this.isPlaying = true;
             ASSET_MANAGER.playAsset("./assets/sound/death.mp3")
             this.isPlaying = true;
         }         
