@@ -84,7 +84,8 @@ class Enemy extends Character {
             // Handle random punch
             this.attackTimer += this.gameEngine.clockTick; // Increment timer by elapsed time
             if (this.attackTimer >= this.attackInterval && (distanceToPlayer <= this.attackRange || distanceToPlayerX <=this.attackRange)) {
-                this.performAttack("punch"); // Perform a punch attack
+                let currentMove = this.randomAttack();
+                this.performAttack(currentMove); // Perform a punch attack
                 this.attackTimer = 0; // Reset the timer
                 this.attackInterval = 2 + Math.random() * 3; // Set a new random interval
 
@@ -94,7 +95,9 @@ class Enemy extends Character {
             
                     setTimeout(() => {
                         if (this.isCollidingWithEntity(player)) { // Recheck if still colliding
-                            player.takeDamage(5); // Inflict damage to the player after delay
+                           if(currentMove == "punch") player.takeDamage(10);
+                           else if(currentMove == "chop") player.takeDamage(5);
+                           else if(currentMove == "kick") player.takeDamage(15);
                         }
                     }, damageDelay);
                 }
@@ -132,6 +135,12 @@ class Enemy extends Character {
         ctx.strokeStyle = "black";
         ctx.lineWidth = 2;
         ctx.strokeRect(xPosition, yPosition, healthBarWidth, healthBarHeight);
+    }
+
+    randomAttack() {
+        const attacks = ["punch", "kick", "chop"];
+        const randomIndex = Math.floor(Math.random() * attacks.length);
+        return attacks[randomIndex];
     }
 
     // isCollidingWithPlayer() {
