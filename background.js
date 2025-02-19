@@ -80,10 +80,6 @@ class Background {
                 },
                 sceneElements: [
                     
-                    { x: 1*PARAMS.CELL_SIZE, y: 0, type: 'trashcan' },
-                    { x: 3*PARAMS.CELL_SIZE, y: 0, type: 'mailbox' },
-                    { x: 13*PARAMS.CELL_SIZE, y: 0, type: 'bus_sign' },
-
                     // Walls
                     { x: 60*PARAMS.CELL_SIZE, y: -110, type: 'grassWall' },
                     { x: 70*PARAMS.CELL_SIZE-40, y: -110, type: 'brickWall' },
@@ -105,8 +101,7 @@ class Background {
                     // Misc
                     { x: 42*PARAMS.CELL_SIZE+15, y: -110, type: 'grass' },
                     { x: 50*PARAMS.CELL_SIZE+15, y: -110, type: 'grass' },
-                    { x: 114*PARAMS.CELL_SIZE, y: -110, type: 'street_car' },
-                    { x: 116*PARAMS.CELL_SIZE, y: +200, type: 'street_car' },
+
 
 
 

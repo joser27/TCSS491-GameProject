@@ -92,9 +92,11 @@ class GameEngine {
         const fixedEntities = this.entities.filter(entity => entity.isFixedZ);
         const dynamicEntities = this.entities.filter(entity => !entity.isFixedZ);
 
-        // Update zIndex based on y position for dynamic entities only
+        // Update zIndex based on bounding box bottom for dynamic entities only
         dynamicEntities.forEach(entity => {
-            entity.zIndex = entity.y * 0.1;
+            if (entity.boundingbox) {
+                entity.zIndex = (entity.boundingbox.y + entity.boundingbox.height) * 0.1;
+            }
         });
 
         // Combine and sort ALL entities by zIndex

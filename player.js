@@ -180,16 +180,17 @@ class Player extends Character {
         if(this.isJumping){
             this.velocity += this.gravity;
             this.y += this.velocity;
-         if(this.y >= this.initialGroundY) {
-            this.isJumping = false;
-            this.velocity = 0;
-            this.y = this.initialGroundY;
+            if(this.y >= this.initialGroundY) {
+                this.isJumping = false;
+                this.velocity = 0;
+                this.y = this.initialGroundY;
             }
             console.log("this.y " + this.y);
             console.log("Initial y: " + this.initialGroundY);
         }
 
-        this.zIndex = this.y;
+        // Update zIndex using the bottom of the bounding box
+        this.zIndex = (this.boundingbox.y + this.boundingbox.height) * 0.1;
     }    
     
 
