@@ -5,10 +5,10 @@ class RedEnemy extends Character {
         this.y = y;
         this.attackTimer = 0;
         this.attackInterval = 2 + Math.random() * 3;
-        this.attackRange = 200;
+        this.attackRange = 300;
         this.isUsingPistol = true;
         this.weapon = new Pistol(this.scene);
-        this.speed = 1.5; // Adjust speed for smooth movement
+        this.speed = 2; 
     }
 
     update() {
