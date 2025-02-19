@@ -74,6 +74,7 @@ class BlueEnemy extends Character {
             this.attackInterval = 2 + Math.random() * 3; // Reset timer for next attack
             this.performSwordAttack();
         }
+        this.zIndex = this.y;
     }
     
 

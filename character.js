@@ -102,7 +102,7 @@ class Character {
                 512,
                 512,
                 4,
-                0.1,
+                0.2,
                 0.8,
                 false
             ),
@@ -559,16 +559,16 @@ class Character {
         }         
     }
 
-    drawGameOver(ctx) {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    // drawGameOver(ctx) {
+    //     ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+    //     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-        ctx.fillStyle = "white";
-        ctx.font = "48px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText("Game Over", ctx.canvas.width / 2, ctx.canvas.height / 2);
+    //     ctx.fillStyle = "white";
+    //     ctx.font = "48px Arial";
+    //     ctx.textAlign = "center";
+    //     ctx.fillText("Game Over", ctx.canvas.width / 2, ctx.canvas.height / 2);
 
-        ctx.font = "24px Arial";
-        ctx.fillText("Press R to Restart", ctx.canvas.width / 2, ctx.canvas.height / 2 + 50);
-    }
+    //     ctx.font = "24px Arial";
+    //     ctx.fillText("Press R to Restart", ctx.canvas.width / 2, ctx.canvas.height / 2 + 50);
+    // }
 }

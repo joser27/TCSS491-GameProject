@@ -45,7 +45,7 @@ class LevelManager {
                         endX: 60*PARAMS.CELL_SIZE,
                         enemies: [
                             { type: 'BlueEnemy', x: 40*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
-                            { type: 'BasicYellowEnemy', x: 52*PARAMS.CELL_SIZE, y: 10*PARAMS.CELL_SIZE },
+                            { type: 'RedEnemy', x: 52*PARAMS.CELL_SIZE, y: 10*PARAMS.CELL_SIZE },
                             { type: 'BasicYellowEnemy', x: 60*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
 
                         ]
@@ -159,6 +159,7 @@ class LevelManager {
                 return new BossEnemy(this.gameEngine, this.sceneManager.scene, x, y);
             },
             'BlueEnemy': (x, y) => new BlueEnemy(this.gameEngine, this.sceneManager.scene, x, y),
+            'RedEnemy': (x, y) => new RedEnemy(this.gameEngine, this.sceneManager.scene,x, y ),
             'RangedEnemy': (x, y) => new RangedEnemy(this.gameEngine, x, y) // TODO: add
         };
 

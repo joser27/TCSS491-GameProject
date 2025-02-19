@@ -24,6 +24,13 @@ class Player extends Character {
 
         super.update();
         //console.log("player ", this.boundingbox);
+
+       // this.handleCheatCodeInput();
+       
+       if(this.gameEngine.keys.h) {
+            this.health = 200;
+       }
+
         if (this.deathCompleted) {
             console.log("Game Over");
         }
@@ -78,7 +85,7 @@ class Player extends Character {
     
         if (!this.currentAttack) {
             const movingRight = this.gameEngine.keys.d || this.gameEngine.keys["ArrowRight"];
-            const movingLeft = this.gameEngine.keys.a || this.gameEngine.keys["ArrowLeft"];
+            const movingLeft =  this.gameEngine.keys.a || this.gameEngine.keys["ArrowLeft"]; 
             const movingUp = this.gameEngine.keys.w || this.gameEngine.keys["ArrowUp"];
             const movingDown = this.gameEngine.keys.s || this.gameEngine.keys["ArrowDown"];
             const jump = this.gameEngine.keys[" "];
@@ -364,5 +371,27 @@ class Player extends Character {
         this.weapon = weapon;
         this.isUsingPistol = weapon instanceof Pistol;
         this.isUsingSword = weapon instanceof Sword;
+    }
+
+    handleCheatCodeInput() {
+        // Listen for keydown events
+        document.addEventListener("keydown", (event) => {
+            // Append the latest key to the buffer (convert to lowercase for consistency)
+            this.cheatCodeBuffer += event.key.toLowerCase();
+
+            // Keep only the last 4 characters (length of "heal")
+            if (this.cheatCodeBuffer.length > 4) {
+                this.cheatCodeBuffer = this.cheatCodeBuffer.slice(-4);
+            }
+
+            // Check if the cheat code "heal" is entered
+            if (this.cheatCodeBuffer === "heal") {
+                this.health = 200; // Restore full health
+                console.log("CHEAT ACTIVATED: Player healed to full health!");
+                
+                // Clear the buffer so it doesn't trigger again immediately
+                this.cheatCodeBuffer = "";
+            }
+        });
     }
 }

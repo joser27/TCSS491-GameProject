@@ -7,6 +7,7 @@ ASSET_MANAGER.queueDownload("./assets/sprites/white_fight_spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/yellow_fight_spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/white_pistol_spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/blue_sword_spritesheet.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/red_pistol_spritesheet.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/bullet.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/evenBiggerGround.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/background1.png");
