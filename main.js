@@ -55,6 +55,11 @@ ASSET_MANAGER.queueDownload("./assets/sprites/testStreet.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/testbuilding1.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/testbuilding2.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/testbuilding3.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/sewer_wall.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/sewer_ground.png");
+
+ASSET_MANAGER.queueDownload("./assets/sprites/outside_ground.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/outside_background.png");
 
 ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_point.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_sprint.png");

@@ -134,30 +134,43 @@ class LevelManager {
         if (!levelConfig) return;
 
         levelConfig.zones.forEach(zoneConfig => {
-            // Create all enemies but don't activate them yet
-            const waves = zoneConfig.waves.map(wave => ({
-                enemies: this.createEnemies(wave.enemies)
-            }));
-            
-            // Add all enemies to game engine as inactive
-            waves.forEach(wave => {
-                wave.enemies.forEach(enemyData => {
+            if (zoneConfig.waves) {
+                // Handle wave-based enemy configuration
+                const waves = zoneConfig.waves.map(wave => ({
+                    enemies: this.createEnemies(wave.enemies)
+                }));
+                
+                // Add all enemies to game engine as inactive
+                waves.forEach(wave => {
+                    wave.enemies.forEach(enemyData => {
+                        enemyData.enemy.isActive = false;
+                        this.gameEngine.addEntity(enemyData.enemy);
+                    });
+                });
+
+                this.addCombatZone(zoneConfig.triggerX, zoneConfig.startX, zoneConfig.endX, waves);
+            } else if (zoneConfig.enemies) {
+                // Handle direct enemy configuration
+                const enemies = this.createEnemies(zoneConfig.enemies);
+                const waves = [{
+                    enemies: enemies
+                }];
+                
+                // Add all enemies to game engine as inactive
+                enemies.forEach(enemyData => {
                     enemyData.enemy.isActive = false;
                     this.gameEngine.addEntity(enemyData.enemy);
                 });
-            });
 
-            this.addCombatZone(zoneConfig.triggerX, zoneConfig.startX, zoneConfig.endX, waves);
+                this.addCombatZone(zoneConfig.triggerX, zoneConfig.startX, zoneConfig.endX, waves);
+            }
         });
     }
 
     createEnemies(enemyConfigs) {
         const enemyTypes = {
             'BasicYellowEnemy': (x, y) => new Enemy(this.gameEngine, this.sceneManager.scene, x, y),
-            'BossEnemy': (x, y) => {
-                console.log("Creating BossEnemy at", x, y); // Debug log
-                return new BossEnemy(this.gameEngine, this.sceneManager.scene, x, y);
-            },
+            'BossEnemy': (x, y) => new BossEnemy(this.gameEngine, this.sceneManager.scene, x, y),
             'BlueEnemy': (x, y) => new BlueEnemy(this.gameEngine, this.sceneManager.scene, x, y),
             'RedEnemy': (x, y) => new RedEnemy(this.gameEngine, this.sceneManager.scene,x, y ),
             'RangedEnemy': (x, y) => new RangedEnemy(this.gameEngine, x, y) // TODO: add

@@ -37,6 +37,16 @@ class Background {
             building2: ASSET_MANAGER.getAsset("./assets/sprites/mallwallAseprite2.png"),
             building3: ASSET_MANAGER.getAsset("./assets/sprites/backgroundMallAseprite.png"),
         }
+
+        this.level3 = {
+            ground: ASSET_MANAGER.getAsset("./assets/sprites/sewer_ground.png"),
+            background: ASSET_MANAGER.getAsset("./assets/sprites/sewer_wall.png"),
+        }
+
+        this.level4 = {
+            ground: ASSET_MANAGER.getAsset("./assets/sprites/outside_ground.png"),
+            background: ASSET_MANAGER.getAsset("./assets/sprites/outside_background.png"),
+        }
         
         this.player = player;
         this.x = 0;
@@ -182,6 +192,66 @@ class Background {
                     
                 ]
             },
+            3: {
+                assets: this.level3,
+                details: {
+                    background: { width: this.level3.background.width*1.5, height: this.level3.background.height*1.5 },
+                    ground: { width: this.level3.ground.width*1.5, height: this.level3.ground.height*1.5 },
+                },
+                sceneElements: [
+                    { x: 0, y: 0, type: 'background' },
+                    { x: this.level3.background.width, y: 0, type: 'background' },
+                    { x: this.level3.background.width*2, y: 0, type: 'background' },
+                    { x: this.level3.background.width*3, y: 0, type: 'background' },
+                    { x: this.level3.background.width*4, y: 0, type: 'background' },
+                    { x: this.level3.background.width*5, y: 0, type: 'background' },
+                    { x: this.level3.background.width*6, y: 0, type: 'background' },
+                    { x: this.level3.background.width*7, y: 0, type: 'background' },
+                    { x: this.level3.background.width*8, y: 0, type: 'background' },
+                    { x: this.level3.background.width*9, y: 0, type: 'background' },
+                    { x: this.level3.background.width*10, y: 0, type: 'background' },
+
+                    { x: 0, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*1.5, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*3, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*4.5, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*6, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*7.5, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*9, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*10.5, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*12, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*13.5, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*15, y: -5, type: 'ground' },
+                ]
+            },
+            4: {
+                assets: this.level4,
+                details: {
+                    background: { width: this.level4.background.width, height: this.level4.background.height },
+                    ground: { width: this.level4.ground.width, height: this.level4.ground.height },
+                },
+                sceneElements: [
+                    { x: 0, y: 120, type: 'ground' },
+                    { x: this.level4.ground.width, y: 120, type: 'ground' },
+                    { x: this.level4.ground.width*2, y: 120, type: 'ground' },
+                    { x: this.level4.ground.width*3, y: 120, type: 'ground' },
+                    { x: this.level4.ground.width*4, y: 120, type: 'ground' },
+                    { x: this.level4.ground.width*5, y: 120, type: 'ground' },
+                    { x: this.level4.ground.width*6, y: 120, type: 'ground' },
+                    { x: this.level4.ground.width*7, y: 120, type: 'ground' },
+
+
+                    { x: 0, y: 125, type: 'background' },
+                    { x: this.level4.background.width, y: 125, type: 'background' },
+                    { x: this.level4.background.width*2, y: 125, type: 'background' },
+                    { x: this.level4.background.width*3, y: 125, type: 'background' },
+                    { x: this.level4.background.width*4, y: 125, type: 'background' },
+                    { x: this.level4.background.width*5, y: 125, type: 'background' },
+                    { x: this.level4.background.width*6, y: 125, type: 'background' },
+                    { x: this.level4.background.width*7, y: 125, type: 'background' },
+                    
+                ]
+            }
         };
     }
 
