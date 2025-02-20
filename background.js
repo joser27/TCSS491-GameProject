@@ -175,12 +175,27 @@ class Background {
                     { x: this.level2.building1.width*2, y: 120, type: 'building2' },
                     { x: this.level2.building1.width*3, y: 120, type: 'building1' },
                     { x: this.level2.building1.width*4, y: 120, type: 'building1' },
+                    { x: this.level2.building1.width*5, y: 120, type: 'building1' },
+                    { x: this.level2.building1.width*6, y: 120, type: 'building2' },
+                    { x: this.level2.building1.width*7, y: 120, type: 'building2' },
+                    { x: this.level2.building1.width*8, y: 120, type: 'building2' },
+                    { x: this.level2.building1.width*9, y: 120, type: 'building2' },
+                    { x: this.level2.building1.width*10, y: 120, type: 'building2' },
+                    { x: this.level2.building1.width*11, y: 120, type: 'building2' },
 
                     { x: 0, y: -480, type: 'building3' },
                     { x: this.level2.building1.width, y: -480, type: 'building3' },
                     { x: this.level2.building1.width*2, y: -480, type: 'building3' },
                     { x: this.level2.building1.width*3, y: -480, type: 'building3' },
                     { x: this.level2.building1.width*4, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width*5, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width*6, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width*7, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width*8, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width*9, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width*10, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width*11, y: -480, type: 'building3' },
+                    
 
                     // Ground
                     { x: 0, y: 120, type: 'ground' },
@@ -189,6 +204,13 @@ class Background {
                     { x: this.level2.ground.width*3, y: 120, type: 'ground' },
                     { x: this.level2.ground.width*4, y: 120, type: 'ground' },
                     { x: this.level2.ground.width*5, y: 120, type: 'ground' },
+                    { x: this.level2.ground.width*6, y: 120, type: 'ground' },
+                    { x: this.level2.ground.width*7, y: 120, type: 'ground' },
+                    { x: this.level2.ground.width*8, y: 120, type: 'ground' },
+                    { x: this.level2.ground.width*9, y: 120, type: 'ground' },
+                    { x: this.level2.ground.width*10, y: 120, type: 'ground' },
+                    
+                    
                     
                 ]
             },
