@@ -2,7 +2,7 @@ class Pistol extends Weapon {
     constructor(scene) {
         super("Pistol", 45, 300, 0.5, scene);
         this.bullets = [];
-        this.magazineSize = 15;
+        this.magazineSize = 10;
         this.ammo = this.magazineSize;
         this.reloading = false;
         this.reloadTime = 2;
@@ -25,8 +25,8 @@ class Pistol extends Weapon {
             this.bullets.push(bullet);
         }
 
-        if(this.ammo === 0 && !this.reloading) {
-            this.reload;
+        if(this.ammo <= 0 && !this.reloading) {
+            this.reload();
         }
     }
 
@@ -40,7 +40,7 @@ class Pistol extends Weapon {
             this.ammo = this.magazineSize;
             this.reloading = false;
             console.log("Reload Complete!")
-        }, this.reloadTime * 1000);
+        }, 1000);
     }
 
     update(clockTick) {
