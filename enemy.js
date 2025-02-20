@@ -84,17 +84,20 @@ class Enemy extends Character {
             // Handle random punch
             this.attackTimer += this.gameEngine.clockTick; // Increment timer by elapsed time
             if (this.attackTimer >= this.attackInterval && (distanceToPlayer <= this.attackRange || distanceToPlayerX <=this.attackRange)) {
-                this.performAttack("punch"); // Perform a punch attack
+                let currentMove = this.randomAttack();
+                this.performAttack(currentMove); // Perform a punch attack
                 this.attackTimer = 0; // Reset the timer
                 this.attackInterval = 2 + Math.random() * 3; // Set a new random interval
 
                 // Check if the punch hits the player
-                if (this.isCollidingWithPlayer()) {
+                if (this.isCollidingWithEntity(player)) {
                     let damageDelay = 500; // Half-second delay in milliseconds
             
                     setTimeout(() => {
-                        if (this.isCollidingWithPlayer()) { // Recheck if still colliding
-                            player.takeDamage(5); // Inflict damage to the player after delay
+                        if (this.isCollidingWithEntity(player)) { // Recheck if still colliding
+                           if(currentMove == "punch") player.takeDamage(10);
+                           else if(currentMove == "chop") player.takeDamage(5);
+                           else if(currentMove == "kick") player.takeDamage(15);
                         }
                     }, damageDelay);
                 }
@@ -134,22 +137,28 @@ class Enemy extends Character {
         ctx.strokeRect(xPosition, yPosition, healthBarWidth, healthBarHeight);
     }
 
-    isCollidingWithPlayer() {
-        const player = this.scene.player;
-        return (
-            this.boundingbox.x < player.boundingbox.x + player.boundingbox.width &&
-            this.boundingbox.x + this.boundingbox.width > player.boundingbox.x &&
-            this.boundingbox.y < player.boundingbox.y + player.boundingbox.height &&
-            this.boundingbox.y + this.boundingbox.height > player.boundingbox.y
-        );
+    randomAttack() {
+        const attacks = ["punch", "kick", "chop"];
+        const randomIndex = Math.floor(Math.random() * attacks.length);
+        return attacks[randomIndex];
     }
 
-    isCollidingWithBullet(bullet) {
-        return (
-            bullet.x < this.boundingbox.x + this.boundingbox.width &&
-            bullet.x + bullet.width > this.boundingbox.x &&
-            bullet.y < this.boundingbox.y + this.boundingbox.height &&
-            bullet.y + bullet.width > this.boundingbox.y
-        );
-    }
+    // isCollidingWithPlayer() {
+    //     const player = this.scene.player;
+    //     return (
+    //         this.boundingbox.x < player.boundingbox.x + player.boundingbox.width &&
+    //         this.boundingbox.x + this.boundingbox.width > player.boundingbox.x &&
+    //         this.boundingbox.y < player.boundingbox.y + player.boundingbox.height &&
+    //         this.boundingbox.y + this.boundingbox.height > player.boundingbox.y
+    //     );
+    // }
+
+    // isCollidingWithBullet(bullet) {
+    //     return (
+    //         bullet.x < this.boundingbox.x + this.boundingbox.width &&
+    //         bullet.x + bullet.width > this.boundingbox.x &&
+    //         bullet.y < this.boundingbox.y + this.boundingbox.height &&
+    //         bullet.y + bullet.width > this.boundingbox.y
+    //     );
+    // }
 }

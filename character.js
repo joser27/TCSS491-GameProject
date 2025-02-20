@@ -102,7 +102,7 @@ class Character {
                 512,
                 512,
                 4,
-                0.1,
+                0.2,
                 0.8,
                 false
             ),
@@ -307,16 +307,19 @@ class Character {
                 if(this.pistolAnimations.damage.isDone()){
                     this.damageTaken = false;
                     this.pistolAnimations.damage.elapsedTime = 0;
+                    this.isPlaying = false;
                 }
             } else if (this.isUsingSword) {
                 if(this.swordAnimations.damage.isDone()){
                     this.damageTaken = false;
                     this.swordAnimations.damage.elapsedTime = 0;
+                    this.isPlaying = false;
                 }
             }else {
                 if(this.damageAnimation.isDone()){
                     this.damageTaken = false;
                     this.damageAnimation.elapsedTime = 0;
+                    this.isPlaying = false;
                 }
             }
             return;
@@ -445,11 +448,62 @@ class Character {
             ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
             ctx.fillRect(this.boundingbox.x, this.boundingbox.y, this.boundingbox.width, this.boundingbox.height);
         }
+        if (this.isUsingSword && PARAMS.DEBUG) {
+            const attackBox = this.getAttackBoundingBox();
+            ctx.strokeStyle = "red";
+            ctx.strokeRect(attackBox.x , attackBox.y, attackBox.width, attackBox.height);
+        }
+    
     }
 
     drawBoundingBox(ctx) {
         ctx.strokeStyle = "red";
         ctx.strokeRect(this.boundingbox.x, this.boundingbox.y, this.boundingbox.width, this.boundingbox.height);
+    }
+
+    isCollidingWithEntity(entity) {
+        return (
+            this.boundingbox.x < entity.boundingbox.x + entity.boundingbox.width &&
+            this.boundingbox.x + this.boundingbox.width > entity.boundingbox.x &&
+            this.boundingbox.y < entity.boundingbox.y + entity.boundingbox.height &&
+            this.boundingbox.y + this.boundingbox.height > entity.boundingbox.y
+        );
+    }
+
+    isCollidingWithBullet(bullet) {
+        return (
+            bullet.x < this.boundingbox.x + this.boundingbox.width &&
+            bullet.x + bullet.width > this.boundingbox.x &&
+            bullet.y < this.boundingbox.y + this.boundingbox.height &&
+            bullet.y + bullet.width > this.boundingbox.y
+        );
+    }
+
+    isEntityInAttackRange(entity) {
+        if (!entity || !entity.boundingbox) return false;
+    
+        const attackBox = this.getAttackBoundingBox();
+        const targetBox = entity.boundingbox;
+    
+        return (
+            attackBox.x < targetBox.x + targetBox.width &&
+            attackBox.x + attackBox.width > targetBox.x &&
+            attackBox.y < targetBox.y + targetBox.height &&
+            attackBox.y + attackBox.height > targetBox.y
+        );
+    }
+    
+    getAttackBoundingBox() {
+        if(this.isUsingSword) {
+            const attackWidth = this.weapon.range; // Sword range
+            const attackHeight = this.boundingbox.height; // Same height as enemy
+
+            let attackX = this.facingLeft
+                ? this.boundingbox.x - attackWidth  // Attack to the left
+                : this.boundingbox.x + this.boundingbox.width; // Attack to the right
+
+            return new BoundingBox(attackX, this.boundingbox.y, attackWidth, attackHeight);
+        } else return;
     }
 
     takeDamage(amount) {
@@ -491,7 +545,6 @@ class Character {
 
     performDeath() {
         if(!this.isPlaying){
-            this.isPlaying = true;
             ASSET_MANAGER.playAsset("./assets/sound/death.mp3")
             this.isPlaying = true;
         }         
@@ -506,16 +559,16 @@ class Character {
         }         
     }
 
-    drawGameOver(ctx) {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    // drawGameOver(ctx) {
+    //     ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+    //     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-        ctx.fillStyle = "white";
-        ctx.font = "48px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText("Game Over", ctx.canvas.width / 2, ctx.canvas.height / 2);
+    //     ctx.fillStyle = "white";
+    //     ctx.font = "48px Arial";
+    //     ctx.textAlign = "center";
+    //     ctx.fillText("Game Over", ctx.canvas.width / 2, ctx.canvas.height / 2);
 
-        ctx.font = "24px Arial";
-        ctx.fillText("Press R to Restart", ctx.canvas.width / 2, ctx.canvas.height / 2 + 50);
-    }
+    //     ctx.font = "24px Arial";
+    //     ctx.fillText("Press R to Restart", ctx.canvas.width / 2, ctx.canvas.height / 2 + 50);
+    // }
 }

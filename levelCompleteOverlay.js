@@ -3,7 +3,7 @@ class LevelCompleteOverlay {
         this.gameEngine = gameEngine;
         this.levelManager = levelManager;
         this.coins = stats.coins;
-        this.health = stats.health;
+        this.health = stats.health/2;
         this.onComplete = stats.onComplete;
         
         this.isFixedZ = true;

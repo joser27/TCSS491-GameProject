@@ -33,68 +33,32 @@ class LevelManager {
                         triggerX: 24*PARAMS.CELL_SIZE,
                         startX: 14*PARAMS.CELL_SIZE,
                         endX: 34*PARAMS.CELL_SIZE,
-                        waves: [
-                            {
-                                enemies: [
-                                    { 
-                                        type: 'BasicYellowEnemy', 
-                                        x: 34*PARAMS.CELL_SIZE, 
-                                        y: 7*PARAMS.CELL_SIZE,
-                                        spawnDelay: 0 
-                                    },
-                                    { 
-                                        type: 'BasicYellowEnemy', 
-                                        x: 33*PARAMS.CELL_SIZE, 
-                                        y: 9*PARAMS.CELL_SIZE,
-                                        spawnDelay: 2
-                                    },
-                                    { 
-                                        type: 'BasicYellowEnemy', 
-                                        x: 32*PARAMS.CELL_SIZE, 
-                                        y: 8*PARAMS.CELL_SIZE,
-                                        spawnDelay: 4
-                                    }
-                                ]
-                            },
-
+                        enemies: [
+                            { type: 'BasicYellowEnemy', x: 34*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
+                            { type: 'BlueEnemy', x: 33*PARAMS.CELL_SIZE, y: 9*PARAMS.CELL_SIZE },
+                            
                         ]
                     },
                     {
                         triggerX: 42*PARAMS.CELL_SIZE,
-                        startX: 38*PARAMS.CELL_SIZE,
-                        endX: 58*PARAMS.CELL_SIZE,
-                        waves: [
-                            {
-                                enemies: [
-                                    { type: 'BasicYellowEnemy', x: 56*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE, spawnDelay: 0 },
-                                    { type: 'BasicYellowEnemy', x: 57*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE, spawnDelay: 2 },
-                                ]
-                            },
-                            {
-                                enemies: [
-                                    { type: 'BasicYellowEnemy', x: 39*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE, spawnDelay: 0 },
-                                    { type: 'BasicYellowEnemy', x: 39*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE, spawnDelay: 2 },
-                                ]
-                            },
+                        startX: 40*PARAMS.CELL_SIZE,
+                        endX: 60*PARAMS.CELL_SIZE,
+                        enemies: [
+                            { type: 'BlueEnemy', x: 40*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
+                            { type: 'RedEnemy', x: 52*PARAMS.CELL_SIZE, y: 10*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 60*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
+
                         ]
                     },
                     {
                         triggerX: 74*PARAMS.CELL_SIZE,
                         startX: 68*PARAMS.CELL_SIZE,
                         endX: 88*PARAMS.CELL_SIZE,
-                        waves: [
-                            {
-                                enemies: [
-                                    { type: 'BasicYellowEnemy', x: 73*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE, spawnDelay: 0 },
-                                    { type: 'BasicYellowEnemy', x: 77*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE, spawnDelay: 0 },
-                                ]
-                            },
-                            {
-                                enemies: [
-                                    { type: 'BasicYellowEnemy', x: 73*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE, spawnDelay: 2 },
-                                    { type: 'BasicYellowEnemy', x: 77*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE, spawnDelay: 0 },
-                                ]
-                            }
+                        enemies: [
+                            { type: 'BasicYellowEnemy', x: 73*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 77*PARAMS.CELL_SIZE, y: 4*PARAMS.CELL_SIZE },
+                            { type: 'BlueEnemy', x: 92*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE },
+                            
                         ]
                     },
                     {
@@ -190,8 +154,13 @@ class LevelManager {
     createEnemies(enemyConfigs) {
         const enemyTypes = {
             'BasicYellowEnemy': (x, y) => new Enemy(this.gameEngine, this.sceneManager.scene, x, y),
-            'BossEnemy': (x, y) => new BossEnemy(this.gameEngine, this.sceneManager.scene, x, y),
-            'RangedEnemy': (x, y) => new RangedEnemy(this.gameEngine, x, y)
+            'BossEnemy': (x, y) => {
+                console.log("Creating BossEnemy at", x, y); // Debug log
+                return new BossEnemy(this.gameEngine, this.sceneManager.scene, x, y);
+            },
+            'BlueEnemy': (x, y) => new BlueEnemy(this.gameEngine, this.sceneManager.scene, x, y),
+            'RedEnemy': (x, y) => new RedEnemy(this.gameEngine, this.sceneManager.scene,x, y ),
+            'RangedEnemy': (x, y) => new RangedEnemy(this.gameEngine, x, y) // TODO: add
         };
 
         return enemyConfigs.map(config => {

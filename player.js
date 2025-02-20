@@ -11,6 +11,7 @@ class Player extends Character {
 
         this.weapon = null;
         this.speed = 5;
+        this.health = 200;
         
     }
 
@@ -23,6 +24,13 @@ class Player extends Character {
 
         super.update();
         //console.log("player ", this.boundingbox);
+
+       // this.handleCheatCodeInput();
+       
+       if(this.gameEngine.keys.h) {
+            this.health = 200;
+       }
+
         if (this.deathCompleted) {
             console.log("Game Over");
         }
@@ -77,7 +85,7 @@ class Player extends Character {
     
         if (!this.currentAttack) {
             const movingRight = this.gameEngine.keys.d || this.gameEngine.keys["ArrowRight"];
-            const movingLeft = this.gameEngine.keys.a || this.gameEngine.keys["ArrowLeft"];
+            const movingLeft =  this.gameEngine.keys.a || this.gameEngine.keys["ArrowLeft"]; 
             const movingUp = this.gameEngine.keys.w || this.gameEngine.keys["ArrowUp"];
             const movingDown = this.gameEngine.keys.s || this.gameEngine.keys["ArrowDown"];
             const jump = this.gameEngine.keys[" "];
@@ -203,64 +211,45 @@ class Player extends Character {
 
         // Check collision with all active enemies in the zone
         for (const enemy of currentZone.enemies) {
-            if(this.isUsingSword){
-                if (this.isEnemyInAttackRange(enemy) && !this.hasDealtDamage) {
-                    this.scene.sceneManager.gameState.playerStats.coins += 1;
-                    let damageDelay = 250;
-                    this.hasDealtDamage = true; // Mark damage as dealt for this attack
-
-                    setTimeout(() => {
-                        if(this.isEnemyInAttackRange(enemy)){
-                            enemy.takeDamage(damage);
-                            if (enemy.health <= 0) {
-                                console.log(`Enemy at (${enemy.x}, ${enemy.y}) is dead. Resetting attack.`);
-                                this.hasDealtDamage = false; // Reset so another enemy can be hit next
-                            }
-                        }
-                    }, damageDelay)
-                    break;
-                }
-
-            } else {
             // Only apply damage if the attack has not already dealt damage
-                if (this.isCollidingWithEnemy(enemy) && !this.hasDealtDamage) {
+                if (this.isCollidingWithEntity(enemy) && !this.hasDealtDamage) {
                     this.scene.sceneManager.gameState.playerStats.coins += 1;
                     let damageDelay = 250;
                     this.hasDealtDamage = true; // Mark damage as dealt for this attack
 
                     setTimeout(() => {
-                        if(this.isCollidingWithEnemy(enemy)){
+                        if(this.isCollidingWithEntity(enemy)){
                             enemy.takeDamage(damage);
                         }
                     }, damageDelay)
                     break;
                 }
-            }
+            
             
         }
     }
 
-    isEnemyInAttackRange(enemy) {
-        if (!enemy || !enemy.boundingbox) return false;
+    // isEnemyInAttackRange(enemy) {
+    //     if (!enemy || !enemy.boundingbox) return false;
     
-        const range = (this.boundingbox.x + this.weapon.range);
-        const leftRange = this.boundingbox.x - this.weapon.range;
-        if(this.facingLeft){
-            return (
-                leftRange - this.boundingbox.width < enemy.boundingbox.x + enemy.boundingbox.width &&
-                leftRange + this.boundingbox.width > enemy.boundingbox.x &&
-                this.boundingbox.y < enemy.boundingbox.y + enemy.boundingbox.height &&
-                this.boundingbox.y + this.boundingbox.height > enemy.boundingbox.y
-            );
-        } else {
-            return (
-                range < enemy.boundingbox.x + enemy.boundingbox.width &&
-                range + this.boundingbox.width > enemy.boundingbox.x &&
-                this.boundingbox.y < enemy.boundingbox.y + enemy.boundingbox.height &&
-                this.boundingbox.y + this.boundingbox.height > enemy.boundingbox.y
-            );
-        }
-    }
+    //     const range = (this.boundingbox.x + this.weapon.range);
+    //     const leftRange = this.boundingbox.x - this.weapon.range;
+    //     if(this.facingLeft){
+    //         return (
+    //             leftRange - this.boundingbox.width < enemy.boundingbox.x + enemy.boundingbox.width &&
+    //             leftRange + this.boundingbox.width > enemy.boundingbox.x &&
+    //             this.boundingbox.y < enemy.boundingbox.y + enemy.boundingbox.height &&
+    //             this.boundingbox.y + this.boundingbox.height > enemy.boundingbox.y
+    //         );
+    //     } else {
+    //         return (
+    //             range < enemy.boundingbox.x + enemy.boundingbox.width &&
+    //             range + this.boundingbox.width > enemy.boundingbox.x &&
+    //             this.boundingbox.y < enemy.boundingbox.y + enemy.boundingbox.height &&
+    //             this.boundingbox.y + this.boundingbox.height > enemy.boundingbox.y
+    //         );
+    //     }
+    // }
     
 
     unequipWeapon() {
@@ -274,17 +263,17 @@ class Player extends Character {
         
     }
     
-    isCollidingWithEnemy(enemy) {
-        if (!enemy || !enemy.boundingbox) return false;
+    // isCollidingWithEnemy(enemy) {
+    //     if (!enemy || !enemy.boundingbox) return false;
 
 
-        return (
-            this.boundingbox.x < enemy.boundingbox.x + enemy.boundingbox.width &&
-            this.boundingbox.x + this.boundingbox.width > enemy.boundingbox.x  &&
-            this.boundingbox.y < enemy.boundingbox.y + enemy.boundingbox.height &&
-            this.boundingbox.y + this.boundingbox.height > enemy.boundingbox.y
-        );
-    }
+    //     return (
+    //         this.boundingbox.x < enemy.boundingbox.x + enemy.boundingbox.width &&
+    //         this.boundingbox.x + this.boundingbox.width > enemy.boundingbox.x  &&
+    //         this.boundingbox.y < enemy.boundingbox.y + enemy.boundingbox.height &&
+    //         this.boundingbox.y + this.boundingbox.height > enemy.boundingbox.y
+    //     );
+    // }
 
     drawDebugStats(ctx) {
         if (PARAMS.DEBUG) {
@@ -363,7 +352,7 @@ class Player extends Character {
         const healthBarHeight = 70; // Height of the health bar
         const xPosition = 20; // Center horizontally
         const yPosition = 30; // Position near the top
-        const healthPercentage = this.health / 100;
+        const healthPercentage = this.health / 200;
 
         const img = new Image();
         img.src = './assets/sprites/healthbar.png';
@@ -382,5 +371,27 @@ class Player extends Character {
         this.weapon = weapon;
         this.isUsingPistol = weapon instanceof Pistol;
         this.isUsingSword = weapon instanceof Sword;
+    }
+
+    handleCheatCodeInput() {
+        // Listen for keydown events
+        document.addEventListener("keydown", (event) => {
+            // Append the latest key to the buffer (convert to lowercase for consistency)
+            this.cheatCodeBuffer += event.key.toLowerCase();
+
+            // Keep only the last 4 characters (length of "heal")
+            if (this.cheatCodeBuffer.length > 4) {
+                this.cheatCodeBuffer = this.cheatCodeBuffer.slice(-4);
+            }
+
+            // Check if the cheat code "heal" is entered
+            if (this.cheatCodeBuffer === "heal") {
+                this.health = 200; // Restore full health
+                console.log("CHEAT ACTIVATED: Player healed to full health!");
+                
+                // Clear the buffer so it doesn't trigger again immediately
+                this.cheatCodeBuffer = "";
+            }
+        });
     }
 }
