@@ -8,6 +8,7 @@ class PlayingScene {
         this.debugPlayer = true;
         this.gameEngine.ctx.imageSmoothingEnabled = true;
         this.gameState = gameState;
+        this.enemies = [];
         this.initEntities()
     }
 
@@ -17,9 +18,21 @@ class PlayingScene {
         this.player.zIndex = 2;
         this.gameEngine.addEntity(this.player);
 
-        this.levelManager = new LevelManager(this.gameEngine, this.sceneManager, this.player, this.camera);
+        this.levelManager = new LevelManager(this.gameEngine, this.sceneManager, this.player, this.camera, this);
         this.levelManager.zIndex = 1;
         this.gameEngine.addEntity(this.levelManager);
+    }
+
+    addEnemy(enemy) {
+        this.enemies.push(enemy);
+        this.gameEngine.addEntity(enemy);
+    }
+
+    removeEnemy(enemy) {
+        const index = this.enemies.indexOf(enemy);
+        if (index > -1) {
+            this.enemies.splice(index, 1);
+        }
     }
 
     update() {

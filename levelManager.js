@@ -1,9 +1,10 @@
 class LevelManager {
-    constructor(gameEngine, sceneManager, player, camera) {
+    constructor(gameEngine, sceneManager, player, camera, playingScene) {
         this.gameEngine = gameEngine;
         this.sceneManager = sceneManager;
         this.camera = camera;
         this.player = player;
+        this.playingScene = playingScene;
         
         // Grid and screen setup
         this.GRID_COLS = Math.floor(PARAMS.canvasWidth / PARAMS.CELL_SIZE);
@@ -215,11 +216,10 @@ class LevelManager {
                     enemies: this.createEnemies(wave.enemies)
                 }));
                 
-                // Add all enemies to game engine as inactive
+                // No need to add enemies to game engine here anymore
                 waves.forEach(wave => {
                     wave.enemies.forEach(enemyData => {
                         enemyData.enemy.isActive = false;
-                        this.gameEngine.addEntity(enemyData.enemy);
                     });
                 });
 
@@ -231,10 +231,9 @@ class LevelManager {
                     enemies: enemies
                 }];
                 
-                // Add all enemies to game engine as inactive
+                // No need to add enemies to game engine here anymore
                 enemies.forEach(enemyData => {
                     enemyData.enemy.isActive = false;
-                    this.gameEngine.addEntity(enemyData.enemy);
                 });
 
                 this.addCombatZone(zoneConfig.triggerX, zoneConfig.startX, zoneConfig.endX, waves);
@@ -247,16 +246,16 @@ class LevelManager {
             'BasicYellowEnemy': (x, y) => new Enemy(this.gameEngine, this.sceneManager.scene, x, y),
             'BossEnemy': (x, y) => new BossEnemy(this.gameEngine, this.sceneManager.scene, x, y),
             'BlueEnemy': (x, y) => new BlueEnemy(this.gameEngine, this.sceneManager.scene, x, y),
-            'RedEnemy': (x, y) => new RedEnemy(this.gameEngine, this.sceneManager.scene,x, y ),
-            'RangedEnemy': (x, y) => new RangedEnemy(this.gameEngine, x, y) // TODO: add
+            'RedEnemy': (x, y) => new RedEnemy(this.gameEngine, this.sceneManager.scene, x, y),
+            'RangedEnemy': (x, y) => new RangedEnemy(this.gameEngine, x, y)
         };
 
         return enemyConfigs.map(config => {
             const enemy = enemyTypes[config.type]?.(config.x, config.y) || 
                          new Enemy(this.gameEngine, this.sceneManager.scene, config.x, config.y);
             
-            // Store spawn delay in the wave data instead of on the enemy
             enemy.isActive = false;
+            // Don't add to GameEngine here anymore, PlayingScene will handle that
             return {
                 enemy: enemy,
                 spawnDelay: config.spawnDelay || 0
@@ -311,12 +310,13 @@ class LevelManager {
                 // Update current wave's delayed spawns
                 const currentWave = zone.waves[zone.currentWave];
                 if (currentWave && currentWave.isActive) {
-                    currentWave.elapsedTime += this.gameEngine.clockTick;  // Add time since last frame
+                    currentWave.elapsedTime += this.gameEngine.clockTick;
                     
                     currentWave.enemies.forEach(enemyData => {
                         if (!enemyData.enemy.isActive && !enemyData.enemy.isDead && 
                             enemyData.spawnDelay <= currentWave.elapsedTime) {
                             enemyData.enemy.isActive = true;
+                            this.playingScene.addEnemy(enemyData.enemy);  // Only add through PlayingScene
                         }
                     });
                 }
@@ -352,12 +352,13 @@ class LevelManager {
         
         const wave = zone.waves[waveIndex];
         wave.isActive = true;
-        wave.elapsedTime = 0;  // Track elapsed time using the timer
+        wave.elapsedTime = 0;
         
-        // Only activate enemies with no delay
+        // Add enemies to GameEngine through PlayingScene when activating them
         wave.enemies.forEach(enemyData => {
             if (enemyData.spawnDelay === 0) {
                 enemyData.enemy.isActive = true;
+                this.playingScene.addEnemy(enemyData.enemy);
             }
         });
     }
