@@ -23,6 +23,11 @@ class Background {
             street_intersection2: ASSET_MANAGER.getAsset("./assets/sprites/street_intersection2.png"),
             street_intersection3: ASSET_MANAGER.getAsset("./assets/sprites/street_intersection3.png"),
             street_car: ASSET_MANAGER.getAsset("./assets/sprites/street_car.png"),
+            street_car2: ASSET_MANAGER.getAsset("./assets/sprites/street_car2.png"),
+            street_car3: ASSET_MANAGER.getAsset("./assets/sprites/street_car3.png"),
+            trashcan: ASSET_MANAGER.getAsset("./assets/sprites/trashcan.png"),
+            mailbox: ASSET_MANAGER.getAsset("./assets/sprites/city_mailbox.png"),
+            bus_sign: ASSET_MANAGER.getAsset("./assets/sprites/bus_sign.png"),
         };
 
         this.level2 = {
@@ -31,6 +36,16 @@ class Background {
             building1: ASSET_MANAGER.getAsset("./assets/sprites/mallwallAseprite1.png"),
             building2: ASSET_MANAGER.getAsset("./assets/sprites/mallwallAseprite2.png"),
             building3: ASSET_MANAGER.getAsset("./assets/sprites/backgroundMallAseprite.png"),
+        }
+
+        this.level3 = {
+            ground: ASSET_MANAGER.getAsset("./assets/sprites/sewer_ground.png"),
+            background: ASSET_MANAGER.getAsset("./assets/sprites/sewer_wall.png"),
+        }
+
+        this.level4 = {
+            ground: ASSET_MANAGER.getAsset("./assets/sprites/outside_ground.png"),
+            background: ASSET_MANAGER.getAsset("./assets/sprites/outside_background.png"),
         }
         
         this.player = player;
@@ -64,11 +79,21 @@ class Background {
                     },
                     misc: {
                         grass: { width: this.level1.grass.width, height: this.level1.grass.height },
-                        street_car: { width: this.level1.street_car.width, height: this.level1.street_car.height },
+                        street_car: { width: this.level1.street_car.width*1.5, height: this.level1.street_car.height*1.5 },
+                        street_car2: { width: this.level1.street_car2.width*1.5, height: this.level1.street_car2.height*1.5 },
+                        street_car3: { width: this.level1.street_car3.width*1.5, height: this.level1.street_car3.height*1.5 },
+                        trashcan: { width: this.level1.trashcan.width, height: this.level1.trashcan.height },
+                        mailbox: { width: this.level1.mailbox.width, height: this.level1.mailbox.height },
+                        bus_sign: { width: this.level1.bus_sign.width, height: this.level1.bus_sign.height },
                     }
+
                 },
                 sceneElements: [
-                 
+                    
+                    { x: 1*PARAMS.CELL_SIZE, y: 0, type: 'trashcan' },
+                    { x: 3*PARAMS.CELL_SIZE, y: 0, type: 'mailbox' },
+                    { x: 13*PARAMS.CELL_SIZE, y: 0, type: 'bus_sign' },
+
                     // Walls
                     { x: 60*PARAMS.CELL_SIZE, y: -110, type: 'grassWall' },
                     { x: 70*PARAMS.CELL_SIZE-40, y: -110, type: 'brickWall' },
@@ -92,6 +117,7 @@ class Background {
                     { x: 50*PARAMS.CELL_SIZE+15, y: -110, type: 'grass' },
                     { x: 114*PARAMS.CELL_SIZE, y: -110, type: 'street_car' },
                     { x: 116*PARAMS.CELL_SIZE, y: +200, type: 'street_car' },
+
 
 
                      // Streets
@@ -149,12 +175,27 @@ class Background {
                     { x: this.level2.building1.width*2, y: 120, type: 'building2' },
                     { x: this.level2.building1.width*3, y: 120, type: 'building1' },
                     { x: this.level2.building1.width*4, y: 120, type: 'building1' },
+                    { x: this.level2.building1.width*5, y: 120, type: 'building1' },
+                    { x: this.level2.building1.width*6, y: 120, type: 'building2' },
+                    { x: this.level2.building1.width*7, y: 120, type: 'building2' },
+                    { x: this.level2.building1.width*8, y: 120, type: 'building2' },
+                    { x: this.level2.building1.width*9, y: 120, type: 'building2' },
+                    { x: this.level2.building1.width*10, y: 120, type: 'building2' },
+                    { x: this.level2.building1.width*11, y: 120, type: 'building2' },
 
                     { x: 0, y: -480, type: 'building3' },
                     { x: this.level2.building1.width, y: -480, type: 'building3' },
                     { x: this.level2.building1.width*2, y: -480, type: 'building3' },
                     { x: this.level2.building1.width*3, y: -480, type: 'building3' },
                     { x: this.level2.building1.width*4, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width*5, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width*6, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width*7, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width*8, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width*9, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width*10, y: -480, type: 'building3' },
+                    { x: this.level2.building1.width*11, y: -480, type: 'building3' },
+                    
 
                     // Ground
                     { x: 0, y: 120, type: 'ground' },
@@ -163,9 +204,76 @@ class Background {
                     { x: this.level2.ground.width*3, y: 120, type: 'ground' },
                     { x: this.level2.ground.width*4, y: 120, type: 'ground' },
                     { x: this.level2.ground.width*5, y: 120, type: 'ground' },
+                    { x: this.level2.ground.width*6, y: 120, type: 'ground' },
+                    { x: this.level2.ground.width*7, y: 120, type: 'ground' },
+                    { x: this.level2.ground.width*8, y: 120, type: 'ground' },
+                    { x: this.level2.ground.width*9, y: 120, type: 'ground' },
+                    { x: this.level2.ground.width*10, y: 120, type: 'ground' },
+                    
+                    
                     
                 ]
             },
+            3: {
+                assets: this.level3,
+                details: {
+                    background: { width: this.level3.background.width*1.5, height: this.level3.background.height*1.5 },
+                    ground: { width: this.level3.ground.width*1.5, height: this.level3.ground.height*1.5 },
+                },
+                sceneElements: [
+                    { x: 0, y: 0, type: 'background' },
+                    { x: this.level3.background.width, y: 0, type: 'background' },
+                    { x: this.level3.background.width*2, y: 0, type: 'background' },
+                    { x: this.level3.background.width*3, y: 0, type: 'background' },
+                    { x: this.level3.background.width*4, y: 0, type: 'background' },
+                    { x: this.level3.background.width*5, y: 0, type: 'background' },
+                    { x: this.level3.background.width*6, y: 0, type: 'background' },
+                    { x: this.level3.background.width*7, y: 0, type: 'background' },
+                    { x: this.level3.background.width*8, y: 0, type: 'background' },
+                    { x: this.level3.background.width*9, y: 0, type: 'background' },
+                    { x: this.level3.background.width*10, y: 0, type: 'background' },
+
+                    { x: 0, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*1.5, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*3, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*4.5, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*6, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*7.5, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*9, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*10.5, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*12, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*13.5, y: -5, type: 'ground' },
+                    { x: this.level3.ground.width*15, y: -5, type: 'ground' },
+                ]
+            },
+            4: {
+                assets: this.level4,
+                details: {
+                    background: { width: this.level4.background.width, height: this.level4.background.height },
+                    ground: { width: this.level4.ground.width, height: this.level4.ground.height },
+                },
+                sceneElements: [
+                    { x: 0, y: 120, type: 'ground' },
+                    { x: this.level4.ground.width, y: 120, type: 'ground' },
+                    { x: this.level4.ground.width*2, y: 120, type: 'ground' },
+                    { x: this.level4.ground.width*3, y: 120, type: 'ground' },
+                    { x: this.level4.ground.width*4, y: 120, type: 'ground' },
+                    { x: this.level4.ground.width*5, y: 120, type: 'ground' },
+                    { x: this.level4.ground.width*6, y: 120, type: 'ground' },
+                    { x: this.level4.ground.width*7, y: 120, type: 'ground' },
+
+
+                    { x: 0, y: 125, type: 'background' },
+                    { x: this.level4.background.width, y: 125, type: 'background' },
+                    { x: this.level4.background.width*2, y: 125, type: 'background' },
+                    { x: this.level4.background.width*3, y: 125, type: 'background' },
+                    { x: this.level4.background.width*4, y: 125, type: 'background' },
+                    { x: this.level4.background.width*5, y: 125, type: 'background' },
+                    { x: this.level4.background.width*6, y: 125, type: 'background' },
+                    { x: this.level4.background.width*7, y: 125, type: 'background' },
+                    
+                ]
+            }
         };
     }
 
@@ -174,6 +282,11 @@ class Background {
     }   
 
     draw(ctx) {
+        // Save the current context state
+        ctx.save();
+        
+        ctx.imageSmoothingEnabled = false;
+        
         const cameraX = Math.round(this.gameEngine.camera.x);
         const currentLevel = this.levelManager.sceneManager.gameState.currentLevel;
         const config = this.levelConfigs[currentLevel];
@@ -225,5 +338,8 @@ class Background {
                 }
             });
         }
+        
+        // Restore the original context state
+        ctx.restore();
     }
 }
