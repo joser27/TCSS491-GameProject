@@ -362,7 +362,23 @@ class Player extends Character {
         ctx.fillRect(xPosition+ 60, yPosition +25, 236 * healthPercentage, 25);
         ctx.drawImage(img,xPosition, yPosition, healthBarWidth, healthBarHeight);
 
-
+        ctx.beginPath(); 
+        ctx.rect(xPosition + 430, yPosition + 10, 350, 50); 
+        ctx.lineWidth = 5; 
+        ctx.strokeStyle = 'purple'; 
+        ctx.fillStyle = 'lightyellow'; 
+        ctx.stroke(); 
+        ctx.fill(); 
+ 
+        ctx.fillStyle = "black";
+        
+        if(this.isUsingPistol){
+            ctx.fillText("Use 'F' to shoot", xPosition + 450, yPosition + 45);
+        } else if(this.isUsingSword){
+            ctx.fillText("Use 'R' to attack", xPosition + 450, yPosition + 45);
+        } else{
+            ctx.fillText("'Q': Sword, 'G' : Pistol", xPosition + 450, yPosition + 45);
+        }
 
         this.drawDebugStats(ctx);
     }

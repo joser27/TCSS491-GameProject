@@ -37,10 +37,42 @@ class GameOverScene {
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
  
-        ctx.font = "64px Arial";
-        ctx.fillText("GAME OVER", PARAMS.canvasWidth / 2, PARAMS.canvasHeight / 2);
+
+        ctx.font = "128px Minecraft";
+        ctx.fillText("Game Over!", PARAMS.canvasWidth / 2, PARAMS.canvasHeight / 2-250);
+        this.drawGlowingOval(ctx,PARAMS.canvasWidth / 2, PARAMS.canvasHeight / 2 + 50, 150, 37.5, 'white', 40);
+        this.deathAnimation = new Animator(
+            ASSET_MANAGER.getAsset('./assets/sprites/white_fight_spritesheet.png'),
+            512 * 40, // 31st sprite
+            0,
+            512,
+            512,
+            1,
+            0.2,
+            0.8,
+            false
+        );
+        this.deathAnimation.drawFrame(this.gameEngine.clockTick, ctx, PARAMS.canvasWidth / 2-200, PARAMS.canvasHeight / 2-250);
 
         ctx.font = "24px Arial";
-        ctx.fillText("Press ENTER to Restart", PARAMS.canvasWidth / 2, PARAMS.canvasHeight / 2 + 50);
+        ctx.fillText("Press Enter to restart", PARAMS.canvasWidth / 2, PARAMS.canvasHeight / 2 + 250);
+        
+    }
+    drawGlowingOval(ctx, x, y, sizeX, sizeY,color, glowSize) {
+        
+        for (let i = 1; i <= glowSize; i++) {
+            ctx.beginPath();
+
+            ctx.fillStyle = `rgba(255, 255, 255, ${1 / glowSize })`;
+            ctx.ellipse(x, y, sizeX +i, sizeY+ i/2, 0, 0, Math.PI * 2);
+            
+            ctx.fill();
+          
+        }
+        ctx.beginPath();
+        ctx.ellipse(x, y, sizeX, sizeY, 0, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.fill();
+
     }
 }
