@@ -203,30 +203,47 @@ class Player extends Character {
     
 
     attackEnemy(damage) {
-        // Get current combat zone's enemies from level manager
         const currentZone = this.scene.levelManager.currentCombatZone;
         
+        if (!currentZone || !currentZone.waves) return;
 
+        const currentWave = currentZone.waves[currentZone.currentWave];
+        if (!currentWave || !currentWave.enemies) return;
 
-        if (!currentZone) return;
+        let hasHitAny = false;
 
-        // Check collision with all active enemies in the zone
-        for (const enemy of currentZone.enemies) {
-            // Only apply damage if the attack has not already dealt damage
-                if (this.isCollidingWithEntity(enemy) && !this.hasDealtDamage) {
+        // Check collision with all active enemies in the current wave
+        for (const enemyData of currentWave.enemies) {
+            const enemy = enemyData.enemy;
+            // For sword attacks, use the attack range box
+            if (this.isUsingSword) {
+                if (enemy.isActive && this.isEntityInAttackRange(enemy) && !this.hasDealtDamage) {
+                    hasHitAny = true;
                     this.scene.sceneManager.gameState.playerStats.coins += 1;
-                    let damageDelay = 250;
-                    this.hasDealtDamage = true; // Mark damage as dealt for this attack
-
+                    
                     setTimeout(() => {
-                        if(this.isCollidingWithEntity(enemy)){
+                        if(this.isEntityInAttackRange(enemy)){
                             enemy.takeDamage(damage);
                         }
-                    }, damageDelay)
-                    break;
+                    }, 250);
                 }
-            
-            
+            } 
+            // For regular attacks, use direct collision
+            else if (enemy.isActive && this.isCollidingWithEntity(enemy) && !this.hasDealtDamage) {
+                hasHitAny = true;
+                this.scene.sceneManager.gameState.playerStats.coins += 1;
+                
+                setTimeout(() => {
+                    if(this.isCollidingWithEntity(enemy)){
+                        enemy.takeDamage(damage);
+                    }
+                }, 250);
+            }
+        }
+
+        // Only set hasDealtDamage if we actually hit something
+        if (hasHitAny) {
+            this.hasDealtDamage = true;
         }
     }
 
