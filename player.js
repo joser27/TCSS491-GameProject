@@ -203,21 +203,15 @@ class Player extends Character {
     
 
     attackEnemy(damage) {
-        const currentZone = this.scene.levelManager.currentCombatZone;
-        
-        if (!currentZone || !currentZone.waves) return;
-
-        const currentWave = currentZone.waves[currentZone.currentWave];
-        if (!currentWave || !currentWave.enemies) return;
-
         let hasHitAny = false;
 
-        // Check collision with all active enemies in the current wave
-        for (const enemyData of currentWave.enemies) {
-            const enemy = enemyData.enemy;
+        // Use PlayingScene's enemies array directly
+        for (const enemy of this.scene.enemies) {
+            if (!enemy.isActive || enemy.isDead) continue;
+
             // For sword attacks, use the attack range box
             if (this.isUsingSword) {
-                if (enemy.isActive && this.isEntityInAttackRange(enemy) && !this.hasDealtDamage) {
+                if (this.isEntityInAttackRange(enemy) && !this.hasDealtDamage) {
                     hasHitAny = true;
                     this.scene.sceneManager.gameState.playerStats.coins += 1;
                     
@@ -229,7 +223,7 @@ class Player extends Character {
                 }
             } 
             // For regular attacks, use direct collision
-            else if (enemy.isActive && this.isCollidingWithEntity(enemy) && !this.hasDealtDamage) {
+            else if (this.isCollidingWithEntity(enemy) && !this.hasDealtDamage) {
                 hasHitAny = true;
                 this.scene.sceneManager.gameState.playerStats.coins += 1;
                 
