@@ -268,6 +268,7 @@ class Character {
             chop: "./assets/sound/chop.mp3",
             kick: "./assets/sound/kick.mp3",
             punch: "./assets/sound/punch.mp3",
+            slash: "./assets/sound/sword.mp3"
         };
 
         this.getHurtSound = [
@@ -326,6 +327,7 @@ class Character {
         }
 
         if(this.isJumping) {
+            this.performSound("./assets/sound/jump.mp3")
             if(this.isUsingPistol){
                 if(this.pistolAnimations.jump.isDone()) {
                     this.isJumping = false;
@@ -531,10 +533,10 @@ class Character {
             // If using pistol, stay idle while shooting
             return;
         }
-        if(this.isUsingSword) {
-            this.currentAttack = type;
-            this.attackCooldown = true;
-        }
+        // if(this.isUsingSword) {
+        //     this.currentAttack = type;
+        //     this.attackCooldown = true;
+        // }
         if (!this.attackCooldown) {
             ASSET_MANAGER.playAsset(currentSound);
             this.currentAttack = type;
@@ -542,7 +544,12 @@ class Character {
         }
     }
     
-
+    performSound(path) {
+        if(!this.isPlaying){
+            ASSET_MANAGER.playAsset(path)
+            this.isPlaying = true;
+        }         
+    }
     performDeath() {
         if(!this.isPlaying){
             ASSET_MANAGER.playAsset("./assets/sound/death.mp3")

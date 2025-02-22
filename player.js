@@ -121,6 +121,7 @@ class Player extends Character {
                 console.log("Player is jumping");
                 this.isJumping = true;
                 this.velocity = this.jumpStrength;
+                this.isPlaying = false;
             }
     
             // Add vertical movement constraints
