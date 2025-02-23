@@ -121,6 +121,7 @@ class Player extends Character {
                 console.log("Player is jumping");
                 this.isJumping = true;
                 this.velocity = this.jumpStrength;
+                this.isPlaying = false;
             }
     
             // Add vertical movement constraints
@@ -202,30 +203,41 @@ class Player extends Character {
     
 
     attackEnemy(damage) {
-        // Get current combat zone's enemies from level manager
-        const currentZone = this.scene.levelManager.currentCombatZone;
-        
+        let hasHitAny = false;
 
+        // Use PlayingScene's enemies array directly
+        for (const enemy of this.scene.enemies) {
+            if (!enemy.isActive || enemy.isDead) continue;
 
-        if (!currentZone) return;
-
-        // Check collision with all active enemies in the zone
-        for (const enemy of currentZone.enemies) {
-            // Only apply damage if the attack has not already dealt damage
-                if (this.isCollidingWithEntity(enemy) && !this.hasDealtDamage) {
+            // For sword attacks, use the attack range box
+            if (this.isUsingSword) {
+                if (this.isEntityInAttackRange(enemy) && !this.hasDealtDamage) {
+                    hasHitAny = true;
                     this.scene.sceneManager.gameState.playerStats.coins += 1;
-                    let damageDelay = 250;
-                    this.hasDealtDamage = true; // Mark damage as dealt for this attack
-
+                    
                     setTimeout(() => {
-                        if(this.isCollidingWithEntity(enemy)){
+                        if(this.isEntityInAttackRange(enemy)){
                             enemy.takeDamage(damage);
                         }
-                    }, damageDelay)
-                    break;
+                    }, 250);
                 }
-            
-            
+            } 
+            // For regular attacks, use direct collision
+            else if (this.isCollidingWithEntity(enemy) && !this.hasDealtDamage) {
+                hasHitAny = true;
+                this.scene.sceneManager.gameState.playerStats.coins += 1;
+                
+                setTimeout(() => {
+                    if(this.isCollidingWithEntity(enemy)){
+                        enemy.takeDamage(damage);
+                    }
+                }, 250);
+            }
+        }
+
+        // Only set hasDealtDamage if we actually hit something
+        if (hasHitAny) {
+            this.hasDealtDamage = true;
         }
     }
 
@@ -362,7 +374,23 @@ class Player extends Character {
         ctx.fillRect(xPosition+ 60, yPosition +25, 236 * healthPercentage, 25);
         ctx.drawImage(img,xPosition, yPosition, healthBarWidth, healthBarHeight);
 
-
+        ctx.beginPath(); 
+        ctx.rect(xPosition + 430, yPosition + 10, 350, 50); 
+        ctx.lineWidth = 5; 
+        ctx.strokeStyle = 'purple'; 
+        ctx.fillStyle = 'lightyellow'; 
+        ctx.stroke(); 
+        ctx.fill(); 
+ 
+        ctx.fillStyle = "black";
+        
+        if(this.isUsingPistol){
+            ctx.fillText("Use 'F' to shoot", xPosition + 450, yPosition + 45);
+        } else if(this.isUsingSword){
+            ctx.fillText("Use 'R' to attack", xPosition + 450, yPosition + 45);
+        } else{
+            ctx.fillText("'Q': Sword, 'G' : Pistol", xPosition + 450, yPosition + 45);
+        }
 
         this.drawDebugStats(ctx);
     }
