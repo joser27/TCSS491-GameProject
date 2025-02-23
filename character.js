@@ -388,7 +388,7 @@ class Character {
         ctx.save();
 
         // Define offsets consistently
-        const offsetX = 165;  // Adjust this value to move sprites left/right
+        const offsetX = 165;  
         const offsetY = 210;
         const screenX = this.x - this.gameEngine.camera.x;
 
@@ -452,6 +452,14 @@ class Character {
             const attackBox = this.getAttackBoundingBox();
             ctx.strokeStyle = "red";
             ctx.strokeRect(attackBox.x , attackBox.y, attackBox.width, attackBox.height);
+        }
+
+        if(this.isUsingPistol && this.weapon.reloading) {
+            ctx.fillStyle = "black";
+            ctx.textAlign = "center";
+     
+            ctx.font = "24px Arial";
+            ctx.fillText("Reloading!..", this.x,this.y - 30);
         }
     
     }
