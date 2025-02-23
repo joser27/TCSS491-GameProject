@@ -210,20 +210,20 @@ class Player extends Character {
             if (!enemy.isActive || enemy.isDead) continue;
 
             // For sword attacks, use the attack range box
-            if (this.isUsingSword) {
-                if (this.isEntityInAttackRange(enemy) && !this.hasDealtDamage) {
-                    hasHitAny = true;
-                    this.scene.sceneManager.gameState.playerStats.coins += 1;
+            // if (this.isUsingSword) {
+            //     if (this.isEntityInAttackRange(enemy) && !this.hasDealtDamage) {
+            //         hasHitAny = true;
+            //         this.scene.sceneManager.gameState.playerStats.coins += 1;
                     
-                    setTimeout(() => {
-                        if(this.isEntityInAttackRange(enemy)){
-                            enemy.takeDamage(damage);
-                        }
-                    }, 250);
-                }
-            } 
+            //         setTimeout(() => {
+            //             if(this.isEntityInAttackRange(enemy)){
+            //                 enemy.takeDamage(damage);
+            //             }
+            //         }, 250);
+            //     }
+            // } 
             // For regular attacks, use direct collision
-            else if (this.isCollidingWithEntity(enemy) && !this.hasDealtDamage) {
+            if (this.isCollidingWithEntity(enemy) && !this.hasDealtDamage) {
                 hasHitAny = true;
                 this.scene.sceneManager.gameState.playerStats.coins += 1;
                 

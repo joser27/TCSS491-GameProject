@@ -10,7 +10,7 @@ class Sword extends Weapon {
         this.cooldownTimer = this.cooldown; // Set cooldown timer
 
         const target = user instanceof Player ? 
-            this.scene.levelManager.currentCombatZone?.enemies : 
+            this.scene.enemies : 
             this.scene.player;
 
         if (!target) return;
