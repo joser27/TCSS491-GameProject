@@ -86,8 +86,8 @@ class Player extends Character {
         if (!this.currentAttack) {
             const movingRight = this.gameEngine.keys.d || this.gameEngine.keys["ArrowRight"];
             const movingLeft =  this.gameEngine.keys.a || this.gameEngine.keys["ArrowLeft"]; 
-            const movingUp = this.gameEngine.keys.w || this.gameEngine.keys["ArrowUp"];
-            const movingDown = this.gameEngine.keys.s || this.gameEngine.keys["ArrowDown"];
+            const movingUp = !this.isJumping && (this.gameEngine.keys.w || this.gameEngine.keys["ArrowUp"]);
+            const movingDown = !this.isJumping && (this.gameEngine.keys.s || this.gameEngine.keys["ArrowDown"]);
             const jump = this.gameEngine.keys[" "];
 
             this.isMoving = movingRight || movingLeft || movingUp || movingDown;
