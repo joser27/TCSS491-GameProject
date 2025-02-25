@@ -60,11 +60,13 @@ ASSET_MANAGER.queueDownload("./assets/sprites/sewer_ground.png");
 
 ASSET_MANAGER.queueDownload("./assets/sprites/outside_ground.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/outside_background.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/cop_hat.png");
 
 ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_point.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_sprint.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_death.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_headbutt.png");
+
 
 
 // Keyboard sprites

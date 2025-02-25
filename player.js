@@ -13,7 +13,8 @@ class Player extends Character {
         this.speed = 5;
         this.health = 200;
         this.scene = scene; // Make sure we have a reference to the scene
-        
+        this.outfit = new Outfit(this.scene.sceneManager.gameState, this.gameEngine);
+        this.outfit.equip('costume', 'copHat');
     }
 
 
@@ -401,7 +402,8 @@ class Player extends Character {
         } else{
             ctx.fillText("'Q': Sword, 'G' : Pistol", xPosition + 450, yPosition + 45);
         }
-
+        this.outfit.draw(ctx, this.x, this.y, this.facingLeft, this.isMoving);
+    
         this.drawDebugStats(ctx);
     }
 
