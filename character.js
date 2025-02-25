@@ -456,13 +456,37 @@ class Character {
             ctx.strokeRect(attackBox.x , attackBox.y, attackBox.width, attackBox.height);
         }
 
-        if(this.isUsingPistol && this.weapon.reloading) {
-            ctx.fillStyle = "black";
+        if (this.weapon instanceof Pistol && this.weapon.reloading) {
+            const totalReloadTime = this.weapon.reloadTime * 1000; // Convert to milliseconds
+            const elapsedTime = Date.now() - this.weapon.reloadStartTime; // Time since reload started
+            const remainingTime = Math.max(totalReloadTime - elapsedTime, 0); // Avoid negative values
+    
+            // Reload progress calculation
+            const barWidth = 100;
+            const barHeight = 10;
+            const progress = ((totalReloadTime - remainingTime) / totalReloadTime) * barWidth;
+    
+            // Positioning (above character's head)
+            const barX = this.x - this.gameEngine.camera.x - barWidth / 2 + 50;
+            const barY = this.y - 60; // Adjust height
+    
+            // Draw background bar
+            ctx.fillStyle = "gray";
+            ctx.fillRect(barX, barY, barWidth, barHeight);
+    
+            // Draw progress fill
+            ctx.fillStyle = "red";
+            ctx.fillRect(barX, barY, progress, barHeight);
+    
+            // Draw text
+            ctx.fillStyle = "white";
+            ctx.font = "16px Arial";
             ctx.textAlign = "center";
-     
-            ctx.font = "24px Arial";
-            ctx.fillText("Reloading!..", this.x,this.y - 30);
+            ctx.fillText("Reloading...", barX + barWidth / 2, barY - 5);
+
+            
         }
+        
     
     }
 

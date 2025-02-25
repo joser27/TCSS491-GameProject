@@ -58,6 +58,10 @@ class Player extends Character {
         if (this.gameEngine.keys.f && this.weapon instanceof Pistol) {
             this.weapon.attack(this);
         }
+
+        if(this.weapon instanceof Pistol && this.gameEngine.keys.t) {
+            this.weapon.reload();
+        }
         
         if(this.gameEngine.keys.q && !this.qKeyPressed) {
             if(!this.hasWeapon) {
@@ -385,7 +389,14 @@ class Player extends Character {
         ctx.fillStyle = "black";
         
         if(this.isUsingPistol){
-            ctx.fillText("Use 'F' to shoot", xPosition + 450, yPosition + 45);
+            ctx.fillText("'F': Shoot, 'T': Reload ", xPosition + 450, yPosition + 45);
+
+            const ammoText = `Ammo: ${this.weapon.ammo}/ ${this.weapon.magazineSize}`;
+            ctx.fillStyle = "white";
+            ctx.font = "bold 20px Arial";
+            ctx.textAlign = "left";
+
+            ctx.fillText(ammoText, 75, ctx.canvas.height - 30);
         } else if(this.isUsingSword){
             ctx.fillText("Use 'R' to attack", xPosition + 450, yPosition + 45);
         } else{

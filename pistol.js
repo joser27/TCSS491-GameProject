@@ -35,6 +35,7 @@ class Pistol extends Weapon {
 
         console.log("Reloading...");
         this.reloading = true;
+        this.reloadStartTime = Date.now();
 
         setTimeout(() => {
             this.ammo = this.magazineSize;
