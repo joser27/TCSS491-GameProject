@@ -12,11 +12,21 @@ class Player extends Character {
         this.weapon = null;
         this.speed = 5;
         this.health = 200;
+        this.scene = scene; // Make sure we have a reference to the scene
         
     }
 
 
     update() {
+        // Open upgrade menu
+        if (this.scene.upgradeMenu.isOpen) {
+            if (this.gameEngine.keys['b']) {
+                this.scene.upgradeMenu.toggle();
+                this.gameEngine.keys['b'] = false;
+            }
+            return;
+        }
+
         // If level is complete, don't process movement or attacks
         if (this.isLevelComplete) {
             return;
