@@ -13,6 +13,10 @@ class Player extends Character {
         this.speed = 5;
         this.health = 200;
         
+        this.comboCount = 0; // Tracks which attack is next
+        this.comboTimeout = null; // Timeout to reset combo if no input
+        this.comboDelay = 1000; // Max time between presses to continue combo (in milliseconds)
+
     }
 
 
@@ -170,18 +174,25 @@ class Player extends Character {
         }
         
         if(!this.isUsingPistol && !this.isUsingSword) {
-        // Perform attacks
-            if (this.gameEngine.keys.c) {
-                this.performAttack("chop");
-                this.attackEnemy(10); // Chop deals 10 damage
+        // // Perform attacks
+        //     if (this.gameEngine.keys.c) {
+        //         this.performAttack("chop");
+        //         this.attackEnemy(10); // Chop deals 10 damage
+        //     }
+        //     if (this.gameEngine.keys.k) {
+        //         this.performAttack("kick");
+        //         this.attackEnemy(25); // Kick deals 25 damage
+        //     }
+        //     if (this.gameEngine.keys.p) {
+        //         this.performAttack("punch");
+        //         this.attackEnemy(15); // Punch deals 15 damage
+        //     }
+            if (this.gameEngine.keys.p && !this.pKeyPressed) {
+                this.performComboAttack();
+                this.pKeyPressed = true; // Prevent multiple detections in one press
             }
-            if (this.gameEngine.keys.k) {
-                this.performAttack("kick");
-                this.attackEnemy(25); // Kick deals 25 damage
-            }
-            if (this.gameEngine.keys.p) {
-                this.performAttack("punch");
-                this.attackEnemy(15); // Punch deals 15 damage
+            if (!this.gameEngine.keys.p) {
+                this.pKeyPressed = false; // Reset when key is released
             }
         }
     
@@ -238,6 +249,7 @@ class Player extends Character {
                 }, 250);
             }
         }
+        
 
         // Only set hasDealtDamage if we actually hit something
         if (hasHitAny) {
@@ -245,29 +257,47 @@ class Player extends Character {
         }
     }
 
-    // isEnemyInAttackRange(enemy) {
-    //     if (!enemy || !enemy.boundingbox) return false;
-    
-    //     const range = (this.boundingbox.x + this.weapon.range);
-    //     const leftRange = this.boundingbox.x - this.weapon.range;
-    //     if(this.facingLeft){
-    //         return (
-    //             leftRange - this.boundingbox.width < enemy.boundingbox.x + enemy.boundingbox.width &&
-    //             leftRange + this.boundingbox.width > enemy.boundingbox.x &&
-    //             this.boundingbox.y < enemy.boundingbox.y + enemy.boundingbox.height &&
-    //             this.boundingbox.y + this.boundingbox.height > enemy.boundingbox.y
-    //         );
-    //     } else {
-    //         return (
-    //             range < enemy.boundingbox.x + enemy.boundingbox.width &&
-    //             range + this.boundingbox.width > enemy.boundingbox.x &&
-    //             this.boundingbox.y < enemy.boundingbox.y + enemy.boundingbox.height &&
-    //             this.boundingbox.y + this.boundingbox.height > enemy.boundingbox.y
-    //         );
-    //     }
-    // }
-    
+   
+    performComboAttack() {
+        this.comboCount++; // Increase combo count
 
+        if (this.comboCount === 1) {
+            this.performAttack("punch");
+            this.attackEnemy(15);
+            console.log("Performed Punch");
+        } else if (this.comboCount === 2) {
+            console.log("Pressed twice, waiting for third...");
+        } else if (this.comboCount >= 3) {
+            console.log("Executing full combo: Chop & Kick!");
+            this.performAttack("chop");
+                this.attackEnemy(10);
+                console.log("Performed Chop");
+                
+            
+                setTimeout(() => {
+                    this.performAttack("kick");
+                    this.attackEnemy(25);
+                    console.log("Performed Kick");
+        
+                    // **Reset the combo ONLY after Chop completes**
+                    setTimeout(() => {
+                        this.comboCount = 0;
+                        console.log("Combo Reset");
+                    }, 300); // Small delay to allow Chop animation to finish
+                }, 600); 
+           
+
+            clearTimeout(this.comboTimeout); // Prevent timeout from resetting early
+        }
+
+        // Reset combo if player waits too long between presses
+        clearTimeout(this.comboTimeout);
+        this.comboTimeout = setTimeout(() => {
+            this.comboCount = 0; // Reset combo after delay
+            console.log("Combo reset");
+        }, this.comboDelay);
+    }
+    
     unequipWeapon() {
         this.weapon = null;
         if(this.isUsingPistol) {
@@ -279,18 +309,6 @@ class Player extends Character {
         
     }
     
-    // isCollidingWithEnemy(enemy) {
-    //     if (!enemy || !enemy.boundingbox) return false;
-
-
-    //     return (
-    //         this.boundingbox.x < enemy.boundingbox.x + enemy.boundingbox.width &&
-    //         this.boundingbox.x + this.boundingbox.width > enemy.boundingbox.x  &&
-    //         this.boundingbox.y < enemy.boundingbox.y + enemy.boundingbox.height &&
-    //         this.boundingbox.y + this.boundingbox.height > enemy.boundingbox.y
-    //     );
-    // }
-
     drawDebugStats(ctx) {
         if (PARAMS.DEBUG) {
             // Set text properties
