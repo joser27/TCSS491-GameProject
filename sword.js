@@ -10,7 +10,7 @@ class Sword extends Weapon {
         this.cooldownTimer = this.cooldown; // Set cooldown timer
 
         const target = user instanceof Player ? 
-            this.scene.enemies : 
+            this.scene.enemies.filter(enemy => enemy.isActive && !enemy.isDead) : 
             this.scene.player;
 
         if (!target) return;
@@ -20,7 +20,7 @@ class Sword extends Weapon {
             for (const enemy of target) {
                 if (user.isEntityInAttackRange(enemy)) {
                     this.dealDamage(user, enemy);
-                    break;
+                    //break;
                 }
             }
         } else {

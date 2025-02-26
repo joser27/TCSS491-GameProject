@@ -22,6 +22,7 @@ class Character {
         this.damageTaken = false;
         this.isUsingSword = false;
         this.isBoss = false;
+        this.swordComboAttack = false;
 
         this.isJumping = false;
         this.velocity = 0;
@@ -257,6 +258,17 @@ class Character {
                 0.2,
                 0.8,
                 true
+            ),
+            combo: new Animator (
+                ASSET_MANAGER.getAsset(swordSpriteSheet),
+                512*7,
+                0,
+                512,
+                512,
+                10,
+                0.1,
+                0.8,
+                false
             )
 
         }
@@ -346,18 +358,13 @@ class Character {
             }
         }
         
-
-        // if (this.isUsingPistol) {
-        //     if (this.damageTaken && this.pistolAnimations.damage.isDone()) {
-        //         this.damageTaken = false;
-        //         this.pistolAnimations.damage.elapsedTime = 0;
-        //     }
-        // } else {
-        //     if (this.damageTaken && this.damageAnimation.isDone()) {
-        //         this.damageTaken = false;
-        //         this.damageAnimation.elapsedTime = 0;
-        //     }
-        // }
+        if(this.isUsingSword && this.swordComboAttack) {
+            if(this.swordAnimations.combo.isDone()) {
+                this.swordAnimations.combo.elapsedTime = 0;
+                this.attackCooldown = false;
+                this.swordComboAttack = false;
+            }
+        }
 
         if (this.currentAttack) {
             if(this.isUsingSword){
@@ -416,7 +423,9 @@ class Character {
                 this.swordAnimations.death.drawFrame(this.gameEngine.clockTick, ctx, screenX- offsetX, this.y - offsetY);
             } else if(this.damageTaken) {
                 this.swordAnimations.damage.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
-            } else if (this.currentAttack) {
+            } else if (this.swordComboAttack) {
+                this.swordAnimations.combo.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
+            }else if (this.currentAttack) {
                 this.swordAnimations.attack.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);
             }else if(this.isJumping) {
                 this.swordAnimations.jump.drawFrame(this.gameEngine.clockTick, ctx, screenX - offsetX, this.y - offsetY);

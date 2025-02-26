@@ -13,9 +13,10 @@ class Player extends Character {
         this.speed = 5;
         this.health = 200;
         
-        this.comboCount = 0; // Tracks which attack is next
+        this.basicComboCount = 0; // Tracks which attack is next
         this.comboTimeout = null; // Timeout to reset combo if no input
         this.comboDelay = 1000; // Max time between presses to continue combo (in milliseconds)
+        this.swordComboCount = 0;
 
     }
 
@@ -82,10 +83,15 @@ class Player extends Character {
             this.qKeyPressed = false;
         }
     
-        if(this.gameEngine.keys.r && this.weapon instanceof Sword) {
-            this.weapon.attack(this);
-            this.performAttack("slash");
+        if(this.gameEngine.keys.r && this.weapon instanceof Sword && !this.rKeyPressed) {
+            this.performSwordCombo();
+            this.rKeyPressed = true;
+            
         }
+        if(!this.gameEngine.keys.r) {
+            this.rKeyPressed = false;
+        }
+    
     
         if (this.weapon) {
             this.weapon.update(this.gameEngine.clockTick);
@@ -174,19 +180,6 @@ class Player extends Character {
         }
         
         if(!this.isUsingPistol && !this.isUsingSword) {
-        // // Perform attacks
-        //     if (this.gameEngine.keys.c) {
-        //         this.performAttack("chop");
-        //         this.attackEnemy(10); // Chop deals 10 damage
-        //     }
-        //     if (this.gameEngine.keys.k) {
-        //         this.performAttack("kick");
-        //         this.attackEnemy(25); // Kick deals 25 damage
-        //     }
-        //     if (this.gameEngine.keys.p) {
-        //         this.performAttack("punch");
-        //         this.attackEnemy(15); // Punch deals 15 damage
-        //     }
             if (this.gameEngine.keys.p && !this.pKeyPressed) {
                 this.performComboAttack();
                 this.pKeyPressed = true; // Prevent multiple detections in one press
@@ -224,20 +217,6 @@ class Player extends Character {
         for (const enemy of this.scene.enemies) {
             if (!enemy.isActive || enemy.isDead) continue;
 
-            // For sword attacks, use the attack range box
-            // if (this.isUsingSword) {
-            //     if (this.isEntityInAttackRange(enemy) && !this.hasDealtDamage) {
-            //         hasHitAny = true;
-            //         this.scene.sceneManager.gameState.playerStats.coins += 1;
-                    
-            //         setTimeout(() => {
-            //             if(this.isEntityInAttackRange(enemy)){
-            //                 enemy.takeDamage(damage);
-            //             }
-            //         }, 250);
-            //     }
-            // } 
-            // For regular attacks, use direct collision
             if (this.isCollidingWithEntity(enemy) && !this.hasDealtDamage) {
                 hasHitAny = true;
                 this.scene.sceneManager.gameState.playerStats.coins += 1;
@@ -259,15 +238,15 @@ class Player extends Character {
 
    
     performComboAttack() {
-        this.comboCount++; // Increase combo count
+        this.basicComboCount++; // Increase combo count
 
-        if (this.comboCount === 1) {
+        if (this.basicComboCount === 1) {
             this.performAttack("punch");
             this.attackEnemy(15);
             console.log("Performed Punch");
-        } else if (this.comboCount === 2) {
+        } else if (this.basicComboCount === 2) {
             console.log("Pressed twice, waiting for third...");
-        } else if (this.comboCount >= 3) {
+        } else if (this.basicComboCount >= 3) {
             console.log("Executing full combo: Chop & Kick!");
             this.performAttack("chop");
                 this.attackEnemy(10);
@@ -281,7 +260,7 @@ class Player extends Character {
         
                     // **Reset the combo ONLY after Chop completes**
                     setTimeout(() => {
-                        this.comboCount = 0;
+                        this.basicComboCount = 0;
                         console.log("Combo Reset");
                     }, 300); // Small delay to allow Chop animation to finish
                 }, 600); 
@@ -293,8 +272,40 @@ class Player extends Character {
         // Reset combo if player waits too long between presses
         clearTimeout(this.comboTimeout);
         this.comboTimeout = setTimeout(() => {
-            this.comboCount = 0; // Reset combo after delay
+            this.basicComboCount = 0; // Reset combo after delay
             console.log("Combo reset");
+        }, this.comboDelay);
+    }
+
+    performSwordCombo() {
+        this.swordComboCount++;
+
+        if(this.swordComboCount === 1){
+            this.weapon.attack(this);
+            this.performAttack("slash");
+        } else if (this.swordComboCount >= 3) {
+            console.log("Executing Sword Combo!");
+
+            this.swordComboAttack = true;  // Set flag to enable animation
+           // this.currentAttack = "combo";  // Set animation to combo
+
+            this.weapon.attack(this);
+            setTimeout(() => {
+                this.weapon.attack(this);
+            }, 200);
+
+            // **Reset after animation duration**
+            setTimeout(() => {
+                this.swordComboAttack = false;
+                this.swordComboCount = 0; // Reset combo count
+                //this.currentAttack = null; // Clear attack state
+            }, 1000);  // Adjust based on animation speed
+
+        }
+        clearTimeout(this.comboTimeout);
+        this.comboTimeout = setTimeout(() => {
+            this.swordComboCount = 0; // Reset combo after delay
+            console.log("Sword Combo reset");
         }, this.comboDelay);
     }
     
