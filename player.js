@@ -65,6 +65,7 @@ class Player extends Character {
         }
 
         if(this.weapon instanceof Pistol && this.gameEngine.keys.t) {
+            if(this.weapon.ammo === this.weapon.magazineSize ) return;
             this.weapon.reload();
         }
         
