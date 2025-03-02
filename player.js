@@ -14,7 +14,7 @@ class Player extends Character {
         this.health = 200;
         this.scene = scene; // Make sure we have a reference to the scene
         this.outfit = new Outfit(this.scene.sceneManager.gameState, this.gameEngine);
-        this.outfit.equip('costume', 'copHat');
+        this.outfit.equip('hat','mafiaHat');
     }
 
 

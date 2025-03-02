@@ -9,6 +9,8 @@ class RedEnemy extends Character {
         this.isUsingPistol = true;
         this.weapon = new Pistol(this.scene);
         this.speed = 2; 
+        this.outfit = new Outfit(this.scene.sceneManager.gameState, this.gameEngine);
+        this.outfit.equip('hat','mafiaHat');
     }
 
     update() {
@@ -100,7 +102,9 @@ class RedEnemy extends Character {
         if (!this.isActive) return;
         
         super.draw(ctx);
-
+        
+            this.outfit.draw(ctx, this.x, this.y, this.facingLeft, this.isMoving);
+        
         if (this.health < 0) {
             this.health = 0;
         }

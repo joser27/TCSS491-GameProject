@@ -25,6 +25,26 @@ class Outfit {
                 scale: 0.3,
                 bobSpeed: 5,
                 bobHeight: 1
+            },
+            mafiaHat: {
+                spriteSheet: "./assets/sprites/mafia_hat.png",
+                offsetX: {
+                    right: {
+                        idle: 0,
+                        moving: 10
+                    },
+                    left: {
+                        idle: 0,
+                        moving: 10
+                    }
+                },
+                offsetY: {
+                    idle: -70,
+                    moving: -70
+                },
+                scale: 0.3,
+                bobSpeed: 5,
+                bobHeight: 1
             }
         };
     }
