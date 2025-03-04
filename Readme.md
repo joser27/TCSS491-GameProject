@@ -9,12 +9,13 @@ Make sure your Caps lock is turned off while using these controls.
 - Space to jump.  
 - 'z' to kill player.  
 - 'h' to restore health.  
-- 'k' to kick.  
 - 'p' to punch.  
-- 'c' to chop.  
+- 3x 'p' for combo attack.
 For special attacks:  
 - 'g' to equip/unequip pistol.  
-- 'f' to fire bullet when using pistol.  
+- 'f' to fire bullet when using pistol.
+- 't' to reload.
 - 'q' to equip/unequip sword.  
 - 'r' to attack with sword.
+- 3x 'r' for sword combo attack.
 
