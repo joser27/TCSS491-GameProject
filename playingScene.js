@@ -10,6 +10,8 @@ class PlayingScene {
         this.gameState = gameState;
         this.enemies = [];
         this.initEntities()
+        this.upgradeMenu = new UpgradeMenu(this.gameState, this.gameEngine);
+        this.gameEngine.addEntity(this.upgradeMenu);
     }
 
     initEntities() {
