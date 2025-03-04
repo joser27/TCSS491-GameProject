@@ -8,6 +8,7 @@ class Player extends Character {
         this.initialGroundY = y;
         this.hasDealtDamage = false; // Flag to prevent multiple damage during a single attack
         this.hasWeapon = false;
+        this.isAttacking = false;
 
         this.weapon = null;
         this.speed = 5;
@@ -43,21 +44,41 @@ class Player extends Character {
         if (this.gameEngine.keys.z) {
             this.takeDamage(this.health); // Instantly kill player for testing
         }
-    
-        if (this.gameEngine.keys.g && !this.gKeyPressed) {
-            if (!this.hasWeapon) {
-                this.equipWeapon(new Pistol(this.scene));
-                this.hasWeapon = true;
-            } else {
-                this.unequipWeapon();
-                this.hasWeapon = false;
-            }
-            this.gKeyPressed = true; // Prevent multiple toggles in one press
-        }
+
         
-        // Reset key state when released
-        if (!this.gameEngine.keys.g) {
-            this.gKeyPressed = false;
+        
+        
+        if(!this.isAttacking) {
+            if (this.gameEngine.keys.g && !this.gKeyPressed) {
+                if (!this.hasWeapon) {
+                    this.equipWeapon(new Pistol(this.scene));
+                    this.hasWeapon = true;
+                } else {
+                    this.unequipWeapon();
+                    this.hasWeapon = false;
+                }
+                this.gKeyPressed = true; // Prevent multiple toggles in one press
+            }
+            
+            // Reset key state when released
+            if (!this.gameEngine.keys.g) {
+                this.gKeyPressed = false;
+            }
+
+            if(this.gameEngine.keys.q && !this.qKeyPressed) {
+                if(!this.hasWeapon) {
+                    this.equipWeapon(new Sword(this.scene));
+                    this.hasWeapon = true;
+                } else {
+                    this.unequipWeapon();
+                    this.hasWeapon = false;
+                }
+                this.qKeyPressed = true;
+                
+            }
+            if(!this.gameEngine.keys.q) {
+                this.qKeyPressed = false;
+            }
         }
 
         if (this.gameEngine.keys.f && this.weapon instanceof Pistol) {
@@ -69,20 +90,7 @@ class Player extends Character {
             this.weapon.reload();
         }
         
-        if(this.gameEngine.keys.q && !this.qKeyPressed) {
-            if(!this.hasWeapon) {
-                this.equipWeapon(new Sword(this.scene));
-                this.hasWeapon = true;
-            } else {
-                this.unequipWeapon();
-                this.hasWeapon = false;
-            }
-            this.qKeyPressed = true;
-            
-        }
-        if(!this.gameEngine.keys.q) {
-            this.qKeyPressed = false;
-        }
+        
     
         if(this.gameEngine.keys.r && this.weapon instanceof Sword && !this.rKeyPressed) {
             this.performSwordCombo();
@@ -283,6 +291,7 @@ class Player extends Character {
 
         if(this.swordComboCount === 1){
             this.weapon.attack(this);
+            this.isAttacking = true;
             this.performAttack("slash");
         } else if (this.swordComboCount >= 3) {
             console.log("Executing Sword Combo!");
@@ -299,7 +308,7 @@ class Player extends Character {
             setTimeout(() => {
                 this.swordComboAttack = false;
                 this.swordComboCount = 0; // Reset combo count
-                //this.currentAttack = null; // Clear attack state
+                this.isAttacking = false;
             }, 1000);  // Adjust based on animation speed
 
         }
