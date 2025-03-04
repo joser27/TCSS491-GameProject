@@ -67,7 +67,6 @@ ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_death.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_headbutt.png");
 
 
-
 // Keyboard sprites
 ASSET_MANAGER.queueDownload("./assets/sprites/ARROWDOWN.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/ARROWUP.png");
@@ -107,6 +106,8 @@ ASSET_MANAGER.queueDownload("./assets/sound/oof1.mp3");
 ASSET_MANAGER.queueDownload("./assets/sound/oof2.mp3");
 ASSET_MANAGER.queueDownload("./assets/sound/jump.mp3");
 ASSET_MANAGER.queueDownload("./assets/sound/sword.mp3");
+ASSET_MANAGER.queueDownload("./assets/sound/cash-register-purchase.mp3");
+ASSET_MANAGER.queueDownload("./assets/sound/no-funds.mp3");
 
 ASSET_MANAGER.downloadAll(() => {
 	const canvas = document.getElementById("gameWorld");

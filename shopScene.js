@@ -8,47 +8,46 @@ class ShopScene {
 
         this.shopBackground = ASSET_MANAGER.getAsset("./assets/sprites/shopImage.png");
         
+        // Add discount percentages
+        this.discounts = {
+            unlockGun: 20,    // 20% off
+            unlockSword: 30,  // 30% off
+            unlockJump: 25    // 25% off
+        };
+
         // shop items with Exit option added at the end
         this.shopItems = [
             {
-                name: "Berserker Mode",
-                icon: "🩸",
-                description: "When HP is below 50%, attacks deal +20% more damage.",
-                price: 1,
-                tooltip: "For aggressive players who take risks."
+                id: 'unlockGun',
+                name: 'Unlock Gun',
+                icon: '🔫',
+                description: 'Unlocks the ability to use a gun',
+                originalPrice: 100,
+                price: this.calculateDiscountedPrice('unlockGun', 30),
+                tooltip: "Press G to equip gun once purchased"
             },
             {
-                name: "Titan Guard",
-                icon: "🛡️",
-                description: "Taking damage briefly makes you invincible for 1 second.",
-                price: 1,
-                tooltip: "For defensive players who struggle against combos."
+                id: 'unlockSword',
+                name: 'Unlock Sword',
+                icon: '⚔️',
+                description: 'Unlocks the ability to use a sword',
+                originalPrice: 150,
+                price: this.calculateDiscountedPrice('unlockSword', 20),
+                tooltip: "Press Q to equip sword once purchased"
             },
             {
-                name: "Sharpened Steel",
-                icon: "⚔️",
-                description: "Sword deals +15% more damage.",
-                price: 1,
-                tooltip: "For sword-focused players."
+                id: 'unlockJump',
+                name: 'Unlock Jump',
+                icon: '⬆️',
+                description: 'Unlocks the ability to jump',
+                originalPrice: 200,
+                price: this.calculateDiscountedPrice('unlockJump', 1000),
+                tooltip: "Press SPACE to jump once purchased"
             },
             {
-                name: "Gunslinger",
-                icon: "🔫",
-                description: "Gun reloads twice as fast.",
-                price: 1,
-                tooltip: "For gun-focused players."
-            },
-            {
-                name: "Shadow Step",
-                icon: "👣",
-                description: "Dodge roll distance is longer and faster.",
-                price: 1,
-                tooltip: "For defensive players who like speed."
-            },
-            {
-                name: "Exit Shop",
-                icon: "🚪",
-                description: "Return to game",
+                name: 'Exit Shop',
+                icon: '🚪',
+                description: 'Return to game',
                 price: 0,
                 tooltip: "Press Enter to exit shop"
             }
@@ -60,6 +59,19 @@ class ShopScene {
         // cooldown timer for entering the shop
         this.entryCooldown = 1;
         this.currentCooldown = this.entryCooldown;
+
+        // Sound paths
+        this.sounds = {
+            purchase: "./assets/sound/cash-register-purchase.mp3",
+            noFunds: "./assets/sound/no-funds.mp3"
+        };
+    }
+
+    calculateDiscountedPrice(itemId, originalPrice) {
+        if (this.discounts[itemId]) {
+            return Math.floor(originalPrice * (1 - this.discounts[itemId] / 100));
+        }
+        return originalPrice;
     }
 
     update() {
@@ -88,13 +100,22 @@ class ShopScene {
                     const playerStats = this.gameState.playerStats;
                     
                     // Check if player has enough coins and hasn't already bought the upgrade
-                    if (playerStats.coins >= selectedItem.price && 
-                        !playerStats.upgrades[this.getUpgradeKey(selectedItem.name)]) {
-                        
-                        // Deduct coins and apply upgrade
-                        playerStats.coins -= selectedItem.price;
-                        playerStats.upgrades[this.getUpgradeKey(selectedItem.name)] = true;
-                        console.log(`Purchased ${selectedItem.name}`);
+                    if (selectedItem.id) { // Only process items with an ID (not the exit option)
+                        if (playerStats.coins >= selectedItem.price && 
+                            !playerStats.upgrades[selectedItem.id]) {
+                            
+                            // Deduct coins and apply upgrade
+                            playerStats.coins -= selectedItem.price;
+                            playerStats.upgrades[selectedItem.id] = true;
+                            ASSET_MANAGER.playAsset(this.sounds.purchase);
+                            console.log(`Purchased ${selectedItem.name}`);
+                        } else if (playerStats.upgrades[selectedItem.id]) {
+                            console.log("Already owned!");
+                            ASSET_MANAGER.playAsset(this.sounds.noFunds);
+                        } else {
+                            console.log("Not enough coins!");
+                            ASSET_MANAGER.playAsset(this.sounds.noFunds);
+                        }
                     }
                 }
                 this.keyPressed = true;
@@ -109,26 +130,15 @@ class ShopScene {
         }
     }
 
-    // Helper method to convert item names to upgrade keys
-    getUpgradeKey(itemName) {
-        const keyMap = {
-            "Berserker Mode": "berserkerMode",
-            "Titan Guard": "titanGuard",
-            "Sharpened Steel": "sharpenedSteel",
-            "Gunslinger": "gunslinger",
-            "Shadow Step": "shadowStep"
-        };
-        return keyMap[itemName];
-    }
-
     draw(ctx) {
         ctx.drawImage(this.shopBackground, 0, 0);
         
         // Draw current coins
-        ctx.font = "32px Arial";
+        ctx.font = "32px eager___";
         ctx.fillStyle = "gold";
         ctx.textAlign = "left";
         ctx.fillText(`Coins: ${this.gameState.playerStats.coins}`, 50, 50);
+        ctx.textAlign = "left"; // Reset alignment
         
         // Draw items
         const startX = 200;
@@ -138,46 +148,47 @@ class ShopScene {
         this.shopItems.forEach((item, index) => {
             const x = startX + (spacing * index);
             
-            // Draw item
-            ctx.font = "30px Arial";
+            // Draw item icon
+            ctx.font = "30px eager___";
             ctx.textAlign = "center";
+            ctx.fillStyle = index === this.selectedIndex ? "#FFD700" : "white";
             
-            // Determine item color based on selection, affordability, and purchase status
-            if (index === this.selectedIndex) {
-                if (this.gameState.playerStats.upgrades[this.getUpgradeKey(item.name)]) {
-                    ctx.fillStyle = "#808080"; // Gray for already purchased
-                } else if (this.gameState.playerStats.coins >= item.price) {
-                    ctx.fillStyle = "#FFD700"; // Gold if can afford
-                } else {
-                    ctx.fillStyle = "#FF0000"; // Red if cannot afford
-                }
-                ctx.fillText(">" + item.icon + "<", x, y);
-            } else {
-                if (this.gameState.playerStats.upgrades[this.getUpgradeKey(item.name)]) {
-                    ctx.fillStyle = "#808080"; // Gray for already purchased
-                } else {
-                    ctx.fillStyle = "white";
-                }
-                ctx.fillText(item.icon, x, y);
+            if (item.id && this.gameState.playerStats.upgrades[item.id]) {
+                ctx.fillStyle = "#808080"; // Gray for owned items
             }
             
-            // Draw price or "OWNED" text
-            ctx.font = "16px Arial";
-            if (this.gameState.playerStats.upgrades[this.getUpgradeKey(item.name)]) {
+            ctx.fillText(index === this.selectedIndex ? ">" + item.icon + "<" : item.icon, x, y);
+            
+            // Draw price or owned status
+            ctx.font = "16px eager___";
+            if (item.id && !this.gameState.playerStats.upgrades[item.id]) {
+                if (item.originalPrice !== item.price) {
+                    ctx.fillStyle = "#4CAF50"; // Green for discount
+                    ctx.fillText(`${this.discounts[item.id]}% OFF!`, x, y + 30);
+                    ctx.fillStyle = "#FFD700"; // Gold for price
+                    ctx.fillText(`${item.price} Coins`, x, y + 50);
+                } else {
+                    ctx.fillText(`${item.price} Coins`, x, y + 30);
+                }
+            } else if (item.id) {
                 ctx.fillText("OWNED", x, y + 30);
-            } else {
-                ctx.fillText(`${item.price} Coins`, x, y + 30);
             }
         });
         
         // Draw description of selected item
         const selectedItem = this.shopItems[this.selectedIndex];
         ctx.fillStyle = "white";
-        ctx.font = "20px Arial";
+        ctx.font = "20px eager___";
+        ctx.textAlign = "center";
         ctx.fillText(selectedItem.name, 400, 580);
-        ctx.font = "16px Arial";
+        ctx.font = "16px eager___";
         ctx.fillText(selectedItem.description, 400, 610);
         ctx.fillText(selectedItem.tooltip, 400, 640);
+
+        // Reset all context properties
+        ctx.textAlign = "left";
+        ctx.fillStyle = "white";
+        ctx.font = "16px eager___";
     }
 }
 
