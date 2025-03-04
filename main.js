@@ -91,6 +91,7 @@ ASSET_MANAGER.queueDownload("./assets/sprites/UI.png");
 // Fonts
 ASSET_MANAGER.queueDownload("./assets/fonts/eager___.ttf");
 ASSET_MANAGER.queueDownload("./assets/fonts/Minecraft.ttf");
+ASSET_MANAGER.queueDownload("./assets/fonts/handwritten.otf");
 
 // music 
 ASSET_MANAGER.queueDownload("./assets/music/music1.mp3");

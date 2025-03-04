@@ -36,7 +36,7 @@ class MenuScene {
 
             switch(this.selectedOption) {
                 case 0: // Play
-                    this.sceneManager.transitionToScene(PlayingScene);
+                    this.sceneManager.transitionToScene(CutScene);
                     break;
                 case 1: // How to Play
                     this.sceneManager.transitionToScene(HowToPlayScene);

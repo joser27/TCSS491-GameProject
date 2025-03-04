@@ -11,6 +11,7 @@ class SceneManager {
             GameOverScene: null,
             HowToPlayScene: null,
             CreditsScene: null,
+            CutScene: null,
         }
         this.scene = this.scenes.MenuScene;
         this.zindex = 100;
@@ -91,6 +92,9 @@ class SceneManager {
         } else if (SceneType === MenuScene) {
             this.scenes.MenuScene = new MenuScene(this.gameEngine, this);
             this.scene = this.scenes.MenuScene;
+        } else if (SceneType === CutScene){
+            this.scenes.CutScene = new CutScene(this.gameEngine, this, this.gameState);
+            this.scene = this.scenes.CutScene;
         }
 
         this.gameEngine.addEntity(this.scene);
