@@ -66,6 +66,10 @@ ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_sprint.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_death.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_headbutt.png");
 
+ASSET_MANAGER.queueDownload("./assets/sprites/shadowking/shadowking_transformed.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/shadowking/shadowking_normal.png");
+
+
 
 // Keyboard sprites
 ASSET_MANAGER.queueDownload("./assets/sprites/ARROWDOWN.png");
@@ -108,6 +112,8 @@ ASSET_MANAGER.queueDownload("./assets/sound/jump.mp3");
 ASSET_MANAGER.queueDownload("./assets/sound/sword.mp3");
 ASSET_MANAGER.queueDownload("./assets/sound/cash-register-purchase.mp3");
 ASSET_MANAGER.queueDownload("./assets/sound/no-funds.mp3");
+ASSET_MANAGER.queueDownload("./assets/sound/transformation.mp3");
+
 
 ASSET_MANAGER.downloadAll(() => {
 	const canvas = document.getElementById("gameWorld");

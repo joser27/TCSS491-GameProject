@@ -35,9 +35,12 @@ class LevelManager {
                         startX: 14*PARAMS.CELL_SIZE,
                         endX: 34*PARAMS.CELL_SIZE,
                         enemies: [
-                            { type: 'BasicYellowEnemy', x: 34*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
-                            { type: 'BlueEnemy', x: 33*PARAMS.CELL_SIZE, y: 9*PARAMS.CELL_SIZE },
-                            
+                            { 
+                                type: 'ShadowKing', 
+                                x: 34*PARAMS.CELL_SIZE, 
+                                y: 7*PARAMS.CELL_SIZE,
+                                spawnDelay: 0 // Ensure immediate spawn
+                            }
                         ]
                     },
                     {
@@ -247,7 +250,13 @@ class LevelManager {
             'BossEnemy': (x, y) => new BossEnemy(this.gameEngine, this.sceneManager.scene, x, y),
             'BlueEnemy': (x, y) => new BlueEnemy(this.gameEngine, this.sceneManager.scene, x, y),
             'RedEnemy': (x, y) => new RedEnemy(this.gameEngine, this.sceneManager.scene, x, y),
-            'RangedEnemy': (x, y) => new RangedEnemy(this.gameEngine, x, y)
+            'RangedEnemy': (x, y) => new RangedEnemy(this.gameEngine, x, y),
+            'ShadowKing': (x, y) => {
+                const shadowKing = new ShadowKing(this.gameEngine, this.sceneManager.scene, x, y);
+                // Initialize the ShadowKing with debug mode off
+                shadowKing.debug = false;
+                return shadowKing;
+            }
         };
 
         return enemyConfigs.map(config => {
@@ -358,6 +367,24 @@ class LevelManager {
         wave.enemies.forEach(enemyData => {
             if (enemyData.spawnDelay === 0) {
                 enemyData.enemy.isActive = true;
+                
+                // Special handling for ShadowKing to ensure it's properly initialized
+                if (enemyData.enemy instanceof ShadowKing) {
+                    console.log("Activating ShadowKing boss!");
+                    // Set initial state to IDLE or CHASE based on player distance
+                    const player = this.playingScene.player;
+                    const distanceToPlayer = Math.sqrt(
+                        Math.pow(enemyData.enemy.x - player.x, 2) + 
+                        Math.pow(enemyData.enemy.y - player.y, 2)
+                    );
+                    
+                    if (distanceToPlayer > enemyData.enemy.attackRange) {
+                        enemyData.enemy.setState(enemyData.enemy.states.CHASE);
+                    } else {
+                        enemyData.enemy.setState(enemyData.enemy.states.IDLE);
+                    }
+                }
+                
                 this.playingScene.addEnemy(enemyData.enemy);
             }
         });
