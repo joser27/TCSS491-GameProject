@@ -7,20 +7,20 @@ class UpgradeMenu {
             {
                 id: 'unlockGun',
                 name: 'Unlock Gun',
-                cost: 30,
+                cost: 1,
                 description: 'Unlocks the ability to use a gun',
             },
             {
                 id: 'unlockSword',
                 name: 'Unlock Sword',
-                cost: 20,
+                cost: 1,
                 description: 'Unlocks the ability to use a sword',
             },
             {
-                id: 'unlockJump',
-                name: 'Unlock Jump',
-                cost: 1000,
-                description: 'Unlocks the ability to jump',
+                id: 'healthkit',
+                name: 'Health Kit',
+                cost: 1,
+                description: 'Restores full health',
             }
         ];
         this.selectedIndex = 0;
@@ -161,18 +161,39 @@ class UpgradeMenu {
 
     purchaseUpgrade() {
         const selectedUpgrade = this.upgrades[this.selectedIndex];
-        
-        // Check if already owned
-        if (this.gameState.playerStats.upgrades[selectedUpgrade.id]) {
-            this.showNotification("Already owned!", "red");
+        const playerStats = this.gameState.playerStats;
+    
+        // Health Kit Purchase Logic
+        if (selectedUpgrade.id === "healthkit") {
+            if (playerStats.inventory.healthKits >= 10) {
+                this.showNotification("Inventory full! Max 10 health kits.", "red");
+                ASSET_MANAGER.playAsset(this.sounds.noFunds);
+                return; // Prevent further purchase
+            }
+    
+            if (playerStats.coins >= selectedUpgrade.cost) {
+                playerStats.coins -= selectedUpgrade.cost;
+                playerStats.inventory.healthKits++;
+                this.showNotification(`Purchased Health Kit! (x${playerStats.inventory.healthKits})`, "green");
+                ASSET_MANAGER.playAsset(this.sounds.purchase);
+            } else {
+                this.showNotification("Not enough coins!", "red");
+                ASSET_MANAGER.playAsset(this.sounds.noFunds);
+            }
+            return; // Exit function after handling Health Kit
+        }
+    
+        // Handle Pistol & Sword (Single Purchase)
+        if (playerStats.upgrades[selectedUpgrade.id]) {
+            this.showNotification(`You already own ${selectedUpgrade.name}!`, "red");
             ASSET_MANAGER.playAsset(this.sounds.noFunds);
             return;
         }
-
-        // Check if enough coins
-        if (this.gameState.playerStats.coins >= selectedUpgrade.cost) {
-            this.gameState.playerStats.coins -= selectedUpgrade.cost;
-            this.gameState.playerStats.upgrades[selectedUpgrade.id] = true;
+    
+        // Unlock Pistol or Sword
+        if (playerStats.coins >= selectedUpgrade.cost) {
+            playerStats.coins -= selectedUpgrade.cost;
+            playerStats.upgrades[selectedUpgrade.id] = true;
             this.showNotification("Purchase successful!", "green");
             ASSET_MANAGER.playAsset(this.sounds.purchase);
         } else {
@@ -180,7 +201,8 @@ class UpgradeMenu {
             ASSET_MANAGER.playAsset(this.sounds.noFunds);
         }
     }
-
+    
+    
     toggle() {
         this.isOpen = !this.isOpen;
         this.selectedIndex = 0;

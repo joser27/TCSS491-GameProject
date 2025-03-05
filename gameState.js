@@ -7,7 +7,9 @@ class GameState {
             upgrades: {
                 unlockGun: false,
                 unlockSword: false,
-                unlockJump: false
+            },
+            inventory: {
+                healthKits: 0
             }
         };
     }
