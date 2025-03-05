@@ -86,7 +86,7 @@ class BossEnemy extends Enemy {
 
         setTimeout(() => {
             if (this.isCollidingWithEntity(this.scene.player)) {
-                this.scene.player.takeDamage(25); // Higher boss attack damage
+                this.scene.player.takeDamage(45); // Higher boss attack damage
             }
         }, 500); // Attack delay for animation
     }
