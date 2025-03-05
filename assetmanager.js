@@ -105,6 +105,7 @@ class AssetManager {
             let bak = audio.cloneNode();
             bak.currentTime = 0;
             bak.volume = audio.volume;
+            bak.muted = audio.muted;
             bak.play();
         } else {
             audio.currentTime = 0;
