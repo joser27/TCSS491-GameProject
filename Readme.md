@@ -7,7 +7,8 @@ Controls
 Make sure your Caps lock is turned off while using these controls.  
 - WASD and Arrow keys for movement.  
 - Space to jump.  
-- 'z' to kill player.  
+- 'z' to kill player.
+- 'b' to open shop.
 - 'h' to restore health.  
 - 'p' to punch.  
 - 3x 'p' for combo attack.
