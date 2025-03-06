@@ -12,6 +12,7 @@ class PlayingScene {
         this.initEntities()
         this.upgradeMenu = new UpgradeMenu(this.gameState, this.gameEngine);
         this.gameEngine.addEntity(this.upgradeMenu);
+        this.isPlaying = false;
     }
 
     initEntities() {
@@ -41,6 +42,26 @@ class PlayingScene {
         if (this.player.deathCompleted) {
             this.sceneManager.transitionToScene(GameOverScene);
         }
+
+
+        if(this.levelManager.currentLevel == 1){
+            this.bossmusic = "./assets/music/stage1boss.mp3";            
+        } else if(this.levelManager.currentLevel == 2){
+            this.bossmusic = "./assets/music/stage2boss.mp3";            
+        } else if(this.levelManager.currentLevel == 3){            
+            this.bossmusic = "./assets/music/stage3boss.mp3";            
+        } else if(this.levelManager.currentLevel == 4){            
+            this.bossmusic = "./assets/music/stage4boss.mp3";   
+        }
+
+        if(this.levelManager.isCurrentZoneBossFight() && !this.isPlaying){
+            this.isPlaying = true;
+            ASSET_MANAGER.pauseBackgroundMusic();
+            ASSET_MANAGER.playAsset(this.bossmusic);  
+        } 
+       
+        
+
     }
 
     draw(ctx) {

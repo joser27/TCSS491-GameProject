@@ -73,6 +73,9 @@ ASSET_MANAGER.queueDownload("./assets/sprites/shadowking/shadowking_normal.png")
 ASSET_MANAGER.queueDownload("./assets/sprites/sorcerer.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/berserker.png");
 
+ASSET_MANAGER.queueDownload("./assets/sprites/boss2.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/boss3.png");
+
 // Keyboard sprites
 ASSET_MANAGER.queueDownload("./assets/sprites/ARROWDOWN.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/ARROWUP.png");
@@ -102,6 +105,10 @@ ASSET_MANAGER.queueDownload("./assets/fonts/handwritten.otf");
 ASSET_MANAGER.queueDownload("./assets/music/music1.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/gameover.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/shop_music.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/stage1boss.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/stage2boss.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/stage3boss.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/stage4boss.mp3");
 
 //sound effect
 ASSET_MANAGER.queueDownload("./assets/sound/kick.mp3");

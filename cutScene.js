@@ -50,13 +50,15 @@ class CutScene {
         const note = new Image();
         const daughter = new Image();
         const player = new Image();
+        const boss2 = new Image();
+        const boss3 = new Image();
         bg.src = './assets/sprites/far-grounds.png';
         house.src = './assets/sprites/building3.png';
 
         if (this.screen1 === 0) {
             this.drawDayScene(ctx, bg, house,daughter, player);
         } else if (this.screen1 === 1) {
-            this.drawNightScene(ctx, bg, house, y, r, b);
+            this.drawNightScene(ctx, bg, house, y, r, b,boss2,boss3);
         } else if (this.screen1 === 2) {
             this.drawNoteScene(ctx, bg, house, note);
         } else if (this.screen1 === 3) {
@@ -71,7 +73,7 @@ class CutScene {
         ctx.fillRect(0, 0, PARAMS.canvasWidth, PARAMS.canvasHeight);
         ctx.drawImage(bg, 0, 0, 1280, 500);
         ctx.drawImage(house, 800, 200, 125, 100);
-        ctx.drawImage(daughter, 700, 300, 25,41);
+        ctx.drawImage(daughter, 725, 300, 25,41);
         ctx.drawImage(player, 750, 250, 55,88);
         this.drawTextbar(ctx);
         this.drawDaySky(ctx);
@@ -84,7 +86,7 @@ class CutScene {
         }
     }
 
-    drawNightScene(ctx, bg, house, y, r, b) {
+    drawNightScene(ctx, bg, house, y, r, b,boss2,boss3) {
         ctx.fillStyle = "#0a0a23";
         ctx.fillRect(0, 0, PARAMS.canvasWidth, PARAMS.canvasHeight);
         ctx.drawImage(bg, 0, 0, 1280, 500);
@@ -100,6 +102,10 @@ class CutScene {
         ctx.drawImage(r, 600, 300, 90, 85);
         b.src = './assets/sprites/blue_sword_pic.png';
         ctx.drawImage(b, 700, 300, 79, 82);
+        boss2.src = './assets/sprites/boss2.png';
+        ctx.drawImage(boss2, 400, 300, 90, 85);
+        boss3.src = './assets/sprites/boss3.png';
+        ctx.drawImage(boss3, 300, 300, 79, 82);
 
         if (this.charIndex >= this.texts[1].length) {
             ctx.font = "15px Arial";

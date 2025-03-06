@@ -39,32 +39,33 @@ class LevelCompleteOverlay {
         ctx.textAlign = "center";
         
         // Background
-        const img1 = new Image();
-        img1.src = './assets/sprites/Box_Orange.png';
+        const orangebox = new Image();
+        orangebox.src = './assets/sprites/Box_Orange.png';
 
-        ctx.drawImage(img1 , ctx.canvas.width / 2 - 250, 90 ,500 ,500);
-
+        ctx.drawImage(orangebox , ctx.canvas.width / 2 - 250, 90 ,500 ,500);
+        const titleUI= new Image();
         // Title
-        img1.src = './assets/sprites/Title_UI.png';
-        ctx.drawImage(img1,ctx.canvas.width/ 2 - 250, 100,500,150);
+        titleUI.src = './assets/sprites/Title_UI.png';
+        ctx.drawImage(titleUI,ctx.canvas.width/ 2 - 250, 100,500,150);
         ctx.font = "36px Courier New";
         ctx.fillText(`Level ${this.levelManager.sceneManager.gameState.currentLevel} Complete!`, ctx.canvas.width / 2, 200);
 
         // Grade
-        img1.src = './assets/sprites/UI.png';
-        ctx.drawImage(img1,ctx.canvas.width/ 2 - 125, 270,250,50);
+        const title= new Image();
+        title.src = './assets/sprites/UI.png';
+        ctx.drawImage(title,ctx.canvas.width/ 2 - 125, 270,250,50);
         ctx.font = "24px Arial";
         ctx.fillText(`Grade: ${this.grade}`, ctx.canvas.width / 2, 300);
         
         // Stats
-        ctx.drawImage(img1,ctx.canvas.width/ 2 - 125, 320,250,50);
+        ctx.drawImage(title,ctx.canvas.width/ 2 - 125, 320,250,50);
         ctx.font = "20px Arial";
         ctx.fillText(`Coins Earned: ${this.coins}`, ctx.canvas.width / 2, 350);
-        ctx.drawImage(img1,ctx.canvas.width/ 2 - 125, 370,250,50);
+        ctx.drawImage(title,ctx.canvas.width/ 2 - 125, 370,250,50);
         ctx.fillText(`Health Remaining: ${this.health}%`, ctx.canvas.width / 2, 400);
         
         // Press Enter prompt
-        ctx.drawImage(img1,ctx.canvas.width/ 2 - 125, 470,250,50);
+        ctx.drawImage(title,ctx.canvas.width/ 2 - 125, 470,250,50);
         ctx.fillText("Press Enter to continue", ctx.canvas.width / 2, 500);
     }
 }
