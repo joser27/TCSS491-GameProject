@@ -36,7 +36,7 @@ class LevelManager {
                         endX: 34*PARAMS.CELL_SIZE,
                         enemies: [
                             { 
-                                type: 'ShadowKing', 
+                                type: 'Sorcerer', 
                                 x: 34*PARAMS.CELL_SIZE, 
                                 y: 7*PARAMS.CELL_SIZE,
                                 spawnDelay: 0 // Ensure immediate spawn
@@ -256,7 +256,8 @@ class LevelManager {
                 // Initialize the ShadowKing with debug mode off
                 shadowKing.debug = false;
                 return shadowKing;
-            }
+            },
+            'Sorcerer': (x, y) => new Sorcerer(this.gameEngine, this.sceneManager.scene, x, y)
         };
 
         return enemyConfigs.map(config => {

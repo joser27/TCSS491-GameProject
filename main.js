@@ -69,6 +69,7 @@ ASSET_MANAGER.queueDownload("./assets/sprites/boss_sprite/boss_headbutt.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/shadowking/shadowking_transformed.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/shadowking/shadowking_normal.png");
 
+ASSET_MANAGER.queueDownload("./assets/sprites/sorcerer.png");
 
 
 // Keyboard sprites
