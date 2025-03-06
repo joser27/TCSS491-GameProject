@@ -137,6 +137,7 @@ class GameEngine {
     };
 
     isKeyPressed(key) {
+        key = key.toLowerCase();
         if (this.keys[key] && !this.consumedKeys[key]) {
             this.consumedKeys[key] = true;
             return true;
@@ -145,4 +146,3 @@ class GameEngine {
     }
 };
 
-// KV Le was here :)

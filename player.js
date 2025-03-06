@@ -24,6 +24,9 @@ class Player extends Character {
         this.notification = null;
         this.notificationTimer = 0;
 
+        this.cheatMode = false;
+        this.cheatCodeBuffer = "";
+
     }
 
 
@@ -49,6 +52,12 @@ class Player extends Character {
             if(this.notificationTimer <= 0) {
                 this.notification = null;
             }
+        }
+
+        this.handleCheatCodeInput();
+      
+        if(this.cheatMode){
+            this.health = 200;
         }
 
        if(this.gameEngine.keys.h && (this.scene.sceneManager.gameState.playerStats.inventory.healthKits > 0)) {
@@ -517,6 +526,12 @@ class Player extends Character {
             ctx.fillText("'Q': Sword, 'G' : Pistol", xPosition + 450, yPosition + 45);
         }
 
+        if(this.cheatMode) {
+            ctx.font = "bold 24px Arial";
+            ctx.textAlign = "left";
+            ctx.fillStyle = "red";
+            ctx.fillText("CHEAT MODE", xPosition + 70, yPosition + 45 );
+        }
         this.drawDebugStats(ctx);
         this.drawInventory(ctx);
 
@@ -544,24 +559,25 @@ class Player extends Character {
     }
 
     handleCheatCodeInput() {
-        // Listen for keydown events
-        document.addEventListener("keydown", (event) => {
-            // Append the latest key to the buffer (convert to lowercase for consistency)
-            this.cheatCodeBuffer += event.key.toLowerCase();
-
-            // Keep only the last 4 characters (length of "heal")
-            if (this.cheatCodeBuffer.length > 4) {
-                this.cheatCodeBuffer = this.cheatCodeBuffer.slice(-4);
+        // Read keys only when pressed once
+        const keys = ["c", "h", "e", "a", "t"];
+        for (const key of keys) {
+            if (this.gameEngine.isKeyPressed(key)) {
+                this.cheatCodeBuffer += key;
             }
+        }
 
-            // Check if the cheat code "heal" is entered
-            if (this.cheatCodeBuffer === "heal") {
-                this.health = 200; // Restore full health
-                console.log("CHEAT ACTIVATED: Player healed to full health!");
-                
-                // Clear the buffer so it doesn't trigger again immediately
-                this.cheatCodeBuffer = "";
-            }
-        });
+        // Keep only last 5 characters
+        if (this.cheatCodeBuffer.length > 5) {
+            this.cheatCodeBuffer = this.cheatCodeBuffer.slice(-5);
+        }
+
+        // Activate cheat mode if "cheat" is typed
+        if (this.cheatCodeBuffer === "cheat") {
+            this.cheatMode = !this.cheatMode;
+            console.log(`CHEAT MODE ${this.cheatMode ? "ACTIVATED" : "DEACTIVATED"}`);
+            this.showNotification(`CHEAT MODE ${this.cheatMode ? "ON" : "OFF"}`, "red");
+            this.cheatCodeBuffer = ""; // Reset buffer
+        }
     }
 }
