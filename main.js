@@ -70,7 +70,7 @@ ASSET_MANAGER.queueDownload("./assets/sprites/shadowking/shadowking_transformed.
 ASSET_MANAGER.queueDownload("./assets/sprites/shadowking/shadowking_normal.png");
 
 ASSET_MANAGER.queueDownload("./assets/sprites/sorcerer.png");
-
+ASSET_MANAGER.queueDownload("./assets/sprites/berserker.png");
 
 // Keyboard sprites
 ASSET_MANAGER.queueDownload("./assets/sprites/ARROWDOWN.png");
