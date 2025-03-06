@@ -44,7 +44,8 @@ ASSET_MANAGER.queueDownload("./assets/sprites/street_car3.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/trashcan.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/city_mailbox.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/bus_sign.png");
-
+ASSET_MANAGER.queueDownload("./assets/sprites/pink_pic.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/white_pic.png");
 
 ASSET_MANAGER.queueDownload("./assets/sprites/mallwallAseprite1.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/mallwallAseprite2.png");
@@ -100,6 +101,7 @@ ASSET_MANAGER.queueDownload("./assets/fonts/handwritten.otf");
 // music 
 ASSET_MANAGER.queueDownload("./assets/music/music1.mp3");
 ASSET_MANAGER.queueDownload("./assets/music/gameover.mp3");
+ASSET_MANAGER.queueDownload("./assets/music/shop_music.mp3");
 
 //sound effect
 ASSET_MANAGER.queueDownload("./assets/sound/kick.mp3");

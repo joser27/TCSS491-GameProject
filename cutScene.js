@@ -48,25 +48,31 @@ class CutScene {
         const r = new Image();
         const b = new Image();
         const note = new Image();
+        const daughter = new Image();
+        const player = new Image();
         bg.src = './assets/sprites/far-grounds.png';
         house.src = './assets/sprites/building3.png';
 
         if (this.screen1 === 0) {
-            this.drawDayScene(ctx, bg, house);
+            this.drawDayScene(ctx, bg, house,daughter, player);
         } else if (this.screen1 === 1) {
             this.drawNightScene(ctx, bg, house, y, r, b);
         } else if (this.screen1 === 2) {
             this.drawNoteScene(ctx, bg, house, note);
         } else if (this.screen1 === 3) {
-            this.drawFinalScene(ctx, bg, house);
+            this.drawFinalScene(ctx, bg, house,player);
         }
     }
 
-    drawDayScene(ctx, bg, house) {
+    drawDayScene(ctx, bg, house, daughter, player) {
+        daughter.src = './assets/sprites/pink_pic.png';
+        player.src = './assets/sprites/white_pic.png';
         ctx.fillStyle = "#87CEEB";
         ctx.fillRect(0, 0, PARAMS.canvasWidth, PARAMS.canvasHeight);
         ctx.drawImage(bg, 0, 0, 1280, 500);
         ctx.drawImage(house, 800, 200, 125, 100);
+        ctx.drawImage(daughter, 700, 300, 25,41);
+        ctx.drawImage(player, 750, 250, 55,88);
         this.drawTextbar(ctx);
         this.drawDaySky(ctx);
 
@@ -111,7 +117,6 @@ class CutScene {
 
         note.src = './assets/sprites/notepaper.png';
         ctx.drawImage(note, PARAMS.canvasWidth / 2 - 250, 100, 500, 300);
-
         this.displayText(ctx, this.texts[2]);
 
         if (this.charIndex >= this.texts[2].length) {
