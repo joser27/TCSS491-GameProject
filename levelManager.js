@@ -577,4 +577,19 @@ class LevelManager {
             );
         });
     }
+
+    isCurrentZoneBossFight() {
+        if (!this.currentCombatZone) return false;
+        
+        const currentWave = this.currentCombatZone.waves[this.currentCombatZone.currentWave];
+        if (!currentWave || !currentWave.isActive) return false;
+        
+        return currentWave.enemies.some(enemyData => {
+            const enemy = enemyData.enemy;
+            return enemy instanceof BossEnemy || 
+                   enemy instanceof ShadowKing || 
+                   enemy instanceof Berserker ||
+                   enemy instanceof Sorcerer;
+        });
+    }
 }
