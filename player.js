@@ -20,6 +20,10 @@ class Player extends Character {
         this.comboDelay = 1000; // Max time between presses to continue combo (in milliseconds)
         this.swordComboCount = 0;
 
+        // notification properties
+        this.notification = null;
+        this.notificationTimer = 0;
+
     }
 
 
@@ -39,12 +43,23 @@ class Player extends Character {
         }
 
         super.update();
-        //console.log("player ", this.boundingbox);
+        
+        if(this.notification && (this.notificationTimer > 0)) {
+            this.notificationTimer -= this.gameEngine.clockTick * 1000;
+            if(this.notificationTimer <= 0) {
+                this.notification = null;
+            }
+        }
 
-       // this.handleCheatCodeInput();
-       
-       if(this.gameEngine.keys.h) {
-            this.health = 200;
+       if(this.gameEngine.keys.h && (this.scene.sceneManager.gameState.playerStats.inventory.healthKits > 0)) {
+            if(this.health < 200){
+                this.health = 200;
+                this.scene.sceneManager.gameState.playerStats.inventory.healthKits--;
+                this.showNotification("Health kit used", "green");
+            } else {
+                this.showNotification("Health is already full!", "green");
+            }
+           
        }
 
         if (this.deathCompleted) {
@@ -60,10 +75,12 @@ class Player extends Character {
         
         if(!this.isAttacking) {
             if (this.gameEngine.keys.g && !this.gKeyPressed) {
-                if (!this.hasWeapon) {
+                if (!this.hasWeapon && this.scene.sceneManager.gameState.playerStats.upgrades.unlockGun) {
                     this.equipWeapon(new Pistol(this.scene));
                     this.hasWeapon = true;
-                } else {
+                } else if(!this.scene.sceneManager.gameState.playerStats.upgrades.unlockGun) {
+                    this.showNotification("You need to buy Pistol from shop, press 'b' to open shop", "red")
+                }else {
                     this.unequipWeapon();
                     this.hasWeapon = false;
                 }
@@ -76,10 +93,12 @@ class Player extends Character {
             }
 
             if(this.gameEngine.keys.q && !this.qKeyPressed) {
-                if(!this.hasWeapon) {
+                if(!this.hasWeapon && this.scene.sceneManager.gameState.playerStats.upgrades.unlockSword) {
                     this.equipWeapon(new Sword(this.scene));
                     this.hasWeapon = true;
-                } else {
+                } else if(!this.scene.sceneManager.gameState.playerStats.upgrades.unlockSword) {
+                    this.showNotification("You need to buy Sword from shop, press 'b' to open shop", "red")
+                }else {
                     this.unequipWeapon();
                     this.hasWeapon = false;
                 }
@@ -238,7 +257,7 @@ class Player extends Character {
 
             if (this.isCollidingWithEntity(enemy) && !this.hasDealtDamage) {
                 hasHitAny = true;
-                this.scene.sceneManager.gameState.playerStats.coins += 1;
+                //this.scene.sceneManager.gameState.playerStats.coins += 1;
                 
                 setTimeout(() => {
                     if(this.isCollidingWithEntity(enemy)){
@@ -396,21 +415,67 @@ class Player extends Character {
             });
         }
     }
+    drawInventory(ctx) {
+        // Draw inventory box
+        ctx.fillStyle = "rgba(0, 0, 0, 0.7)"; // Semi-transparent background
+        ctx.fillRect(20, ctx.canvas.height - 90, 160, 80); // Adjusted height for all items
+
+        // Draw inventory label
+        ctx.fillStyle = "white";
+        ctx.font = "16px Arial";
+        ctx.fillText("Inventory", 30, ctx.canvas.height - 65);
+
+        // Load item icons
+        const healthKitIcon = new Image();
+        healthKitIcon.src = "./assets/sprites/health_kit.png"; 
+
+        const pistolIcon = new Image();
+        pistolIcon.src = "./assets/sprites/pistol_icon.png"; // Add a pistol icon
+
+        const swordIcon = new Image();
+        swordIcon.src = "./assets/sprites/sword_icon.png"; // Add a sword icon
+
+        // Get player upgrades
+        const upgrades = this.scene.sceneManager.gameState.playerStats.upgrades;
+        const inventory = this.scene.sceneManager.gameState.playerStats.inventory;
+
+        // Display Health Kit Count
+        ctx.drawImage(healthKitIcon, 30, ctx.canvas.height - 50, 20, 20);
+        // If at max limit, highlight it
+        if (inventory.healthKits >= 10) {
+            ctx.fillStyle = "red";  // Turn text red to indicate full
+            ctx.fillText(`x ${inventory.healthKits}`, 60, ctx.canvas.height - 35);
+        } else {
+            ctx.fillStyle = "white";
+            ctx.fillText(`x ${inventory.healthKits}`, 60, ctx.canvas.height - 35);
+        }
+
+        // Display Pistol (Greyed out if not owned)
+        ctx.globalAlpha = upgrades.unlockGun ? 1.0 : 0.3; // Transparent if not owned
+        ctx.drawImage(pistolIcon, 100, ctx.canvas.height - 50, 20, 20);
+        ctx.globalAlpha = 1.0; // Reset transparency
+        if (upgrades.unlockGun) {
+            ctx.fillText("✔", 120, ctx.canvas.height - 35);
+        }
+
+        // Display Sword (Greyed out if not owned)
+        ctx.globalAlpha = upgrades.unlockSword ? 1.0 : 0.3;
+        ctx.drawImage(swordIcon, 140, ctx.canvas.height - 50, 20, 20);
+        ctx.globalAlpha = 1.0;
+        if (upgrades.unlockSword) {
+            ctx.fillText("✔", 160, ctx.canvas.height - 35);
+        }
+
+        // Instruction for Health Kit usage
+        ctx.font = "14px Arial";
+        ctx.fillStyle = "white";
+        ctx.fillText("Press 'H' to use", 30, ctx.canvas.height - 15);
+
+    }
 
     draw(ctx) {
         super.draw(ctx);
-        // if(!this.hasWeapon){
-        //     super.draw(ctx);
-        // } else {
-        //     if (this.weapon instanceof Pistol) {
-        //         this.weapon.shootAnimation.drawFrame(
-        //             this.gameEngine.clockTick,
-        //             ctx,
-        //             this.x -165,
-        //             this.y - 210
-        //         );
-        //     }
-        // }
+        
         // Draw health bar fixed at the top center of the screen
         const canvasWidth = ctx.canvas.width;
         const healthBarWidth = 300; // Width of the health bar
@@ -445,7 +510,7 @@ class Player extends Character {
             ctx.font = "bold 20px Arial";
             ctx.textAlign = "left";
 
-            ctx.fillText(ammoText, 75, ctx.canvas.height - 30);
+            ctx.fillText(ammoText, 75, ctx.canvas.height - 100);
         } else if(this.isUsingSword){
             ctx.fillText("Use 'R' to attack", xPosition + 450, yPosition + 45);
         } else{
@@ -453,6 +518,23 @@ class Player extends Character {
         }
 
         this.drawDebugStats(ctx);
+        this.drawInventory(ctx);
+
+        //Show Notifications
+        if(this.notification) {
+            ctx.font = '24px Arial';
+            ctx.fillStyle = this.notification.color;
+            ctx.textAlign = "center";
+            ctx.fillText(this.notification.message, ctx.canvas.width/2, ctx.canvas.height - 50);
+        }
+    }
+
+    showNotification(message, color) {
+        this.notification = {
+            message: message,
+            color: color
+        };
+        this.notificationTimer = 2000;
     }
 
     equipWeapon(weapon) {

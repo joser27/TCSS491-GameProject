@@ -292,23 +292,27 @@ class Character {
     update() {
         if (this.isDead) {
             this.performDeath();
+            
             if(this.isUsingPistol){
                 if(this.pistolAnimations.death.isDone()){
                     this.deathCompleted = true;
                     this.isPlaying = false;
                     this.removeFromWorld = true;
+                    //this.scene.sceneManager.gameState.playerStats.coins += 1;
                 }
             } else if (this.isUsingSword) {
                 if(this.swordAnimations.death.isDone()) {
                     this.deathCompleted = true;
                     this.isPlaying = false;
                     this.removeFromWorld = true;
+                    //this.scene.sceneManager.gameState.playerStats.coins += 1;
                 }
             } else {
                 if (this.deathAnimation.isDone()) {
                     this.deathCompleted = true;
                     this.isPlaying = false;
                     this.removeFromWorld = true;
+                   // this.scene.sceneManager.gameState.playerStats.coins += 1;
                 }
             }
             return;

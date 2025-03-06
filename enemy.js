@@ -18,8 +18,13 @@ class Enemy extends Character {
             // Stop all actions if the enemy is dead
             this.isMoving = false;
             this.currentAttack = null;
+            if(this.deathAnimation.isDone()){
+                this.scene.sceneManager.gameState.playerStats.coins += 5;
+            }
+
             return;
         }
+        
         const player = this.scene.player;
 
         if (player.weapon instanceof Pistol) {
@@ -27,7 +32,6 @@ class Enemy extends Character {
                 if (this.isCollidingWithBullet(bullet)) {
                     console.log("Enemy hit by bullet");
                     this.takeDamage(player.weapon.damage);
-                    this.scene.sceneManager.gameState.playerStats.coins += 1;
                     bullet.offScreen = true;
                 }
             });

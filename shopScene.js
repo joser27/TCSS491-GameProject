@@ -12,7 +12,7 @@ class ShopScene {
         this.discounts = {
             unlockGun: 20,    // 20% off
             unlockSword: 30,  // 30% off
-            unlockJump: 25    // 25% off
+            healthkit: 25    // 25% off
         };
 
         // shop items with Exit option added at the end
@@ -31,18 +31,18 @@ class ShopScene {
                 name: 'Unlock Sword',
                 icon: '⚔️',
                 description: 'Unlocks the ability to use a sword',
-                originalPrice: 150,
+                originalPrice: 50,
                 price: this.calculateDiscountedPrice('unlockSword', 20),
                 tooltip: "Press Q to equip sword once purchased"
             },
             {
-                id: 'unlockJump',
-                name: 'Unlock Jump',
-                icon: '⬆️',
-                description: 'Unlocks the ability to jump',
-                originalPrice: 200,
-                price: this.calculateDiscountedPrice('unlockJump', 1000),
-                tooltip: "Press SPACE to jump once purchased"
+                id: 'healthkit',
+                name: 'Health Kit',
+                icon: '❤️',
+                description: 'Restores full health',
+                originalPrice: 10,
+                price: this.calculateDiscountedPrice('healthkit', 10),
+                tooltip: "Press 'h' to restore health"
             },
             {
                 name: 'Exit Shop',
@@ -55,6 +55,10 @@ class ShopScene {
         
         this.selectedIndex = 0;
         this.keyPressed = false;
+
+        // notification properties
+        this.notification = null;
+        this.notificationTimer = 0;
         
         // cooldown timer for entering the shop
         this.entryCooldown = 1;
@@ -73,12 +77,27 @@ class ShopScene {
         }
         return originalPrice;
     }
+    showNotification(message, color) {
+        this.notification = {
+            message: message,
+            color: color
+        };
+        this.notificationTimer = 2000; // Display for 2 seconds
+    }
+    
 
     update() {
         // Handle cooldown timer
         if (this.currentCooldown > 0) {
             this.currentCooldown -= this.gameEngine.clockTick;
             return; // Skip input handling during cooldown
+        }
+
+        if (this.notification && this.notificationTimer > 0) {
+            this.notificationTimer -= this.gameEngine.clockTick * 1000;
+            if (this.notificationTimer <= 0) {
+                this.notification = null;
+            }
         }
 
         // Handle item selection
@@ -95,29 +114,38 @@ class ShopScene {
                     // Exit shop and return to game
                     this.sceneManager.transitionToScene(PlayingScene);
                 } else {
-                    // Handle purchase logic
                     const selectedItem = this.shopItems[this.selectedIndex];
                     const playerStats = this.gameState.playerStats;
-                    
-                    // Check if player has enough coins and hasn't already bought the upgrade
-                    if (selectedItem.id) { // Only process items with an ID (not the exit option)
-                        if (playerStats.coins >= selectedItem.price && 
-                            !playerStats.upgrades[selectedItem.id]) {
-                            
-                            // Deduct coins and apply upgrade
+                
+                    if (selectedItem.id) {
+                        if (selectedItem.id === "healthkit") {
+                            if (playerStats.inventory.healthKits >= 10) {
+                                this.showNotification("Inventory full! Max 10 health kits.", "red");
+                                ASSET_MANAGER.playAsset(this.sounds.noFunds);
+                                return; // Prevent purchase
+                            }
+                        }
+                
+                        if (playerStats.coins >= selectedItem.price) {
                             playerStats.coins -= selectedItem.price;
-                            playerStats.upgrades[selectedItem.id] = true;
+                
+                            if (selectedItem.id === "healthkit") {
+                                playerStats.inventory.healthKits++;
+                                this.showNotification(`Purchased Health Kit! (x${playerStats.inventory.healthKits})`, "green");
+                            } else {
+                                playerStats.upgrades[selectedItem.id] = true;
+                                this.showNotification(`Purchased ${selectedItem.name}!`, "green");
+                            }
+                
                             ASSET_MANAGER.playAsset(this.sounds.purchase);
-                            console.log(`Purchased ${selectedItem.name}`);
-                        } else if (playerStats.upgrades[selectedItem.id]) {
-                            console.log("Already owned!");
-                            ASSET_MANAGER.playAsset(this.sounds.noFunds);
                         } else {
-                            console.log("Not enough coins!");
+                            this.showNotification("Not enough coins!", "red");
                             ASSET_MANAGER.playAsset(this.sounds.noFunds);
                         }
                     }
                 }
+                
+                
                 this.keyPressed = true;
             }
         }
@@ -189,6 +217,14 @@ class ShopScene {
         ctx.textAlign = "left";
         ctx.fillStyle = "white";
         ctx.font = "16px eager___";
+
+        if (this.notification) {
+            ctx.font = '24px Arial';
+            ctx.fillStyle = this.notification.color;
+            ctx.textAlign = 'center';
+            ctx.fillText(this.notification.message, ctx.canvas.width / 2, ctx.canvas.height - 100);
+        }
+        
     }
 }
 
