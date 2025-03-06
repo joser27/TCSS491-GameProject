@@ -14,6 +14,7 @@ class GameEngine {
         this.mouse = null;
         this.wheel = null;
         this.keys = {};
+        this.consumedKeys = {};
 
         // Options and the Details
         this.options = options || {
@@ -73,7 +74,10 @@ class GameEngine {
         });
 
         this.ctx.canvas.addEventListener("keydown", event => this.keys[event.key] = true);
-        this.ctx.canvas.addEventListener("keyup", event => this.keys[event.key] = false);
+        this.ctx.canvas.addEventListener("keyup", event => {
+            this.keys[event.key] = false;
+            this.consumedKeys[event.key] = false;
+        });
     };
 
     addEntity(entity) {
@@ -132,6 +136,13 @@ class GameEngine {
         this.draw();
     };
 
+    isKeyPressed(key) {
+        if (this.keys[key] && !this.consumedKeys[key]) {
+            this.consumedKeys[key] = true;
+            return true;
+        }
+        return false;
+    }
 };
 
 // KV Le was here :)
