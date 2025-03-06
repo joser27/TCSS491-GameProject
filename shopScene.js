@@ -8,6 +8,10 @@ class ShopScene {
 
         this.shopBackground = ASSET_MANAGER.getAsset("./assets/sprites/shopImage.png");
         
+        // Music 
+        ASSET_MANAGER.pauseBackgroundMusic();
+        ASSET_MANAGER.playAsset("./assets/music/shop_music.mp3");
+               
         // Add discount percentages
         this.discounts = {
             unlockGun: 20,    // 20% off
