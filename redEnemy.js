@@ -18,6 +18,10 @@ class RedEnemy extends Character {
         if (this.isDead) {
             this.isMoving = false;
             this.currentAttack = null;
+            if(this.pistolAnimations.death.isDone()){
+                this.scene.sceneManager.gameState.playerStats.coins += 15;
+            }
+
             return;
         }
 
@@ -38,7 +42,6 @@ class RedEnemy extends Character {
                 if (this.isCollidingWithBullet(bullet)) {
                     console.log("Red Enemy hit by player bullet");
                     this.takeDamage(player.weapon.damage);
-                    this.scene.sceneManager.gameState.playerStats.coins += 1;
                     bullet.offScreen = true;
                 }
             });
@@ -65,8 +68,8 @@ class RedEnemy extends Character {
     }
 
     // Move up/down towards the player **until they are aligned in the Y direction**
-    if (this.y !== player.y + 1) {
-        this.y += player.y > this.y-1 ? this.speed : -this.speed;
+    if (this.y !== player.y - 5) {
+        this.y += player.y > this.y +5 ? this.speed : -this.speed;
         this.isMoving = true;
     }
 

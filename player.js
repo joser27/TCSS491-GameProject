@@ -257,7 +257,7 @@ class Player extends Character {
 
             if (this.isCollidingWithEntity(enemy) && !this.hasDealtDamage) {
                 hasHitAny = true;
-                this.scene.sceneManager.gameState.playerStats.coins += 1;
+                //this.scene.sceneManager.gameState.playerStats.coins += 1;
                 
                 setTimeout(() => {
                     if(this.isCollidingWithEntity(enemy)){

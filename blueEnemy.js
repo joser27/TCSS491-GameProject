@@ -17,6 +17,11 @@ class BlueEnemy extends Character {
         if (this.isDead) {
             this.isMoving = false;
             this.currentAttack = null;
+            if(this.swordAnimations.death.isDone()){
+                this.scene.sceneManager.gameState.playerStats.coins += 10;
+            }
+            //this.scene.sceneManager.gameState.playerStats.coins += 1;
+
             return;
         }
         const player = this.scene.player;
@@ -27,7 +32,6 @@ class BlueEnemy extends Character {
                 if (this.isCollidingWithBullet(bullet)) {
                     console.log("Enemy hit by bullet");
                     this.takeDamage(player.weapon.damage);
-                    this.scene.sceneManager.gameState.playerStats.coins += 1;
                     bullet.offScreen = true;
                 }
             });

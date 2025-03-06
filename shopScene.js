@@ -31,7 +31,7 @@ class ShopScene {
                 name: 'Unlock Sword',
                 icon: '⚔️',
                 description: 'Unlocks the ability to use a sword',
-                originalPrice: 150,
+                originalPrice: 50,
                 price: this.calculateDiscountedPrice('unlockSword', 20),
                 tooltip: "Press Q to equip sword once purchased"
             },

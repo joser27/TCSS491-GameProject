@@ -7,19 +7,19 @@ class UpgradeMenu {
             {
                 id: 'unlockGun',
                 name: 'Unlock Gun',
-                cost: 1,
+                cost: 100,
                 description: 'Unlocks the ability to use a gun',
             },
             {
                 id: 'unlockSword',
                 name: 'Unlock Sword',
-                cost: 1,
+                cost: 50,
                 description: 'Unlocks the ability to use a sword',
             },
             {
                 id: 'healthkit',
                 name: 'Health Kit',
-                cost: 1,
+                cost: 10,
                 description: 'Restores full health',
             }
         ];

@@ -50,6 +50,8 @@ class BossEnemy extends Enemy {
             this.isMoving = false;
             this.headbuttAttack = false;
             this.removeFromWorld = true;
+            this.scene.sceneManager.gameState.playerStats.coins += 20;
+
             return;
         }
 
