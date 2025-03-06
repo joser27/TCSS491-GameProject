@@ -35,12 +35,8 @@ class LevelManager {
                         startX: 14*PARAMS.CELL_SIZE,
                         endX: 34*PARAMS.CELL_SIZE,
                         enemies: [
-                            { 
-                                type: 'Berserker', 
-                                x: 34*PARAMS.CELL_SIZE, 
-                                y: 7*PARAMS.CELL_SIZE,
-                                spawnDelay: 0 // Ensure immediate spawn
-                            }
+                            { type: 'BasicYellowEnemy', x: 34*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
+                            { type: 'BasicYellowEnemy', x: 34*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE },
                         ]
                     },
                     {
@@ -119,9 +115,7 @@ class LevelManager {
                         waves: [
                             {
                                 enemies: [
-                                    { type: 'BossEnemy', x: 108*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE, spawnDelay: 0 },
-                                    { type: 'RedEnemy', x: 99*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE, spawnDelay: 5 },
-                                    { type: 'BlueEnemy', x: 121*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE, spawnDelay: 8 },
+                                    { type: 'Berserker', x: 108*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE, spawnDelay: 0 },
                                 ]
                             }
                         ]
@@ -159,9 +153,8 @@ class LevelManager {
                         startX: 68*PARAMS.CELL_SIZE,
                         endX: 88*PARAMS.CELL_SIZE,
                         enemies: [
-                            { type: 'BossEnemy', x: 73*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
-                            { type: 'RedEnemy', x: 77*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
-                            { type: 'BlueEnemy', x: 92*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE },
+                            { type: 'Sorcerer', x: 73*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE },
+
                         ]
                     }
                 ]
@@ -187,9 +180,8 @@ class LevelManager {
                         startX: 40*PARAMS.CELL_SIZE,
                         endX: 60*PARAMS.CELL_SIZE,
                         enemies: [
-                            { type: 'BlueEnemy', x: 40*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
-                            { type: 'RedEnemy', x: 52*PARAMS.CELL_SIZE, y: 10*PARAMS.CELL_SIZE },
-                            { type: 'BossEnemy', x: 60*PARAMS.CELL_SIZE, y: 6*PARAMS.CELL_SIZE },
+                            { type: 'ShadowKing', x: 40*PARAMS.CELL_SIZE, y: 5*PARAMS.CELL_SIZE },
+
                         ]
                     }
                 ]
