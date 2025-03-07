@@ -44,8 +44,8 @@ class ShopScene {
                 name: 'Health Kit',
                 icon: '❤️',
                 description: 'Restores full health',
-                originalPrice: 10,
-                price: this.calculateDiscountedPrice('healthkit', 10),
+                originalPrice: 5,
+                price: this.calculateDiscountedPrice('healthkit', 5),
                 tooltip: "Press 'h' to restore health"
             },
             {

@@ -19,7 +19,7 @@ class UpgradeMenu {
             {
                 id: 'healthkit',
                 name: 'Health Kit',
-                cost: 10,
+                cost: 5,
                 description: 'Restores full health',
             }
         ];

@@ -67,22 +67,7 @@ class Enemy extends Character {
             this.isMoving = false; // Stop moving if within attack range
         }
 
-        // const isPlayerOnTop = 
-        //     player.y + player.boundingbox.height <= this.y + 60;
-        //     //player.x + player.boundingbox.width > this.x -40 &&
-        //     //player.x < this.x + this.boundingbox.width + 40;
-
-
-        // if (isPlayerOnTop) {
-        //     this.isMoving = true;
-
-        //    // this.x = Math.random() < 0.5 ? -1 : 1;
-
-        //     //this.y += Math.sin(this.gameEngine.clockTick *10) * 2;
-        //     if (Math.random() < 0.1) {
-        //         this.y -= 10; // Small jump
-        //     }
-        // }
+        
 
         if (!this.isBoss) {
             // Handle random punch
@@ -147,22 +132,5 @@ class Enemy extends Character {
         return attacks[randomIndex];
     }
 
-    // isCollidingWithPlayer() {
-    //     const player = this.scene.player;
-    //     return (
-    //         this.boundingbox.x < player.boundingbox.x + player.boundingbox.width &&
-    //         this.boundingbox.x + this.boundingbox.width > player.boundingbox.x &&
-    //         this.boundingbox.y < player.boundingbox.y + player.boundingbox.height &&
-    //         this.boundingbox.y + this.boundingbox.height > player.boundingbox.y
-    //     );
-    // }
-
-    // isCollidingWithBullet(bullet) {
-    //     return (
-    //         bullet.x < this.boundingbox.x + this.boundingbox.width &&
-    //         bullet.x + bullet.width > this.boundingbox.x &&
-    //         bullet.y < this.boundingbox.y + this.boundingbox.height &&
-    //         bullet.y + bullet.width > this.boundingbox.y
-    //     );
-    // }
+   
 }

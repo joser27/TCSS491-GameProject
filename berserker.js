@@ -130,6 +130,8 @@ class Berserker extends Enemy {
         
         if (this.isDead) {
             this.setState(this.states.DEATH);
+           
+            
             return;
         }
         
@@ -591,7 +593,7 @@ class Berserker extends Enemy {
         ctx.font = "20px Arial";
         ctx.fillStyle = this.rageMode ? "orange" : "white";
         ctx.textAlign = "right";
-        ctx.fillText("BERSERKER", xPosition + 50, yPosition + 40);
+        ctx.fillText("BERSERKER", xPosition , yPosition + 40);
         
         // Draw character
         const screenX = this.x - this.gameEngine.camera.x;

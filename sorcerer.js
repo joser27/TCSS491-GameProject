@@ -178,6 +178,7 @@ class Sorcerer extends Enemy {
             if (this.currentState !== this.states.DEATH) {
                 this.setState(this.states.DEATH);
             }
+           
             return;
         }
         

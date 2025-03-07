@@ -170,7 +170,10 @@ class LevelManager {
                                 enemies: [
                                     { type: 'RedEnemy', x: 34*PARAMS.CELL_SIZE, y: 7*PARAMS.CELL_SIZE, spawnDelay: 0 },
                                     { type: 'BlueEnemy', x: 33*PARAMS.CELL_SIZE, y: 9*PARAMS.CELL_SIZE, spawnDelay: 2 },
-                                    { type: 'BasicYellowEnemy', x: 32*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE, spawnDelay: 4 },
+                                    { type: 'BasicYellowEnemy', x: 22*PARAMS.CELL_SIZE, y: 10*PARAMS.CELL_SIZE, spawnDelay: 4 },
+                                    { type: 'BasicYellowEnemy', x: 22*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE, spawnDelay: 4 },
+                                    { type: 'BossEnemy', x: 33*PARAMS.CELL_SIZE, y: 8*PARAMS.CELL_SIZE, spawnDelay: 8 },
+
                                 ]
                             }
                         ]

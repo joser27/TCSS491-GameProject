@@ -259,29 +259,34 @@ class Player extends Character {
 
     attackEnemy(damage) {
         let hasHitAny = false;
-
+    
         // Use PlayingScene's enemies array directly
         for (const enemy of this.scene.enemies) {
             if (!enemy.isActive || enemy.isDead) continue;
-
-            if (this.isCollidingWithEntity(enemy) && !this.hasDealtDamage) {
+    
+            // Ensure the enemy is in attack range AND in front of the player
+            const isInRange = this.isCollidingWithEntity(enemy);
+            const isInFront = this.facingLeft ? (enemy.x < this.x) : (enemy.x > this.x);
+    
+            if (isInRange && isInFront && !this.hasDealtDamage) {
                 hasHitAny = true;
-                //this.scene.sceneManager.gameState.playerStats.coins += 1;
-                
+    
                 setTimeout(() => {
-                    if(this.isCollidingWithEntity(enemy)){
+                    if (this.isCollidingWithEntity(enemy)) {
                         enemy.takeDamage(damage);
                     }
                 }, 250);
+    
+                break; // Stop after hitting the first enemy
             }
         }
-        
-
+    
         // Only set hasDealtDamage if we actually hit something
         if (hasHitAny) {
             this.hasDealtDamage = true;
         }
     }
+    
 
    
     performComboAttack() {

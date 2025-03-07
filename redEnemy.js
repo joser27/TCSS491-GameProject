@@ -68,10 +68,11 @@ class RedEnemy extends Character {
     }
 
     // Move up/down towards the player **until they are aligned in the Y direction**
-    if (this.y !== player.y - 5) {
-        this.y += player.y > this.y +5 ? this.speed : -this.speed;
+    if (Math.abs(this.y - (player.y - 5)) > 1) {
+        this.y += player.y > this.y + 5 ? this.speed : -this.speed;
         this.isMoving = true;
     }
+    
 
     // Stop moving if within attack range
     if (distanceToPlayerX <= this.attackRange && distanceToPlayerY <= this.attackRange) {
