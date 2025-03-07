@@ -20,11 +20,13 @@ class LevelManager {
         this.currentCombatZone = null;
         this.cameraLeftBound = 0;
         this.cameraRightBound = null;
+        this.currentLevel = 1;
 
         // Music 
         ASSET_MANAGER.pauseBackgroundMusic();
         ASSET_MANAGER.playAsset("./assets/music/music1.mp3");
-
+        
+        
         // Initialize current level
         this.currentLevel = this.sceneManager.gameState.currentLevel;
         this.levelConfigs = {
@@ -203,6 +205,7 @@ class LevelManager {
         console.log(`Initializing level ${levelNumber}`);
         this.combatZones = [];
         this.currentCombatZone = null;
+        this.currentLevel = levelNumber;
 
         const levelConfig = this.levelConfigs[levelNumber];
         if (!levelConfig) return;
@@ -586,7 +589,6 @@ class LevelManager {
         
         const currentWave = this.currentCombatZone.waves[this.currentCombatZone.currentWave];
         if (!currentWave || !currentWave.isActive) return false;
-        
         return currentWave.enemies.some(enemyData => {
             const enemy = enemyData.enemy;
             return enemy instanceof BossEnemy || 
