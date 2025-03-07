@@ -77,19 +77,27 @@ ASSET_MANAGER.queueDownload("./assets/sprites/boss2.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/boss3.png");
 
 // Keyboard sprites
-ASSET_MANAGER.queueDownload("./assets/sprites/ARROWDOWN.png");
-ASSET_MANAGER.queueDownload("./assets/sprites/ARROWUP.png");
-ASSET_MANAGER.queueDownload("./assets/sprites/ARROWLEFT.png");
-ASSET_MANAGER.queueDownload("./assets/sprites/ARROWRIGHT.png");
-ASSET_MANAGER.queueDownload("./assets/sprites/W.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/ARROWDOWN.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/ARROWUP.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/ARROWLEFT.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/ARROWRIGHT.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/W.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/A.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/S.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/D.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/I.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/J.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/K.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/L.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/B.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/F.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/G.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/SPACE.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/Q.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/R.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/P.png");
 
-ASSET_MANAGER.queueDownload("./assets/sprites/A.png");
-ASSET_MANAGER.queueDownload("./assets/sprites/S.png");
-ASSET_MANAGER.queueDownload("./assets/sprites/D.png");
-ASSET_MANAGER.queueDownload("./assets/sprites/I.png");
-ASSET_MANAGER.queueDownload("./assets/sprites/J.png");
-ASSET_MANAGER.queueDownload("./assets/sprites/K.png");
-ASSET_MANAGER.queueDownload("./assets/sprites/L.png");
+
 ASSET_MANAGER.queueDownload("./assets/sprites/healthbar.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/coin.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/Title_UI.png");

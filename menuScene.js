@@ -97,30 +97,42 @@ class HowToPlayScene {
             width: 34,
             height: 16,
         }
-        this.arrowLeft = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/ARROWLEFT.png"), 
+        this.spaceDetails = {
+            width: 134,
+            height: 16,
+        }
+        this.arrowLeft = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/keyboard/ARROWLEFT.png"), 
             0, 0, this.arrowKeysDetails.width/2, this.arrowKeysDetails.height, 2, 0.3, 3, true);
-        this.arrowRight = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/ARROWRIGHT.png"),
+        this.arrowRight = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/keyboard/ARROWRIGHT.png"),
             0, 0, this.arrowKeysDetails.width/2, this.arrowKeysDetails.height, 2, 0.3, 3, true);
-        this.arrowUp = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/ARROWUP.png"),
+        this.arrowUp = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/keyboard/ARROWUP.png"),
             0, 0, this.arrowKeysDetails.width/2, this.arrowKeysDetails.height, 2, 0.3, 3, true);
-        this.arrowDown = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/ARROWDOWN.png"),
+        this.arrowDown = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/keyboard/ARROWDOWN.png"),
             0, 0, this.arrowKeysDetails.width/2, this.arrowKeysDetails.height, 2, 0.3, 3, true);
-        this.w = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/W.png"),
+        this.w = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/keyboard/W.png"),
             0, 0, this.arrowKeysDetails.width/2, this.arrowKeysDetails.height, 2, 0.3, 3, true);
-        this.a = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/A.png"),
+        this.a = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/keyboard/A.png"),
             0, 0, this.arrowKeysDetails.width/2, this.arrowKeysDetails.height, 2, 0.3, 3, true);
-        this.s = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/S.png"),
+        this.s = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/keyboard/S.png"),
             0, 0, this.arrowKeysDetails.width/2, this.arrowKeysDetails.height, 2, 0.3, 3, true);
-        this.d = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/D.png"),
+        this.d = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/keyboard/D.png"),
             0, 0, this.arrowKeysDetails.width/2, this.arrowKeysDetails.height, 2, 0.3, 3, true);
-        this.i = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/I.png"),
+        
+       
+        this.q = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/keyboard/Q.png"),
             0, 0, this.arrowKeysDetails.width/2, this.arrowKeysDetails.height, 2, 0.3, 3, true);
-        this.j = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/J.png"),
+        this.r = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/keyboard/R.png"),
             0, 0, this.arrowKeysDetails.width/2, this.arrowKeysDetails.height, 2, 0.3, 3, true);
-        this.k = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/K.png"),
+        this.b = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/keyboard/B.png"),
             0, 0, this.arrowKeysDetails.width/2, this.arrowKeysDetails.height, 2, 0.3, 3, true);
-        this.l = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/L.png"),
+        this.g = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/keyboard/G.png"),
             0, 0, this.arrowKeysDetails.width/2, this.arrowKeysDetails.height, 2, 0.3, 3, true);
+        this.f = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/keyboard/F.png"),
+            0, 0, this.arrowKeysDetails.width/2, this.arrowKeysDetails.height, 2, 0.3, 3, true);
+        this.p = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/keyboard/P.png"),
+            0, 0, this.arrowKeysDetails.width/2, this.arrowKeysDetails.height, 2, 0.3, 3, true);
+        this.space = new Animator(ASSET_MANAGER.getAsset("./assets/sprites/keyboard/SPACE.png"),
+            0, 0, this.spaceDetails.width/2, this.spaceDetails.height, 2, 0.3, 3, true);
     }
 
     update() {
@@ -140,60 +152,71 @@ class HowToPlayScene {
         ctx.textAlign = "center";
         ctx.fillText("How to Play", ctx.canvas.width / 2, 100);
 
-        // Draw control instructions
-        ctx.font = "24px eager___";
-        ctx.fillStyle = "white";
-        
         const centerX = ctx.canvas.width / 2;
         const startY = 180;
-        const keySpacing = 40; // Space between keys
-        
-        // WASD Section (left side)
+        const keySpacing = 30;
+
+        // Section headers smaller (32px instead of previous size)
+        ctx.font = "32px eager___";
         ctx.fillStyle = "#FFD700";
         ctx.fillText("Movement Controls", centerX, startY);
         
-        // W key (top)
-        this.w.drawFrame(this.gameEngine.clockTick, ctx, centerX - 150, startY + keySpacing-20);
-        // A S D keys (bottom row)
+        // WASD Section
+        this.w.drawFrame(this.gameEngine.clockTick, ctx, centerX - 150, startY-24 + keySpacing);
         this.a.drawFrame(this.gameEngine.clockTick, ctx, centerX - 210, startY + keySpacing * 2);
         this.s.drawFrame(this.gameEngine.clockTick, ctx, centerX - 150, startY + keySpacing * 2);
         this.d.drawFrame(this.gameEngine.clockTick, ctx, centerX - 90, startY + keySpacing * 2);
 
-        // Arrow Keys Section (right side)
-        // Up arrow (top)
-        this.arrowUp.drawFrame(this.gameEngine.clockTick, ctx, centerX + 150, startY + keySpacing-20);
-        // Left, Down, Right arrows (bottom row)
+        // Arrow Keys Section
+        this.arrowUp.drawFrame(this.gameEngine.clockTick, ctx, centerX + 150, startY-24 + keySpacing);
         this.arrowLeft.drawFrame(this.gameEngine.clockTick, ctx, centerX + 90, startY + keySpacing * 2);
         this.arrowDown.drawFrame(this.gameEngine.clockTick, ctx, centerX + 150, startY + keySpacing * 2);
         this.arrowRight.drawFrame(this.gameEngine.clockTick, ctx, centerX + 210, startY + keySpacing * 2);
 
-        // Movement description
-        ctx.fillStyle = "white";
-        ctx.fillText("Move in any direction", centerX, startY + keySpacing * 4);
+        // Jump control
+
 
         // Combat Controls Section
-        const combatY = startY + keySpacing * 5;
+        const combatY = startY + keySpacing * 4;
+        ctx.font = "24px eager___";
         ctx.fillStyle = "#FFD700";
-        ctx.fillText("Combat Controls", centerX, combatY);
+        ctx.fillText("Combat Controls", centerX, combatY+14);
 
-        // I J K L keys in position
-        this.i.drawFrame(this.gameEngine.clockTick, ctx, centerX - 100, combatY + keySpacing);
-        this.j.drawFrame(this.gameEngine.clockTick, ctx, centerX - 30, combatY + keySpacing);
-        this.k.drawFrame(this.gameEngine.clockTick, ctx, centerX + 40, combatY + keySpacing);
-        this.l.drawFrame(this.gameEngine.clockTick, ctx, centerX + 110, combatY + keySpacing);
-
-        // Combat control descriptions
+        // Combat 
+        const combatStartY = combatY + keySpacing;
+        ctx.font = "18px eager___";
         ctx.fillStyle = "white";
-        const descY = combatY + keySpacing * 3;
-        ctx.fillText("Shop", centerX - 80, descY);
-        ctx.fillText("Chop", centerX - 8, descY);
-        ctx.fillText("Kick", centerX + 60, descY);
-        ctx.fillText("Punch", centerX + 140, descY);
+        
+        // First row of combat controls
+        this.q.drawFrame(this.gameEngine.clockTick, ctx, centerX - 180, combatStartY);
+        ctx.fillText("Equip Sword", centerX - 240, combatStartY + keySpacing);
+        
+        this.r.drawFrame(this.gameEngine.clockTick, ctx, centerX +20, combatStartY);
+        ctx.fillText("Sword Attack", centerX - 40, combatStartY + keySpacing);
+        
+        this.p.drawFrame(this.gameEngine.clockTick, ctx, centerX+220, combatStartY);
+        ctx.fillText("Punch Combo", centerX + 160, combatStartY + keySpacing);
+
+        // Second row of combat controls
+        const row2Y = combatStartY + keySpacing * 2;
+        this.g.drawFrame(this.gameEngine.clockTick, ctx, centerX - 180, row2Y);
+        ctx.fillText("Equip Gun", centerX - 240, row2Y + keySpacing);
+        
+        this.f.drawFrame(this.gameEngine.clockTick, ctx, centerX +20, row2Y);
+        ctx.fillText("Fire Gun", centerX - 40, row2Y + keySpacing);
+        
+        this.b.drawFrame(this.gameEngine.clockTick, ctx, centerX + 220, row2Y);
+        ctx.fillText("Open Shop", centerX + 160, row2Y + keySpacing);
+
+        this.space.drawFrame(this.gameEngine.clockTick, ctx, centerX-100, startY+300 + keySpacing * 2);
+        ctx.font = "18px eager___";
+        ctx.fillStyle = "white";
+        ctx.fillText("Jump", centerX-140, startY +300 + keySpacing * 3);
 
         // Return instruction
-        ctx.font = "20px eager___";
+        ctx.font = "16px eager___";
         ctx.fillStyle = "#808080";
-        ctx.fillText("Press Enter to return to Menu", ctx.canvas.width / 2, ctx.canvas.height - 50);
+        ctx.fillText("Press Enter to return to Menu", ctx.canvas.width / 2, ctx.canvas.height - 30);
     }
 }
 
