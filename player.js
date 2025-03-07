@@ -55,21 +55,26 @@ class Player extends Character {
         }
 
         this.handleCheatCodeInput();
-      
+       
         if(this.cheatMode){
             this.health = 200;
         }
 
-       if(this.gameEngine.keys.h && (this.scene.sceneManager.gameState.playerStats.inventory.healthKits > 0)) {
-            if(this.health < 200){
-                this.health = 200;
-                this.scene.sceneManager.gameState.playerStats.inventory.healthKits--;
-                this.showNotification("Health kit used", "green");
+        
+        if (this.gameEngine.keys.h) { // Ensures key press is detected once
+            if (this.scene.sceneManager.gameState.playerStats.inventory.healthKits > 0) {
+                if (this.health < 200) {
+                    this.health = 200;
+                    this.scene.sceneManager.gameState.playerStats.inventory.healthKits--;
+                    this.showNotification("Health kit used", "green");
+                } else {
+                    this.showNotification("Health is already full!", "red");
+                }
             } else {
-                this.showNotification("Health is already full!", "green");
+                this.showNotification("No health kits left!", "red");
             }
-           
-       }
+        }
+        
 
         if (this.deathCompleted) {
             console.log("Game Over");

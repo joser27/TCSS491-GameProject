@@ -8,7 +8,7 @@ class CutScene {
 
         // Dialogue for each screen
         this.texts = [
-            "David, despite financial problems lived a simple life and happy with his daughter Mia.",
+            "David, despite financial problems lived a simple and happy life with his daughter Mia.",
             "One night, while David was away, the Shadow King’s minions destroyed their home.",
             "They kidnapped Mia, leaving only a note: 'You will find her in the Obsidian Tower.'",
             "David must fight to save his daughter! Would you help?"
@@ -17,7 +17,7 @@ class CutScene {
         this.currentText = "";  // Text displayed letter-by-letter
         this.charIndex = 0;  // Tracks how many characters have been printed
         this.typingSpeed = 50;  // Speed of typewriter effect
-        this.lastTypingTime = 0;  // Tracks last character render time
+        this.lastTypingTime = Date.now();  // Tracks last character render time
     }
 
     update() {
@@ -33,6 +33,8 @@ class CutScene {
                 if (this.screen1 < this.texts.length - 1) {
                     this.screen1++;
                     this.charIndex = 0;
+                    this.lastTypingTime = Date.now();
+                    this.currentText = ""; 
                 } else {
                     this.sceneManager.transitionToScene(PlayingScene); // Move to gameplay
                 }
@@ -142,7 +144,7 @@ class CutScene {
         ctx.fillStyle = "red";
         ctx.font = "45px Arial";
 
-        this.displayText(ctx, this.texts[3]);
+        this.displayText(ctx, this.texts[3], "red");
 
         if (this.charIndex >= this.texts[3].length) {
             ctx.font = "15px Arial";
@@ -151,8 +153,12 @@ class CutScene {
         }
     }
 
-    displayText(ctx, text) {
+    displayText(ctx, text, color = "black") {
         // Ensure typing effect runs at correct speed
+
+        if (this.charIndex === 0 && this.screen1 === 0) {
+            this.lastTypingTime = Date.now();  // Ensure first screen starts typing immediately
+        }
         if (Date.now() - this.lastTypingTime > this.typingSpeed && this.charIndex < text.length) {
             this.charIndex++;
             this.lastTypingTime = Date.now();
