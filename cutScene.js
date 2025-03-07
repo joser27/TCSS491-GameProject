@@ -8,10 +8,10 @@ class CutScene {
 
         // Dialogue for each screen
         this.texts = [
-            "David, A lonely Stickman, lived a simple life with his daughter Mia. They are poor but happy.",
-            "But one night when David went out for work, The Shadow King’s minions tore through their home.",
-            "They kidnapped Mia and left only a note: 'You will find her in the Obsidian Tower.'",
-            "Help David to save his daughter!!!!"
+            "David, despite financial problems lived a simple life and happy with his daughter Mia.",
+            "One night, while David was away, the Shadow King’s minions destroyed their home.",
+            "They kidnapped Mia, leaving only a note: 'You will find her in the Obsidian Tower.'",
+            "David must fight to save his daughter! Would you help?"
         ];
 
         this.currentText = "";  // Text displayed letter-by-letter
