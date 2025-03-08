@@ -107,13 +107,16 @@ class SceneManager {
 
     nextLevel() {
         this.resetCamera();
-        if(this.gameState.currentLevel = 5){
+        
+        // Check if we just completed level 4 (which has the Shadow King)
+        // and if the Shadow King is dead
+        if (this.gameState.currentLevel === 4 && this.scene.enemies.some(enemy => 
+            enemy instanceof ShadowKing && enemy.isDead)) {
             this.transitionToScene(Outro);
         } else {
             this.transitionToScene(ShopScene);
+            this.gameState.currentLevel++;
         }
-        this.gameState.currentLevel++;
-       
     }
 };
 
