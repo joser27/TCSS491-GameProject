@@ -1,6 +1,6 @@
 class Pistol extends Weapon {
     constructor(scene) {
-        super("Pistol", 4500, 300, 0.5, scene);
+        super("Pistol", 45, 300, 0.5, scene);
         this.bullets = [];
         this.magazineSize = 7;
         this.ammo = this.magazineSize;

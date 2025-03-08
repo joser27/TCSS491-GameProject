@@ -108,7 +108,12 @@ class SceneManager {
     nextLevel() {
         this.resetCamera();
         this.gameState.currentLevel++;
-        this.transitionToScene(ShopScene);
+        if(this.gameState.currentLevel != 1){
+            this.transitionToScene(ShopScene);
+        } else {
+            this.transitionToScene(Outro);
+        }
+       
     }
 };
 

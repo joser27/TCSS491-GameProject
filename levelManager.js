@@ -302,9 +302,6 @@ class LevelManager {
             this.goIndicator = null;
         }
         
-        if(this.currentLevel === 5){
-            this.sceneManager.transitionToScene(Outro);
-        }
 
         for (let zone of this.combatZones) {
             if (zone.isCompleted) continue;
