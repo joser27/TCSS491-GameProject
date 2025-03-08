@@ -9,26 +9,14 @@ class GameOverScene {
 
     update() {
         if (this.gameEngine.keys["Enter"]) {
-
-            // Reset player stats
-            this.sceneManager.gameState.playerStats.coins = 0;
-            this.sceneManager.gameState.playerStats.upgrades = {
-                berserkerMode: false,
-                titanGuard: false,
-                sharpenedSteel: false,
-                gunslinger: false,
-                shadowStep: false
-            };
-            this.sceneManager.gameState.currentLevel = 1;
+            // Only reset player health, keep other progress
             this.sceneManager.gameState.playerStats.health = 100;
-
+            
             // Reset camera and transition to playing scene
             this.sceneManager.resetCamera();
             this.sceneManager.transitionToScene(PlayingScene);
-
         }
     }           
-
 
     draw(ctx) {
         ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
@@ -37,7 +25,6 @@ class GameOverScene {
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
  
-
         ctx.font = "128px Minecraft";
         ctx.fillText("Game Over!", PARAMS.canvasWidth / 2, PARAMS.canvasHeight / 2-250);
         this.drawGlowingOval(ctx,PARAMS.canvasWidth / 2, PARAMS.canvasHeight / 2 + 50, 150, 37.5, 'white', 40);
@@ -55,8 +42,10 @@ class GameOverScene {
         this.deathAnimation.drawFrame(this.gameEngine.clockTick, ctx, PARAMS.canvasWidth / 2-200, PARAMS.canvasHeight / 2-250);
 
         ctx.font = "24px Arial";
-        ctx.fillText("Press Enter to restart", PARAMS.canvasWidth / 2, PARAMS.canvasHeight / 2 + 250);
+        ctx.fillText("Press Enter to retry level " + this.sceneManager.gameState.currentLevel, PARAMS.canvasWidth / 2, PARAMS.canvasHeight / 2 + 250);
         
+        ctx.font = "20px Arial";
+        ctx.fillText("Coins: " + this.sceneManager.gameState.playerStats.coins, PARAMS.canvasWidth / 2, PARAMS.canvasHeight / 2 + 330);
     }
     drawGlowingOval(ctx, x, y, sizeX, sizeY,color, glowSize) {
         

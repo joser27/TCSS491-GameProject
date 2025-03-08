@@ -11,9 +11,9 @@ class Outro {
         // ASSET_MANAGER.playAsset("./assets/music/music1.mp3");
         // Dialogue for each screen
         this.texts = [
-            "After David defeated all the Shadow King’s minions and Shadow King ",
+            "After David defeated all the Shadow King's minions and Shadow King ",
             "Mia, his daughter, is there, trembling, her eyes filled with fear and tear.",
-            "'I’ve got you, sweetheart. You’re safe now.' David said and untied her",
+            "'I've got you, sweetheart. You're safe now.' David said and untied her",
             "He took over all the Shadow King's treasure and lived in the Obsidian Tower with his daughter",
             "Happy Ending!"
         ];
@@ -54,6 +54,8 @@ class Outro {
                     this.screen1++;
                     this.charIndex = 0;
                 } else {
+                    // Reset game first.
+                    this.sceneManager.gameState.reset();
                     this.sceneManager.transitionToScene(MenuScene); // Move to Menu
                 }
             }
