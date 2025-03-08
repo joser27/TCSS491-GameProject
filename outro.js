@@ -13,8 +13,8 @@ class Outro {
         this.texts = [
             "After David defeated all the Shadow King’s minions and Shadow King ",
             "Mia, his daughter, is there, trembling, her eyes filled with fear and tear.",
-            "'I’ve got you, sweetheart. You’re safe now.' David said and untie her",
-            "He took over all the Shadow King's treasure and live inside Obsidian Tower with his daughter",
+            "'I’ve got you, sweetheart. You’re safe now.' David said and untied her",
+            "He took over all the Shadow King's treasure and lived in the Obsidian Tower with his daughter",
             "Happy Ending!"
         ];
 
