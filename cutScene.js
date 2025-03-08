@@ -75,7 +75,7 @@ class CutScene {
         ctx.fillRect(0, 0, PARAMS.canvasWidth, PARAMS.canvasHeight);
         ctx.drawImage(bg, 0, 0, 1280, 500);
         ctx.drawImage(house, 800, 200, 125, 100);
-        ctx.drawImage(daughter, 725, 300, 25,41);
+        ctx.drawImage(daughter, 825, 300, 20,35);
         ctx.drawImage(player, 750, 250, 55,88);
         this.drawTextbar(ctx);
         this.drawDaySky(ctx);

@@ -12,6 +12,7 @@ class SceneManager {
             HowToPlayScene: null,
             CreditsScene: null,
             CutScene: null,
+            Outro: null,
         }
         this.scene = this.scenes.MenuScene;
         this.zindex = 100;
@@ -95,7 +96,11 @@ class SceneManager {
         } else if (SceneType === CutScene){
             this.scenes.CutScene = new CutScene(this.gameEngine, this, this.gameState);
             this.scene = this.scenes.CutScene;
-        }
+        } else if (SceneType === Outro){
+            this.scenes.Outro = new Outro(this.gameEngine, this);
+            this.scene = this.scenes.Outro;
+        } 
+
 
         this.gameEngine.addEntity(this.scene);
     }

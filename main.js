@@ -45,7 +45,10 @@ ASSET_MANAGER.queueDownload("./assets/sprites/trashcan.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/city_mailbox.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/bus_sign.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/pink_pic.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/pink_robbed.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/white_pic.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/castle1.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/outro1.png");
 
 ASSET_MANAGER.queueDownload("./assets/sprites/mallwallAseprite1.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/mallwallAseprite2.png");
@@ -75,6 +78,8 @@ ASSET_MANAGER.queueDownload("./assets/sprites/berserker.png");
 
 ASSET_MANAGER.queueDownload("./assets/sprites/boss2.png");
 ASSET_MANAGER.queueDownload("./assets/sprites/boss3.png");
+ASSET_MANAGER.queueDownload("./assets/sprites/finalboss_killed.png");
+
 
 // Keyboard sprites
 ASSET_MANAGER.queueDownload("./assets/sprites/keyboard/ARROWDOWN.png");
