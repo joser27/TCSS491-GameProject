@@ -61,7 +61,8 @@ class Player extends Character {
         }
 
         
-        if (this.gameEngine.keys.h) { // Ensures key press is detected once
+        if (this.gameEngine.keys.h && !this.hKeyPressed) { // Ensures key press is detected once
+            this.hKeyPressed = true;
             if (this.scene.sceneManager.gameState.playerStats.inventory.healthKits > 0) {
                 if (this.health < 200) {
                     this.health = 200;
@@ -74,7 +75,10 @@ class Player extends Character {
                 this.showNotification("No health kits left!", "red");
             }
         }
-        
+
+        if(!this.gameEngine.keys.h) {
+            this.hKeyPressed = false;
+        }
 
         if (this.deathCompleted) {
             console.log("Game Over");
